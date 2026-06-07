@@ -1,0 +1,39 @@
+{
+  "name": "my-portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@clerk/nextjs": "^7.4.3",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "@sanity/code-input": "^7.1.2",
+    "@sanity/icons": "^3.7.4",
+    "@sanity/ui": "^3.2.0",
+    "@tailwindcss/postcss": "^4.1.18",
+    "framer-motion": "^12.40.0",
+    "lucide-react": "^0.562.0",
+    "next": "latest",
+    "next-sanity": "^13.0.11",
+    "react": "latest",
+    "react-dom": "latest",
+    "sanity": "^5.30.0",
+    "styled-components": "^6.4.2",
+    "three": "^0.184.0"
+  },
+  "devDependencies": {
+    "@types/node": "25.0.3",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@types/three": "^0.184.1",
+    "autoprefixer": "^10.4.23",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18",
+    "typescript": "5.9.3"
+  }
+}
