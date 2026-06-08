@@ -28,14 +28,11 @@ export default function BlogHero3D({ featuredArticle }: { featuredArticle?: any 
           <span className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#D4A373] mb-8 block">
             {featuredArticle ? "Featured Article" : "Editorial Intelligence"}
           </span>
-          <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-light tracking-tighter text-[#2F3E46] leading-[0.9] mb-8">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tighter text-[#2F3E46] leading-[1.1] mb-8 max-w-2xl break-words relative z-50">
             {featuredArticle ? (
-              <>
-                {featuredArticle.title.split(' ')[0]} <br />
-                <span className="font-serif italic text-[#84A98C]">
-                  {featuredArticle.title.split(' ').slice(1).join(' ')}
-                </span>
-              </>
+              <span className="font-serif italic text-[#52796F]">
+                {featuredArticle.title}
+              </span>
             ) : (
               <>
                 Thought <br />
