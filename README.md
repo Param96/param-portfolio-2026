@@ -20,29 +20,6 @@ This project is a modern, responsive portfolio built to display my engineering w
 - **Deployment:** [Vercel](https://vercel.com/)
 - **Authentication:** [Clerk](https://clerk.com/)
 
-## Getting Started
-
-To run this project locally:
-
-1. **Clone the repository:**
-   ```bash
-   git clone <repository-url>
-   cd <repository-directory>
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Set up environment variables:**
-   - Create a `.env.local` file based on `.env.example` (if provided) and fill in the required keys for Sanity, Clerk, etc.
-
-4. **Run the development server:**
-   ```bash
-   npm run dev
-   ```
-   Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Structure
 
