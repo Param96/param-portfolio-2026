@@ -10,7 +10,7 @@ export default async function ProjectsPage() {
   const projects = data as any;
 
   return (
-    <div className="relative min-h-screen bg-[#111]">
+    <div className="relative min-h-screen bg-[#E9EDC9] text-[#2F3E46] overflow-hidden selection:bg-[#D4A373] selection:text-[#FEFAE0] font-sans">
       {/* 3D Immersive Hero */}
       <ProjectsHero3D />
 

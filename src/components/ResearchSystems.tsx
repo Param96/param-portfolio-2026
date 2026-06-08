@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
+import posthog from "posthog-js";
 import { Layers, Database, ShieldCheck, Workflow } from "lucide-react";
 
 export default function ResearchSystems() {
@@ -187,6 +189,22 @@ export default function ResearchSystems() {
                       ))}
                     </ul>
                   </div>
+                </div>
+
+                <div className="mt-12 pt-8 border-t border-[#354F52]/10 flex justify-end">
+                  <Link
+                    href="/research"
+                    className="flex items-center gap-4 group/btn"
+                    onClick={() => posthog.capture('research_accessed', { source: 'homepage' })}
+                  >
+                    <span className="text-xs font-bold uppercase tracking-widest text-[#52796F] group-hover/btn:text-[#2F3E46] transition-colors">Enter Research Infrastructure</span>
+                    <div className="w-10 h-10 rounded-full border border-[#84A98C]/30 flex items-center justify-center group-hover/btn:border-[#84A98C] group-hover/btn:bg-[#84A98C]/10 transition-all duration-500">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#84A98C] group-hover/btn:text-[#2F3E46]">
+                        <path d="M5 12h14"></path>
+                        <path d="m12 5 7 7-7 7"></path>
+                      </svg>
+                    </div>
+                  </Link>
                 </div>
 
               </div>

@@ -66,11 +66,11 @@ export default async function RootLayout({
   const isEnabled = draft.isEnabled;
   return (
     <ClerkProvider>
-      <html lang="en" className={`${jetbrainsMono.variable}`}>
+      <html lang="en" className={`${jetbrainsMono.variable}`} suppressHydrationWarning>
         <head>
           <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,300,400&display=swap" rel="stylesheet" />
         </head>
-        <body className="min-h-screen relative font-satoshi">
+        <body className="min-h-screen relative font-satoshi" suppressHydrationWarning>
           <PostHogProvider>
             <PublicLayoutWrapper>{children}</PublicLayoutWrapper>
             {isEnabled && <VisualEditing />}

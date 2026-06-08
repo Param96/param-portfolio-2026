@@ -31,11 +31,11 @@ const experiments = [
 
 export default function CurrentExperiments() {
   return (
-    <section className="relative w-full py-40 bg-[#111] text-white overflow-hidden border-t border-white/5">
+    <section className="relative w-full py-40 bg-[#E9EDC9] text-[#2F3E46] overflow-hidden border-t border-[#84A98C]/10">
       {/* Background cinematic mesh */}
-      <div className="absolute inset-0 pointer-events-none opacity-20">
-        <div className="absolute top-0 right-[20%] w-[1px] h-full bg-gradient-to-b from-transparent via-white/10 to-transparent" />
-        <div className="absolute top-[20%] right-0 w-full h-[1px] bg-gradient-to-l from-transparent via-white/10 to-transparent" />
+      <div className="absolute inset-0 pointer-events-none opacity-40">
+        <div className="absolute top-0 right-[20%] w-[1px] h-full bg-gradient-to-b from-transparent via-[#84A98C]/30 to-transparent" />
+        <div className="absolute top-[20%] right-0 w-full h-[1px] bg-gradient-to-l from-transparent via-[#84A98C]/30 to-transparent" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -48,12 +48,12 @@ export default function CurrentExperiments() {
                 Living Systems
               </span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-light tracking-tight text-white">
+            <h2 className="text-4xl md:text-6xl font-light tracking-tight text-[#2F3E46]">
               Experimental <br />
               <span className="font-serif italic text-[#D4A373]">Engineering.</span>
             </h2>
           </div>
-          <p className="text-white/40 max-w-sm text-sm leading-relaxed border-l border-white/10 pl-6">
+          <p className="text-[#354F52] max-w-sm text-sm leading-relaxed border-l border-[#84A98C]/20 pl-6">
             These are not static products. They are living systems, architectural explorations, and active infrastructure built to test the limits of intelligent automation.
           </p>
         </div>
@@ -66,7 +66,7 @@ export default function CurrentExperiments() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="group relative bg-white/[0.02] border border-white/5 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row gap-8 md:gap-16 hover:bg-white/[0.04] transition-all duration-700 overflow-hidden"
+              className="group relative bg-[#FEFAE0]/40 border border-[#84A98C]/10 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row gap-8 md:gap-16 hover:bg-[#FEFAE0] hover:shadow-lg transition-all duration-700 overflow-hidden shadow-sm"
             >
               <div 
                 className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none"
@@ -76,30 +76,30 @@ export default function CurrentExperiments() {
               <div className="md:w-1/4 flex flex-col justify-between">
                 <div>
                   <span className="text-xs font-mono font-bold" style={{ color: exp.color }}>SYS_{exp.id}</span>
-                  <p className="text-[10px] uppercase tracking-widest text-white/30 mt-2">{exp.status}</p>
+                  <p className="text-[10px] uppercase tracking-widest text-[#52796F] mt-2 font-bold">{exp.status}</p>
                 </div>
               </div>
               
               <div className="md:w-2/4">
-                <h3 className="text-3xl md:text-4xl font-medium mb-4 text-white group-hover:translate-x-2 transition-transform duration-500">{exp.title}</h3>
-                <p className="text-white/50 leading-relaxed max-w-lg">
+                <h3 className="text-3xl md:text-4xl font-medium mb-4 text-[#2F3E46] group-hover:translate-x-2 transition-transform duration-500">{exp.title}</h3>
+                <p className="text-[#354F52] leading-relaxed max-w-lg">
                   {exp.description}
                 </p>
               </div>
               
-              <div className="md:w-1/4 flex items-end justify-start md:justify-end">
+              <div className="md:w-1/4 flex items-end justify-start md:justify-end z-10">
                 <Link
-                href={`/projects`}
-                className="flex items-center gap-4 group/btn"
-                onClick={() => posthog.capture('experiment_accessed', {
-                  experiment_id: exp.id,
-                  experiment_title: exp.title,
-                  experiment_status: exp.status,
-                })}
-              >
-                  <span className="text-xs font-bold uppercase tracking-widest text-white/30 group-hover/btn:text-white transition-colors">Access System</span>
-                  <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center group-hover/btn:border-white/40 group-hover/btn:bg-white/10 transition-all duration-500">
-                    <ArrowRight className="w-4 h-4 text-white/50 group-hover/btn:text-white" />
+                  href={`/projects`}
+                  className="flex items-center gap-4 group/btn"
+                  onClick={() => posthog.capture('experiment_accessed', {
+                    experiment_id: exp.id,
+                    experiment_title: exp.title,
+                    experiment_status: exp.status,
+                  })}
+                >
+                  <span className="text-xs font-bold uppercase tracking-widest text-[#84A98C] group-hover/btn:text-[#2F3E46] transition-colors">Access System</span>
+                  <div className="w-10 h-10 rounded-full border border-[#84A98C]/30 flex items-center justify-center group-hover/btn:border-[#84A98C] group-hover/btn:bg-[#84A98C]/10 transition-all duration-500">
+                    <ArrowRight className="w-4 h-4 text-[#84A98C] group-hover/btn:text-[#2F3E46]" />
                   </div>
                 </Link>
               </div>
