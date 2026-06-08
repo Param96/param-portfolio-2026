@@ -173,14 +173,10 @@ export default function Navbar() {
 
             {/* ── Right Side / CTA ── */}
             <div className="hidden md:flex items-center gap-4 relative z-10">
-              {/* Admin Sign-In Portal (Sign-ups are disabled at the Clerk Dashboard level) */}
-              <Show when="signed-out">
-                <SignInButton mode="modal">
-                  <button className={`text-[10px] font-bold uppercase tracking-[0.2em] transition-colors duration-500 hover:text-[#D4A373] ${scrolled ? "text-[#FEFAE0]/70" : "text-[#2F3E46]/70"}`}>
-                    Admin Portal
-                  </button>
-                </SignInButton>
-              </Show>
+              {/* 
+                Hidden Admin Access: We do not show the SignInButton anymore. 
+                You can access the admin panel by manually typing /admin in your browser. 
+              */}
               <Show when="signed-in">
                 <UserButton appearance={{ elements: { userButtonAvatarBox: "w-8 h-8" } }} />
               </Show>
