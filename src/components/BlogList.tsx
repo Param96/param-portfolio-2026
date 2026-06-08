@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import posthog from "posthog-js";
 
 export default function BlogList({ articles }: { articles: any[] }) {
   const [activeCategory, setActiveCategory] = useState<string>("All");
@@ -22,10 +23,13 @@ export default function BlogList({ articles }: { articles: any[] }) {
         {categories.map((cat: any) => (
           <button
             key={cat}
-            onClick={() => setActiveCategory(cat)}
+            onClick={() => {
+              setActiveCategory(cat);
+              posthog.capture('blog_category_filtered', { category: cat });
+            }}
             className={`text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full transition-colors ${
-              activeCategory === cat 
-                ? "bg-[#2F3E46] text-[#FEFAE0]" 
+              activeCategory === cat
+                ? "bg-[#2F3E46] text-[#FEFAE0]"
                 : "bg-[#2F3E46]/5 text-[#2F3E46] hover:bg-[#2F3E46]/10"
             }`}
           >
@@ -56,7 +60,16 @@ export default function BlogList({ articles }: { articles: any[] }) {
               transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="group cursor-pointer block border-b border-[#2F3E46]/10 hover:bg-[#F8F9FA] transition-colors duration-500"
             >
-              <Link href={`/blog/${article.slug || ""}`} className="flex flex-col md:flex-row items-start md:items-center py-12 md:py-16 px-4 md:px-8 gap-8 md:gap-16 w-full">
+              <Link
+                href={`/blog/${article.slug || ""}`}
+                onClick={() => posthog.capture('blog_article_clicked', {
+                  article_id: article._id,
+                  article_title: article.title,
+                  article_category: article.category,
+                  article_slug: article.slug,
+                })}
+                className="flex flex-col md:flex-row items-start md:items-center py-12 md:py-16 px-4 md:px-8 gap-8 md:gap-16 w-full"
+              >
                 
                 {/* Meta Column */}
                 <div className="w-full md:w-[200px] flex md:flex-col items-center md:items-start justify-between md:justify-start gap-2 shrink-0">

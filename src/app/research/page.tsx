@@ -3,6 +3,7 @@ import { ALL_RESEARCH_QUERY } from "@/sanity/lib/queries";
 import Link from "next/link";
 import { ArrowRight, Database, Workflow, ShieldCheck, Cpu } from "lucide-react";
 import * as FramerMotion from "framer-motion";
+import { ResearchLink } from "@/components/research/ResearchLink";
 
 export const revalidate = 60;
 
@@ -94,9 +95,15 @@ export default async function CinematicResearchPage() {
                 </div>
                 
                 <h2 className="text-4xl md:text-5xl font-bold mb-10 font-serif text-[#2F3E46] max-w-4xl leading-tight">
-                  <Link href={`/research/${project.slug}`} className="hover:text-[#52796F] transition-colors">
+                  <ResearchLink
+                    href={`/research/${project.slug}`}
+                    research_id={project._id}
+                    research_title={project.title}
+                    research_slug={project.slug}
+                    className="hover:text-[#52796F] transition-colors"
+                  >
                     {project.title}
-                  </Link>
+                  </ResearchLink>
                 </h2>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
@@ -114,12 +121,15 @@ export default async function CinematicResearchPage() {
                       </div>
                     </div>
                     <div>
-                      <Link 
+                      <ResearchLink
                         href={`/research/${project.slug}`}
+                        research_id={project._id}
+                        research_title={project.title}
+                        research_slug={project.slug}
                         className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-[#2F3E46] border-b border-[#2F3E46]/30 pb-2 hover:border-[#2F3E46] transition-colors"
                       >
                         Read Full Research <ArrowRight className="w-4 h-4" />
-                      </Link>
+                      </ResearchLink>
                     </div>
                   </div>
                 </div>

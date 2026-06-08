@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { socialLinks } from "@/data/social";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import posthog from "posthog-js";
 
 const floatingConcepts = [
   { main: "Agentic AI Systems", sub: "orchestration layers, autonomous workflows, intelligent routing" },
@@ -154,11 +155,12 @@ export default function ContactPage() {
             {socialLinks.map((social, i) => {
               const Icon = social.icon;
               return (
-                <a 
-                  key={i} 
+                <a
+                  key={i}
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => posthog.capture('social_link_clicked', { platform: social.name, url: social.url })}
                   className="group relative h-48 border border-[#2F3E46]/10 flex flex-col items-center justify-center gap-6 hover:border-[#84A98C] hover:bg-[#84A98C]/5 transition-all duration-700 rounded-3xl"
                 >
                   <div className="w-16 h-16 rounded-full border border-[#2F3E46]/10 flex items-center justify-center group-hover:scale-110 group-hover:border-[#84A98C] group-hover:text-[#84A98C] transition-all duration-700 text-[#2F3E46]">

@@ -2,78 +2,109 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Terminal } from "lucide-react";
+import posthog from "posthog-js";
 
 const experiments = [
   {
     id: "01",
-    title: "AI Verification Agent",
-    description: "Multi-modal architecture designed to audit, verify, and trace outputs from large language models inside high-stakes pipelines.",
-    status: "Active System",
+    title: "AI Verify Agent",
+    description: "An intelligent educational verification infrastructure automating dataset validation through XGBoost-based workflows and scalable intelligence pipelines.",
+    status: "Active Infrastructure",
+    color: "#D4A373"
   },
   {
     id: "02",
-    title: "Jarvis Orchestration",
-    description: "Continuous autonomic intelligence framework managing sub-agent deployment, task queuing, and distributed memory systems.",
-    status: "Evolving Infrastructure",
+    title: "Jarvis",
+    description: "A modular agentic AI assistant exploring autonomous orchestration layers, experimental interaction systems, and automated copilots.",
+    status: "Experimental Engine",
+    color: "#84A98C"
   },
   {
     id: "03",
-    title: "Pactify Workflows",
-    description: "Procedural generation logic for automating complex, multi-step contract generation through deterministic natural language parsing.",
-    status: "Archived Concept",
+    title: "Pactify",
+    description: "An AI-powered founder workflow platform exploring safe generation systems and operational productivity infrastructure for startups.",
+    status: "Startup Tooling",
+    color: "#52796F"
   }
 ];
 
 export default function CurrentExperiments() {
   return (
-    <section className="relative w-full py-32 bg-[#FAEDCD] text-[#2F3E46] overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="relative w-full py-40 bg-[#111] text-white overflow-hidden border-t border-white/5">
+      {/* Background cinematic mesh */}
+      <div className="absolute inset-0 pointer-events-none opacity-20">
+        <div className="absolute top-0 right-[20%] w-[1px] h-full bg-gradient-to-b from-transparent via-white/10 to-transparent" />
+        <div className="absolute top-[20%] right-0 w-full h-[1px] bg-gradient-to-l from-transparent via-white/10 to-transparent" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         
         <div className="mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#84A98C] mb-4 block">
-              Active Architecture
-            </span>
-            <h2 className="text-4xl md:text-5xl font-light tracking-tight text-[#2F3E46]">
-              Current <span className="font-bold italic text-[#52796F]">Experiments</span>
+            <div className="flex items-center gap-3 mb-6">
+              <Terminal className="w-4 h-4 text-[#84A98C]" />
+              <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#84A98C]">
+                Living Systems
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-6xl font-light tracking-tight text-white">
+              Experimental <br />
+              <span className="font-serif italic text-[#D4A373]">Engineering.</span>
             </h2>
           </div>
-          <p className="text-[#52796F] max-w-sm text-sm leading-relaxed">
-            These are not finished products. They are living systems, architectural explorations, and active infrastructure tests.
+          <p className="text-white/40 max-w-sm text-sm leading-relaxed border-l border-white/10 pl-6">
+            These are not static products. They are living systems, architectural explorations, and active infrastructure built to test the limits of intelligent automation.
           </p>
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-4">
           {experiments.map((exp, i) => (
             <motion.div
               key={exp.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="group relative border-t border-[#354F52]/10 py-12 flex flex-col md:flex-row gap-8 md:gap-16 hover:bg-[#FEFAE0]/50 transition-colors duration-700"
+              className="group relative bg-white/[0.02] border border-white/5 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row gap-8 md:gap-16 hover:bg-white/[0.04] transition-all duration-700 overflow-hidden"
             >
-              <div className="md:w-1/4">
-                <span className="text-sm font-jetbrains text-[#D4A373]">{exp.id}</span>
-                <p className="text-[10px] uppercase tracking-widest text-[#84A98C] mt-2">{exp.status}</p>
+              <div 
+                className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none"
+                style={{ background: `radial-gradient(circle at 80% 50%, ${exp.color}, transparent 50%)` }}
+              />
+
+              <div className="md:w-1/4 flex flex-col justify-between">
+                <div>
+                  <span className="text-xs font-mono font-bold" style={{ color: exp.color }}>SYS_{exp.id}</span>
+                  <p className="text-[10px] uppercase tracking-widest text-white/30 mt-2">{exp.status}</p>
+                </div>
               </div>
               
               <div className="md:w-2/4">
-                <h3 className="text-3xl font-medium mb-4 group-hover:text-[#D4A373] transition-colors duration-500">{exp.title}</h3>
-                <p className="text-[#52796F] leading-relaxed max-w-lg">
+                <h3 className="text-3xl md:text-4xl font-medium mb-4 text-white group-hover:translate-x-2 transition-transform duration-500">{exp.title}</h3>
+                <p className="text-white/50 leading-relaxed max-w-lg">
                   {exp.description}
                 </p>
               </div>
               
-              <div className="md:w-1/4 flex items-center md:justify-end">
-                <Link href={`/projects/${exp.title.toLowerCase().replace(/ /g, "-")}`} className="w-12 h-12 rounded-full border border-[#354F52]/20 flex items-center justify-center group-hover:bg-[#2F3E46] group-hover:border-transparent transition-all duration-500">
-                  <ArrowRight className="w-4 h-4 text-[#2F3E46] group-hover:text-[#FEFAE0] transition-colors" />
+              <div className="md:w-1/4 flex items-end justify-start md:justify-end">
+                <Link
+                href={`/projects`}
+                className="flex items-center gap-4 group/btn"
+                onClick={() => posthog.capture('experiment_accessed', {
+                  experiment_id: exp.id,
+                  experiment_title: exp.title,
+                  experiment_status: exp.status,
+                })}
+              >
+                  <span className="text-xs font-bold uppercase tracking-widest text-white/30 group-hover/btn:text-white transition-colors">Access System</span>
+                  <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center group-hover/btn:border-white/40 group-hover/btn:bg-white/10 transition-all duration-500">
+                    <ArrowRight className="w-4 h-4 text-white/50 group-hover/btn:text-white" />
+                  </div>
                 </Link>
               </div>
             </motion.div>
           ))}
-          <div className="border-t border-[#354F52]/10 w-full" />
         </div>
 
       </div>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight, Github, Linkedin, Mail, Instagram } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
+import posthog from "posthog-js";
 
 export default function ContactCTA() {
   return (
@@ -38,6 +39,7 @@ export default function ContactCTA() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
             <Link
               href="/contact"
+              onClick={() => posthog.capture('contact_cta_clicked', { cta_type: 'get_in_touch', source: 'contact_cta_section' })}
               className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold text-lg hover:from-blue-500 hover:to-indigo-500 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(59,130,246,0.3)]"
             >
               Get in Touch
@@ -45,6 +47,7 @@ export default function ContactCTA() {
             </Link>
             <Link
               href="/resume"
+              onClick={() => posthog.capture('contact_cta_clicked', { cta_type: 'view_resume', source: 'contact_cta_section' })}
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl glass text-slate-300 font-medium hover:bg-white/[0.06] hover:text-white transition-all duration-300"
             >
               View Resume

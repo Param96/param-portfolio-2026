@@ -1,5 +1,5 @@
 import ProjectsHero3D from "@/components/ProjectsHero3D";
-import ProjectList from "@/components/ProjectList";
+import EvolvingSystemsList from "@/components/EvolvingSystemsList";
 import { sanityFetch } from "@/sanity/lib/live";
 import { ALL_PROJECTS_QUERY } from "@/sanity/lib/queries";
 
@@ -10,12 +10,12 @@ export default async function ProjectsPage() {
   const projects = data as any;
 
   return (
-    <div className="relative min-h-screen bg-[#FEFAE0]">
+    <div className="relative min-h-screen bg-[#111]">
       {/* 3D Immersive Hero */}
       <ProjectsHero3D />
 
-      {/* Dynamic Projects from Sanity */}
-      <ProjectList projects={projects} />
+      {/* Dynamic Cinematic Projects from Sanity */}
+      <EvolvingSystemsList projects={projects} />
     </div>
   );
 }

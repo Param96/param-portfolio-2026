@@ -5,6 +5,7 @@ import { PortableText } from "next-sanity";
 import Link from "next/link";
 import { ArrowLeft, FlaskConical, GitCommit, Settings, TerminalSquare } from "lucide-react";
 import ReadershipTracker from "@/components/analytics/ReadershipTracker";
+import { getPostHogClient } from "@/lib/posthog-server";
 
 export const revalidate = 60;
 
@@ -19,6 +20,19 @@ export default async function LabNoteDetailPage({ params }: { params: Promise<{ 
   if (!note) {
     notFound();
   }
+
+  // Track lab note view server-side for a reliable count
+  const posthog = getPostHogClient();
+  posthog.capture({
+    distinctId: "anonymous",
+    event: "article_viewed",
+    properties: {
+      article_id: note._id,
+      article_title: note.title,
+      article_type: "lab-note",
+      article_slug: resolvedParams.slug,
+    },
+  });
 
   const dateStr = note.publishedAt 
     ? new Date(note.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })

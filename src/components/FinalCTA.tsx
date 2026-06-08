@@ -1,5 +1,8 @@
+"use client";
+
 import ScrollReveal from "./ScrollReveal";
 import { ArrowRight, Mail } from "lucide-react";
+import posthog from "posthog-js";
 
 export default function FinalCTA() {
   return (
@@ -25,17 +28,22 @@ export default function FinalCTA() {
              </p>
 
              <div className="flex flex-col sm:flex-row items-center gap-4">
-               <a href="mailto:paramppatel100@gmail.com" 
-                  className="group relative inline-flex items-center gap-2.5 px-8 py-4 rounded-full font-bold text-white
-                             bg-[#2F3E46] hover:bg-[#354F52] shadow-xl hover:shadow-2xl hover:-translate-y-1
-                             transition-all duration-300 text-sm tracking-wide">
+               <a
+                 href="mailto:paramppatel100@gmail.com"
+                 onClick={() => posthog.capture('contact_cta_clicked', { cta_type: 'email', source: 'final_cta_section' })}
+                 className="group relative inline-flex items-center gap-2.5 px-8 py-4 rounded-full font-bold text-white
+                            bg-[#2F3E46] hover:bg-[#354F52] shadow-xl hover:shadow-2xl hover:-translate-y-1
+                            transition-all duration-300 text-sm tracking-wide">
                  Start a Conversation
                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
                </a>
-               <a href="https://linkedin.com/in/paramp06" 
-                  target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-[#354F52]
-                             hover:text-[#2F3E46] hover:bg-[#2F3E46]/5 transition-colors duration-300 text-sm tracking-wide">
+               <a
+                 href="https://linkedin.com/in/paramp06"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 onClick={() => posthog.capture('contact_cta_clicked', { cta_type: 'linkedin', source: 'final_cta_section' })}
+                 className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-[#354F52]
+                            hover:text-[#2F3E46] hover:bg-[#2F3E46]/5 transition-colors duration-300 text-sm tracking-wide">
                  Connect on LinkedIn
                </a>
              </div>

@@ -7,6 +7,7 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-
 import { ArrowRight, Menu, X } from "lucide-react";
 import { navLinks } from "@/data/navigation";
 import { Show, UserButton, SignInButton } from "@clerk/nextjs";
+import posthog from "posthog-js";
 
 export default function Navbar() {
   const [hidden, setHidden] = useState(false);
@@ -182,9 +183,10 @@ export default function Navbar() {
               </Show>
               <Link
                 href="/contact"
+                onClick={() => posthog.capture('nav_collaborate_clicked', { source: 'desktop' })}
                 className={`group relative px-6 py-2 rounded-full font-bold text-[10px] tracking-[0.2em] uppercase transition-all duration-700 flex items-center gap-2 border shadow-lg overflow-hidden ${
-                  scrolled 
-                    ? "bg-[#FEFAE0]/10 border-white/10 text-[#FEFAE0] hover:bg-[#FEFAE0]/20 hover:border-white/20 hover:shadow-[0_0_20px_rgba(212,163,115,0.2)]" 
+                  scrolled
+                    ? "bg-[#FEFAE0]/10 border-white/10 text-[#FEFAE0] hover:bg-[#FEFAE0]/20 hover:border-white/20 hover:shadow-[0_0_20px_rgba(212,163,115,0.2)]"
                     : "bg-[#2F3E46] border-[#2F3E46]/10 text-[#FEFAE0] hover:bg-[#354F52] hover:shadow-[0_8px_30px_rgba(47,62,70,0.2)]"
                 }`}
               >
@@ -259,7 +261,7 @@ export default function Navbar() {
               >
                 <Link
                   href="/contact"
-                  onClick={() => setMobileOpen(false)}
+                  onClick={() => { setMobileOpen(false); posthog.capture('nav_collaborate_clicked', { source: 'mobile' }); }}
                   className="w-full flex items-center justify-between rounded-2xl bg-[#D4A373]/10 border border-[#D4A373]/20 px-8 py-6 text-xs font-bold uppercase tracking-[0.2em] text-[#D4A373] hover:bg-[#D4A373]/20 transition-colors duration-500"
                 >
                   Initiate Collaboration

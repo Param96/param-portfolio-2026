@@ -17,6 +17,7 @@ import { projects, Project } from "@/data/projects";
 import AnimatedSection from "@/components/AnimatedSection";
 import GlowCard from "@/components/GlowCard";
 import SectionHeader from "@/components/SectionHeader";
+import posthog from "posthog-js";
 
 function getGlowColor(project: Project): "blue" | "emerald" | "violet" | "amber" {
   if (project.id === "eraksha") return "amber";
@@ -71,6 +72,24 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   const visibleFeatures = expanded ? project.features : project.features.slice(0, 3);
   const hasMore = project.features.length > 3;
 
+  const handleFeaturesToggle = () => {
+    const next = !expanded;
+    setExpanded(next);
+    posthog.capture('project_features_expanded', {
+      project_id: project.id,
+      project_name: project.title,
+      expanded: next,
+    });
+  };
+
+  const handleLinkClick = (linkType: 'github' | 'demo') => {
+    posthog.capture('project_link_clicked', {
+      project_id: project.id,
+      project_name: project.title,
+      link_type: linkType,
+    });
+  };
+
   return (
     <AnimatedSection
       delay={index * 150}
@@ -114,7 +133,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           </ul>
           {hasMore && (
             <button
-              onClick={() => setExpanded(!expanded)}
+              onClick={handleFeaturesToggle}
               className="flex items-center gap-1 mt-3 text-xs font-medium text-blue-400 hover:text-blue-300 transition-colors duration-300"
             >
               <ChevronDown
@@ -148,17 +167,16 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           {/* TODO: Wire up githubUrl when available */}
           <a
             href={project.githubUrl || "#"}
-            onClick={(e) => !project.githubUrl && e.preventDefault()}
+            onClick={(e) => { if (!project.githubUrl) { e.preventDefault(); return; } handleLinkClick('github'); }}
             className="flex items-center gap-2 text-sm text-slate-500 hover:text-white transition-colors duration-300"
             aria-label={`View ${project.title} on GitHub`}
           >
             <Github className="w-4 h-4" />
             Source Code
           </a>
-          {/* TODO: Wire up liveUrl when available */}
           <a
             href={project.liveUrl || "#"}
-            onClick={(e) => !project.liveUrl && e.preventDefault()}
+            onClick={(e) => { if (!project.liveUrl) { e.preventDefault(); return; } handleLinkClick('demo'); }}
             className="flex items-center gap-2 text-sm text-slate-500 hover:text-white transition-colors duration-300"
             aria-label={`View live demo of ${project.title}`}
           >

@@ -3,9 +3,11 @@ import { BLOG_BY_SLUG_QUERY, ALL_BLOGS_QUERY } from "@/sanity/lib/queries";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Share2, Bookmark } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import BlogProgressBar from "@/components/BlogProgressBar";
 import ReadershipTracker from "@/components/analytics/ReadershipTracker";
+import BlogArticleActions from "@/components/blog/BlogArticleActions";
+import { getPostHogClient } from "@/lib/posthog-server";
 
 export const revalidate = 60;
 
@@ -20,6 +22,20 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (!article) {
     notFound();
   }
+
+  // Track article view server-side for a reliable count
+  const posthog = getPostHogClient();
+  posthog.capture({
+    distinctId: "anonymous",
+    event: "article_viewed",
+    properties: {
+      article_id: article._id,
+      article_title: article.title,
+      article_type: "blog",
+      article_slug: resolvedParams.slug,
+      article_category: article.category,
+    },
+  });
 
   // Fetch some recent articles for "Related" section
   const { data: allData } = await sanityFetch({ query: ALL_BLOGS_QUERY });
@@ -73,13 +89,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               </ul>
             </div>
 
-            <div className="pt-8 border-t border-[#2F3E46]/10 flex gap-4">
-              <button className="w-10 h-10 rounded-full border border-[#2F3E46]/20 flex items-center justify-center text-[#2F3E46]/50 hover:bg-[#2F3E46]/5 hover:text-[#2F3E46] transition-colors">
-                <Share2 className="w-4 h-4" />
-              </button>
-              <button className="w-10 h-10 rounded-full border border-[#2F3E46]/20 flex items-center justify-center text-[#2F3E46]/50 hover:bg-[#2F3E46]/5 hover:text-[#2F3E46] transition-colors">
-                <Bookmark className="w-4 h-4" />
-              </button>
+            <div className="pt-8 border-t border-[#2F3E46]/10">
+              <BlogArticleActions articleId={article._id} articleTitle={article.title} />
             </div>
           </div>
         </aside>

@@ -5,6 +5,7 @@ import { PortableText } from "next-sanity";
 import Link from "next/link";
 import { ArrowLeft, Cpu, Workflow, ShieldCheck, Database } from "lucide-react";
 import ReadershipTracker from "@/components/analytics/ReadershipTracker";
+import { getPostHogClient } from "@/lib/posthog-server";
 
 export const revalidate = 60;
 
@@ -19,6 +20,19 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
   if (!research) {
     notFound();
   }
+
+  // Track research view server-side for a reliable count
+  const posthog = getPostHogClient();
+  posthog.capture({
+    distinctId: "anonymous",
+    event: "article_viewed",
+    properties: {
+      article_id: research._id,
+      article_title: research.title,
+      article_type: "research",
+      article_slug: resolvedParams.slug,
+    },
+  });
 
   return (
     <div className="relative min-h-screen bg-[#E9EDC9] text-[#2F3E46] pt-32 pb-40 overflow-hidden selection:bg-[#D4A373] selection:text-[#FEFAE0]">

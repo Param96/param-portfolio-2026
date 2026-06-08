@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { PortableText } from "next-sanity";
+import posthog from "posthog-js";
 
 export default function LabNotesList({ notes }: { notes: any[] }) {
   if (!notes || notes.length === 0) {
@@ -38,7 +39,14 @@ export default function LabNotesList({ notes }: { notes: any[] }) {
             <span className={`font-jetbrains text-[10px] ${dateColor}`}>
               {new Date(note.publishedAt || Date.now()).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).toUpperCase()}
             </span>
-            <Link href={`/lab-notes/${note.slug}`}>
+            <Link
+              href={`/lab-notes/${note.slug}`}
+              onClick={() => posthog.capture('lab_note_clicked', {
+                note_id: note._id,
+                note_title: note.title,
+                note_slug: note.slug,
+              })}
+            >
               <h2 className="text-2xl font-bold text-[#2F3E46] mt-4 mb-6 hover:text-[#52796F] transition-colors">
                 {note.title}
               </h2>

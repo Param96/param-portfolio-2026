@@ -1,31 +1,36 @@
 import { NextResponse } from 'next/server';
-import { kv } from '@vercel/kv';
+import { Redis } from '@upstash/redis';
 
 export const revalidate = 0; // Live data, do not cache
 
 export async function GET() {
   try {
-    if (!process.env.KV_REST_API_URL) {
+    if (!process.env.KV_REST_API_URL || !process.env.KV_REST_API_TOKEN) {
       return NextResponse.json({ error: 'KV not configured' }, { status: 500 });
     }
+
+    const redis = new Redis({
+      url: process.env.KV_REST_API_URL,
+      token: process.env.KV_REST_API_TOKEN,
+    });
 
     const fiveMinsAgo = Date.now() - 5 * 60 * 1000;
     
     // Count global active users in the last 5 minutes
-    const globalCount = await kv.zcount('live:global', fiveMinsAgo, '+inf');
+    const globalCount = await redis.zcount('live:global', fiveMinsAgo, '+inf');
 
     // Count active users on specific routes
     const [researchCount, labNotesCount, blogCount] = await Promise.all([
-      kv.zcount('live:route:/research', fiveMinsAgo, '+inf'),
-      kv.zcount('live:route:/lab-notes', fiveMinsAgo, '+inf'),
-      kv.zcount('live:route:/blog', fiveMinsAgo, '+inf'),
+      redis.zcount('live:route:/research', fiveMinsAgo, '+inf'),
+      redis.zcount('live:route:/lab-notes', fiveMinsAgo, '+inf'),
+      redis.zcount('live:route:/blog', fiveMinsAgo, '+inf'),
     ]);
 
     // Cleanup old keys (Background task)
-    kv.zremrangebyscore('live:global', '-inf', fiveMinsAgo).catch(() => {});
-    kv.zremrangebyscore('live:route:/research', '-inf', fiveMinsAgo).catch(() => {});
-    kv.zremrangebyscore('live:route:/lab-notes', '-inf', fiveMinsAgo).catch(() => {});
-    kv.zremrangebyscore('live:route:/blog', '-inf', fiveMinsAgo).catch(() => {});
+    redis.zremrangebyscore('live:global', '-inf', fiveMinsAgo).catch(() => {});
+    redis.zremrangebyscore('live:route:/research', '-inf', fiveMinsAgo).catch(() => {});
+    redis.zremrangebyscore('live:route:/lab-notes', '-inf', fiveMinsAgo).catch(() => {});
+    redis.zremrangebyscore('live:route:/blog', '-inf', fiveMinsAgo).catch(() => {});
 
     return NextResponse.json({
       globalActive: globalCount,
