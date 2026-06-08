@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
 import Link from "next/link";
 import { ArrowLeft, Cpu, Workflow, ShieldCheck, Database } from "lucide-react";
+import ReadershipTracker from "@/components/analytics/ReadershipTracker";
 
 export const revalidate = 60;
 
@@ -21,6 +22,7 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
 
   return (
     <div className="relative min-h-screen bg-[#E9EDC9] text-[#2F3E46] pt-32 pb-40 overflow-hidden selection:bg-[#D4A373] selection:text-[#FEFAE0]">
+      <ReadershipTracker articleId={research._id} articleType="research" />
       {/* Global Atmosphere */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#FAEDCD] opacity-40 rounded-full blur-[150px]" />

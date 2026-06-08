@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
 import Link from "next/link";
 import { ArrowLeft, FlaskConical, GitCommit, Settings, TerminalSquare } from "lucide-react";
+import ReadershipTracker from "@/components/analytics/ReadershipTracker";
 
 export const revalidate = 60;
 
@@ -25,6 +26,7 @@ export default async function LabNoteDetailPage({ params }: { params: Promise<{ 
 
   return (
     <div className="relative min-h-screen bg-[#FAEDCD] text-[#2F3E46] pt-32 pb-40 selection:bg-[#D4A373] selection:text-[#FEFAE0]">
+      <ReadershipTracker articleId={note._id} articleType="lab-note" />
       {/* Background visual */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#E9EDC9]/50 blur-[120px] rounded-full" />

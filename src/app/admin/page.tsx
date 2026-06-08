@@ -5,6 +5,10 @@ import { ArrowRight, Database, FileText, Settings, LayoutTemplate, Briefcase, Fl
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
+import { client } from "@/sanity/lib/client";
+import { formatDistanceToNow } from "date-fns";
+import LiveTopology from "@/components/admin/LiveTopology";
+import EditorialIntelligence from "@/components/admin/EditorialIntelligence";
 
 export const revalidate = 0;
 
@@ -86,6 +90,11 @@ export default async function AdminDashboard() {
           <Link href="/admin/studio/intent/create/template=labNote;type=labNote" className="flex items-center gap-2 bg-[#2F3E46] text-white px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-[#354F52] transition-colors border border-white/10">
             <FlaskConical className="w-4 h-4" /> New Lab Note
           </Link>
+        </div>
+
+        {/* TOP ROW: Live Observability */}
+        <div className="mb-12">
+          <LiveTopology />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -183,6 +192,11 @@ export default async function AdminDashboard() {
             </div>
 
           </div>
+        </div>
+
+        {/* BOTTOM ROW: PostHog Intelligence */}
+        <div className="mb-12">
+          <EditorialIntelligence />
         </div>
       </main>
     </div>

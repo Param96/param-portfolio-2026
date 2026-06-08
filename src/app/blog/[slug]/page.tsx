@@ -5,6 +5,7 @@ import { PortableText } from "next-sanity";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Share2, Bookmark } from "lucide-react";
 import BlogProgressBar from "@/components/BlogProgressBar";
+import ReadershipTracker from "@/components/analytics/ReadershipTracker";
 
 export const revalidate = 60;
 
@@ -31,6 +32,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   return (
     <div className="min-h-screen bg-[#F6F1E3] pt-32 pb-40 selection:bg-[#D4A373] selection:text-[#111]">
       <BlogProgressBar />
+      <ReadershipTracker articleId={article._id} articleType="blog" />
 
       {/* Background Atmosphere */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">

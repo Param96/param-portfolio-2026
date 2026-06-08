@@ -55,6 +55,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { SanityLive } from "@/sanity/lib/live";
 import { draftMode } from "next/headers";
+import { PostHogProvider } from "@/providers/PostHogProvider";
 
 export default async function RootLayout({
   children,
@@ -70,9 +71,11 @@ export default async function RootLayout({
           <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,300,400&display=swap" rel="stylesheet" />
         </head>
         <body className="min-h-screen relative font-satoshi">
-          <PublicLayoutWrapper>{children}</PublicLayoutWrapper>
-          {isEnabled && <VisualEditing />}
-          <SanityLive />
+          <PostHogProvider>
+            <PublicLayoutWrapper>{children}</PublicLayoutWrapper>
+            {isEnabled && <VisualEditing />}
+            <SanityLive />
+          </PostHogProvider>
         </body>
       </html>
     </ClerkProvider>
