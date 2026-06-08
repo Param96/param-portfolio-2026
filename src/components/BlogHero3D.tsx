@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import * as THREE from "three";
 import { ArrowDown } from "lucide-react";
 
-export default function BlogHero3D() {
+export default function BlogHero3D({ featuredArticle }: { featuredArticle?: any }) {
   return (
     <div className="relative w-full min-h-screen bg-[#F6F1E3] overflow-hidden flex flex-col md:flex-row items-center">
       
@@ -26,19 +26,30 @@ export default function BlogHero3D() {
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
         >
           <span className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#D4A373] mb-8 block">
-            Editorial Intelligence
+            {featuredArticle ? "Featured Article" : "Editorial Intelligence"}
           </span>
-          <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-light tracking-tighter text-[#2F3E46] leading-[0.9] mb-8">
-            Thought <br />
-            <span className="font-serif italic text-[#84A98C]">Systems.</span>
+          <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-light tracking-tighter text-[#2F3E46] leading-[0.9] mb-8">
+            {featuredArticle ? (
+              <>
+                {featuredArticle.title.split(' ')[0]} <br />
+                <span className="font-serif italic text-[#84A98C]">
+                  {featuredArticle.title.split(' ').slice(1).join(' ')}
+                </span>
+              </>
+            ) : (
+              <>
+                Thought <br />
+                <span className="font-serif italic text-[#84A98C]">Systems.</span>
+              </>
+            )}
           </h1>
           <p className="text-lg text-[#52796F] leading-relaxed max-w-md font-medium mb-12">
-            Research notes, engineering ideas, startup observations, and intelligent workflows.
+            {featuredArticle ? featuredArticle.summary : "Research notes, engineering ideas, startup observations, and intelligent workflows."}
           </p>
           
           <div className="inline-flex items-center gap-4 group cursor-pointer">
             <span className="text-sm font-bold uppercase tracking-widest text-[#2F3E46] opacity-50">
-              Read Articles
+              {featuredArticle ? "Read Featured" : "Read Articles"}
             </span>
             <div className="w-10 h-10 rounded-full border border-[#2F3E46]/10 flex items-center justify-center opacity-50">
               <ArrowDown className="w-4 h-4" />

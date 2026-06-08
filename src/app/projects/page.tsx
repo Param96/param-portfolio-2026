@@ -6,7 +6,8 @@ import { ALL_PROJECTS_QUERY } from "@/sanity/lib/queries";
 export const revalidate = 60;
 
 export default async function ProjectsPage() {
-  const { data: projects } = await sanityFetch({ query: ALL_PROJECTS_QUERY });
+  const { data } = await sanityFetch({ query: ALL_PROJECTS_QUERY });
+  const projects = data as any;
 
   return (
     <div className="relative min-h-screen bg-[#FEFAE0]">

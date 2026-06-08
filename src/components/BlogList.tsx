@@ -3,20 +3,45 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function BlogList({ articles }: { articles: any[] }) {
-  if (!articles || articles.length === 0) {
-    return (
-      <div className="w-full px-6 md:px-12 lg:px-24 pb-40 text-center text-[#52796F] text-xl">
-        No articles published yet.
-      </div>
-    );
-  }
+  const [activeCategory, setActiveCategory] = useState<string>("All");
+
+  const categories = ["All", ...Array.from(new Set(articles.map(a => a.category).filter(Boolean)))];
+
+  const filteredArticles = activeCategory === "All" 
+    ? articles 
+    : articles.filter(a => a.category === activeCategory);
 
   return (
     <div className="w-full px-6 md:px-12 lg:px-24 pb-40">
+      
+      {/* Filters */}
+      <div className="max-w-[1400px] mx-auto mb-16 flex flex-wrap gap-4 items-center border-b border-[#2F3E46]/10 pb-8">
+        {categories.map((cat: any) => (
+          <button
+            key={cat}
+            onClick={() => setActiveCategory(cat)}
+            className={`text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full transition-colors ${
+              activeCategory === cat 
+                ? "bg-[#2F3E46] text-[#FEFAE0]" 
+                : "bg-[#2F3E46]/5 text-[#2F3E46] hover:bg-[#2F3E46]/10"
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
       <div className="max-w-[1400px] mx-auto border-t border-[#2F3E46]/10">
-        {articles.map((article, i) => {
+        {(!filteredArticles || filteredArticles.length === 0) && (
+          <div className="py-20 text-center text-[#52796F] text-xl">
+            No articles found for this category.
+          </div>
+        )}
+
+        {filteredArticles.map((article, i) => {
           // Format date safely
           const dateStr = article.publishedAt 
             ? new Date(article.publishedAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
