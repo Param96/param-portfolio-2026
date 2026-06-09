@@ -228,7 +228,7 @@ export default function CinematicResearchPage() {
                                 </svg>
                               </div>
 
-                              <div className="grid grid-cols-2 gap-4 z-10 w-full relative">
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 z-10 w-full relative">
                                 <div className="bg-[#2F3E46] text-white p-4 rounded-xl shadow-lg border border-white/10 text-center flex flex-col justify-center items-center"><span className="text-xs font-mono">XGBoost Baseline</span></div>
                                 <div className="bg-white text-[#2F3E46] p-4 rounded-xl border border-[#84A98C]/30 text-center flex flex-col justify-center items-center"><span className="text-xs font-mono">Heuristic Filter</span></div>
                                 <div className="col-span-2 bg-[#84A98C] text-white p-4 rounded-xl shadow-lg border border-[#84A98C]/30 text-center mt-2"><span className="text-xs md:text-sm font-mono tracking-widest uppercase">Confidence Score: 98.4%</span></div>

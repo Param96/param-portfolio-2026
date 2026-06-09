@@ -275,7 +275,7 @@ export default function EvolvingSystemsList({ projects }: { projects: any[] }) {
                                 </svg>
                               </div>
 
-                              <div className="grid grid-cols-2 gap-4 relative z-10 w-full mt-auto">
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10 w-full mt-auto">
                                 {(project.techStack || ['System Layer 1', 'Orchestration', 'Validation UI', 'Data Pipeline']).slice(0, 4).map((tech: string, idx: number) => (
                                   <div key={idx} className="bg-white/80 border border-[#84A98C]/20 p-4 rounded-xl shadow-sm flex flex-col gap-2 items-center text-center hover:bg-[#FEFAE0] transition-colors cursor-default">
                                     <Layers className="w-4 h-4 text-[#84A98C]" />

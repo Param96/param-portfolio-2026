@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useMemo } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Html, Float, Line, Sphere, Sparkles, Stars, Environment } from "@react-three/drei";
 import { motion as framerMotion, useScroll, useTransform } from "framer-motion";
 import * as THREE from "three";
@@ -155,6 +155,8 @@ export default function SystemsGrowthArchitecture() {
 function Scene() {
   const groupRef = useRef<THREE.Group>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const { viewport } = useThree();
+  const scale = viewport.width < 8 ? viewport.width / 8 : 1;
 
   // Camera parallax tied to mouse
   useFrame((state) => {
@@ -172,7 +174,7 @@ function Scene() {
   });
 
   return (
-    <group ref={groupRef}>
+    <group ref={groupRef} scale={scale}>
       {/* Central Trunk */}
       <Trunk />
 
@@ -246,6 +248,10 @@ function SystemNode({ data, delay }: { data: typeof NODES[0], delay: number }) {
       <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
         <mesh
           ref={meshRef}
+          onClick={(e) => {
+            e.stopPropagation();
+            setHovered(!hovered);
+          }}
           onPointerOver={(e) => {
             e.stopPropagation();
             setHovered(true);
