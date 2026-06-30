@@ -142,23 +142,23 @@ export default function SecureCommLinkForm() {
           <Lock className="w-4 h-4 text-[#84A98C]" />
         </div>
 
-            <div className="flex flex-col gap-8">
-              <div className="flex flex-col md:flex-row gap-8">
-                <div className="flex flex-col gap-3 w-full group">
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-[#52796F] group-focus-within:text-[#D4A373] transition-colors">Identifier (Name)</label>
-                  <input type="text" value={formData.name} onChange={(e) => setFormData(prev => ({...prev, name: e.target.value}))} className="w-full bg-transparent border-b border-[#2F3E46]/20 px-0 py-3 text-[#2F3E46] focus:outline-none focus:border-[#D4A373] transition-colors font-medium placeholder:text-[#2F3E46]/30" placeholder="Jane Doe" />
+              <div className="flex flex-col gap-8">
+                <div className="flex flex-col md:flex-row gap-8">
+                  <div className="flex flex-col gap-3 w-full group">
+                    <label className="font-fraunces text-lg text-[#2F3E46]/60 group-focus-within:text-[#D4A373] transition-colors">What should I call you?</label>
+                    <input type="text" value={formData.name} onChange={(e) => setFormData(prev => ({...prev, name: e.target.value}))} className="w-full bg-transparent border-b border-[#2F3E46]/20 px-0 py-3 text-[#2F3E46] focus:outline-none focus:border-[#D4A373] transition-colors font-medium text-lg placeholder:text-[#2F3E46]/30" placeholder="Jane Doe" />
+                  </div>
+                  <div className="flex flex-col gap-3 w-full group">
+                    <label className="font-fraunces text-lg text-[#2F3E46]/60 group-focus-within:text-[#D4A373] transition-colors">Where can I reach you?</label>
+                    <input type="email" value={formData.email} onChange={(e) => setFormData(prev => ({...prev, email: e.target.value}))} className="w-full bg-transparent border-b border-[#2F3E46]/20 px-0 py-3 text-[#2F3E46] focus:outline-none focus:border-[#D4A373] transition-colors font-medium text-lg placeholder:text-[#2F3E46]/30" placeholder="jane@example.com" />
+                  </div>
                 </div>
-                <div className="flex flex-col gap-3 w-full group">
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-[#52796F] group-focus-within:text-[#D4A373] transition-colors">Return Vector (Email)</label>
-                  <input type="email" value={formData.email} onChange={(e) => setFormData(prev => ({...prev, email: e.target.value}))} className="w-full bg-transparent border-b border-[#2F3E46]/20 px-0 py-3 text-[#2F3E46] focus:outline-none focus:border-[#D4A373] transition-colors font-medium placeholder:text-[#2F3E46]/30" placeholder="jane@example.com" />
-                </div>
-              </div>
 
-              <div className="flex flex-col gap-3 group">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-[#52796F] group-focus-within:text-[#D4A373] transition-colors">Payload (Message)</label>
-                <textarea rows={4} value={formData.message} onChange={(e) => setFormData(prev => ({...prev, message: e.target.value}))} className="w-full bg-transparent border-b border-[#2F3E46]/20 px-0 py-3 text-[#2F3E46] focus:outline-none focus:border-[#D4A373] transition-colors resize-none font-medium placeholder:text-[#2F3E46]/30" placeholder="How can we collaborate?" />
+                <div className="flex flex-col gap-3 group">
+                  <label className="font-fraunces text-lg text-[#2F3E46]/60 group-focus-within:text-[#D4A373] transition-colors">What are we building?</label>
+                  <textarea rows={4} value={formData.message} onChange={(e) => setFormData(prev => ({...prev, message: e.target.value}))} className="w-full bg-transparent border-b border-[#2F3E46]/20 px-0 py-3 text-[#2F3E46] focus:outline-none focus:border-[#D4A373] transition-colors resize-none font-medium text-lg placeholder:text-[#2F3E46]/30" placeholder="Tell me about your project, idea, or just say hi..." />
+                </div>
               </div>
-            </div>
 
             {/* Drag to Submit */}
             <div className="mt-4">
