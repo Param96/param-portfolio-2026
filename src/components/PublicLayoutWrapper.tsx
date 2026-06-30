@@ -6,6 +6,7 @@ import LotusBloomNav from "./ui/LotusBloomNav";
 import Footer from "./Footer";
 import CustomCursor from "./CustomCursor";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 export default function PublicLayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -41,6 +42,16 @@ export default function PublicLayoutWrapper({ children }: { children: React.Reac
           transition={{ duration: 1, ease: "easeInOut" }}
         >
           <LotusBloomNav />
+          
+          {/* Global Fixed Nameplate */}
+          <Link href="/" className="fixed top-6 left-6 md:top-8 md:left-8 z-[100] group flex flex-col pointer-events-auto mix-blend-difference text-white">
+            <span className="font-fraunces text-lg md:text-xl font-medium tracking-tight group-hover:text-[var(--amber)] transition-colors duration-500">
+              Param Patel
+            </span>
+            <span className="font-inter text-[8px] md:text-[10px] uppercase tracking-widest mt-1 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+              AI Engineer & Builder
+            </span>
+          </Link>
           <main className="relative z-10 transition-all duration-700">{children}</main>
           <Footer />
         </motion.div>

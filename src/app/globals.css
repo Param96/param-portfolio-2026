@@ -24,6 +24,31 @@
   --color-border-line: var(--border-line);
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes shimmer {
+    0% {
+      background-position: -200% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+  
+  .animate-shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--color-amber-deep) 0%,
+      var(--color-amber) 50%,
+      var(--color-amber-deep) 100%
+    );
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: shimmer 2.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  }
+}
+
 /* ===================================================================
    GLOBAL THEME ENGINE — LIVING MEADOW
    =================================================================== */

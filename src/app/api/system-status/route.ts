@@ -31,25 +31,27 @@ export async function GET() {
       }
     }
 
-    // 3. Fetch GitHub Activity
-    // Graceful fallback if GITHUB_TOKEN is not provided
+    // 3. Fetch GitHub Activity for Param96
     let recentCommits = 42; 
     let activeBranches = 7;
     
-    if (process.env.GITHUB_TOKEN && process.env.GITHUB_USERNAME) {
-      try {
-        // Example logic: fetch recent events to count commits
-        const ghRes = await fetch(`https://api.github.com/users/${process.env.GITHUB_USERNAME}/events/public`, {
-          headers: { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` }
-        });
+    try {
+      // Fetch public events for the user without requiring a token
+      const ghRes = await fetch(`https://api.github.com/users/Param96/events/public`, {
+        next: { revalidate: 3600 } // Cache for 1 hour to prevent rate limits
+      });
+      
+      if (ghRes.ok) {
         const ghData = await ghRes.json();
         if (Array.isArray(ghData)) {
           const pushEvents = ghData.filter(event => event.type === 'PushEvent');
           recentCommits = pushEvents.reduce((acc, event) => acc + (event.payload.commits?.length || 0), 0);
         }
-      } catch (e) {
-        console.warn("GitHub API fetch failed", e);
+      } else {
+        console.warn("GitHub API fetch returned non-200 status", ghRes.status);
       }
+    } catch (e) {
+      console.warn("GitHub API fetch failed", e);
     }
 
     return NextResponse.json({

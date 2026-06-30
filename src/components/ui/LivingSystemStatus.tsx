@@ -53,7 +53,7 @@ export default function LivingSystemStatus() {
 
   return (
     <div className="fixed bottom-6 left-6 z-40 hidden md:flex flex-col items-start gap-3 font-inter text-[10px] uppercase tracking-widest">
-      <div className="bg-bg-surface/60 backdrop-blur-md border border-border-line shadow-[0_8px_32px_rgba(0,0,0,0.05)] p-4 rounded-2xl flex flex-col gap-3 transition-colors duration-1000 ease-in-out">
+      <div className="bg-[var(--bg-surface)]/80 backdrop-blur-md border border-[var(--border-line)] shadow-sm p-5 rounded-2xl flex flex-col gap-4 transition-colors duration-1000 ease-in-out">
         {/* Presence Module */}
         <div className="flex items-center gap-4 flex-row-reverse">
           <div className="flex flex-col items-start">
@@ -65,7 +65,7 @@ export default function LivingSystemStatus() {
             <span className="text-[var(--moss)] font-bold transition-colors duration-1000 ease-in-out">{presence.istTime}</span>
             <div className="relative flex h-2 w-2">
               {presence.status === 'Available' || presence.status === 'Deep Work' ? (
-                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
+                <span className={`absolute inline-flex h-full w-full rounded-full opacity-75 animate-[ping_2.5s_cubic-bezier(0,0,0.2,1)_infinite] ${
                   presence.status === 'Available' ? 'bg-[var(--moss)]' : 'bg-[var(--amber)]'
                 }`} />
               ) : null}
@@ -82,8 +82,8 @@ export default function LivingSystemStatus() {
           <div className="flex flex-col items-start gap-2 pt-3 border-t border-border-line opacity-70 hover:opacity-100 transition-all duration-500">
             <div className="flex items-center gap-2">
               <span className="text-text-main transition-colors duration-1000 ease-in-out">Node: {system.intelligence.activeNodes} Active</span>
-              <span className="text-text-dim transition-colors duration-1000 ease-in-out">/</span>
-              <span className="text-[var(--amber)] transition-colors duration-1000 ease-in-out">{system.intelligence.trainingNodes} Training</span>
+              <span className="text-text-dim transition-colors duration-1000 ease-in-out mx-1">/</span>
+              <span className="animate-shimmer">{system.intelligence.trainingNodes} Training</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-text-main transition-colors duration-1000 ease-in-out">{system.system.status}</span>

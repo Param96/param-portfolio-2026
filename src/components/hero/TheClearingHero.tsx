@@ -80,7 +80,7 @@ export default function TheClearingHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
           >
-            Co-Founder & CEO · Sanvaya
+            AI Engineer & Builder
           </motion.div>
 
           {/* Headline */}

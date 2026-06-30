@@ -94,27 +94,27 @@ export default function GodModeTerminal() {
           <div className="absolute inset-0 bg-black/40 backdrop-blur-md pointer-events-auto" onClick={toggleTerminal} />
           
           {/* Terminal Window */}
-          <div className="relative w-full max-w-3xl h-[60vh] min-h-[400px] glass-strong rounded-lg shadow-2xl overflow-hidden flex flex-col font-inter text-xs pointer-events-auto">
+          <div className="relative w-full max-w-3xl h-[60vh] min-h-[400px] bg-[#111111] border border-[#333333] rounded-lg shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col font-inter text-xs pointer-events-auto">
             {/* Header */}
-            <div className="h-8 border-b border-[var(--border-light)] flex items-center justify-between px-4 bg-[var(--bg-main)]/50 select-none">
-              <span className="text-[var(--text-muted)]">system_override.exe</span>
-              <button onClick={toggleTerminal} className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors">
+            <div className="h-8 border-b border-[#333333] flex items-center justify-between px-4 bg-[#1A1A1A] select-none">
+              <span className="text-[#888888]">system_override.exe</span>
+              <button onClick={toggleTerminal} className="text-[#888888] hover:text-[#EEEEEE] transition-colors">
                 [X]
               </button>
             </div>
 
             {/* Output */}
-            <div className="flex-1 p-4 overflow-y-auto flex flex-col gap-1 text-[var(--accent-technical)]">
+            <div className="flex-1 p-4 overflow-y-auto flex flex-col gap-1 text-[#00FF41]">
               {history.map((line, i) => (
-                <div key={i} className={line.startsWith(">") ? "text-[var(--text-primary)] mt-2" : "opacity-80"}>
+                <div key={i} className={line.startsWith(">") ? "text-[#FFFFFF] mt-2" : "opacity-80"}>
                   {line}
                 </div>
               ))}
             </div>
 
             {/* Input */}
-            <div className="h-12 border-t border-[var(--border-light)] p-4 flex items-center gap-2 text-[var(--text-primary)] bg-[var(--bg-main)]">
-              <span className="text-[var(--accent-technical)]">root@system:~#</span>
+            <div className="h-12 border-t border-[#333333] p-4 flex items-center gap-2 text-[#FFFFFF] bg-[#111111]">
+              <span className="text-[#00FF41]">root@system:~#</span>
               <input
                 ref={inputRef}
                 type="text"
@@ -123,7 +123,7 @@ export default function GodModeTerminal() {
                 onKeyDown={(e) => {
                   if (e.key === "Enter") handleCommand(input);
                 }}
-                className="flex-1 bg-transparent outline-none border-none text-[var(--text-primary)]"
+                className="flex-1 bg-transparent outline-none border-none text-[#FFFFFF]"
                 spellCheck={false}
                 autoComplete="off"
               />
