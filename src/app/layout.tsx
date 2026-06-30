@@ -1,11 +1,22 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono } from "next/font/google";
+import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import PublicLayoutWrapper from "@/components/PublicLayoutWrapper";
+import LivingSystemProvider from "@/components/global/LivingSystemProvider";
+import GodModeTerminal from "@/components/ui/GodModeTerminal";
+import LivingSystemStatus from "@/components/ui/LivingSystemStatus";
+import SynestheticAudio from "@/components/global/SynestheticAudio";
 
-const jetbrainsMono = JetBrains_Mono({
+const fraunces = Fraunces({
   subsets: ["latin"],
-  variable: "--font-jetbrains",
+  variable: "--font-fraunces",
+  display: "swap",
+  axes: ["SOFT", "WONK", "opsz"],
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -66,15 +77,22 @@ export default async function RootLayout({
   const isEnabled = draft.isEnabled;
   return (
     <ClerkProvider>
-      <html lang="en" className={`${jetbrainsMono.variable}`} suppressHydrationWarning>
+      <html lang="en" className={`${fraunces.variable} ${inter.variable}`} suppressHydrationWarning>
         <head>
-          <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,300,400&display=swap" rel="stylesheet" />
+          {/* Fonts loaded via next/font/google */}
         </head>
-        <body className="min-h-screen relative font-satoshi" suppressHydrationWarning>
+        <body className="min-h-screen relative font-inter" suppressHydrationWarning>
           <PostHogProvider>
+            <LivingSystemProvider />
+            <GodModeTerminal />
+            <LivingSystemStatus />
             <PublicLayoutWrapper>{children}</PublicLayoutWrapper>
-            {isEnabled && <VisualEditing />}
-            <SanityLive />
+            {isEnabled && (
+              <>
+                <VisualEditing />
+                <SanityLive />
+              </>
+            )}
           </PostHogProvider>
         </body>
       </html>

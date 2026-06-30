@@ -36,7 +36,7 @@ export default function LabNotesList({ notes }: { notes: any[] }) {
           >
             <div className={`absolute ${dotPosition} top-10 w-4 h-4 rounded-full z-10 ${dotColor}`} />
             
-            <span className={`font-jetbrains text-[10px] ${dateColor}`}>
+            <span className={`font-inter text-[10px] ${dateColor}`}>
               {new Date(note.publishedAt || Date.now()).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).toUpperCase()}
             </span>
             <Link

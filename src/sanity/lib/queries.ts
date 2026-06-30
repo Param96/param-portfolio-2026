@@ -97,6 +97,17 @@ export const PROJECT_BY_SLUG_QUERY = groq`
   }
 `;
 
+export const REPOSITORY_GALAXY_QUERY = groq`
+  *[_type == "project"] {
+    _id,
+    title,
+    "slug": slug.current,
+    status,
+    techStack,
+    category
+  }
+`;
+
 // Lab Notes
 export const ALL_LAB_NOTES_QUERY = groq`
   *[_type == "labNote"] | order(publishedAt desc) {

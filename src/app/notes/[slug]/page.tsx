@@ -84,7 +84,7 @@ export default async function LabNoteDetailPage({ params }: { params: Promise<{ 
         </header>
 
         {/* Technical Data Context (Simulated UI) */}
-        <div className="bg-[#FEFAE0] border border-[#354F52]/10 rounded-md p-6 mb-16 shadow-inner font-jetbrains text-xs text-[#52796F]">
+        <div className="bg-[#FEFAE0] border border-[#354F52]/10 rounded-md p-6 mb-16 shadow-inner font-inter text-xs text-[#52796F]">
           <div className="flex items-center justify-between mb-4 border-b border-[#354F52]/5 pb-2">
             <div className="flex items-center gap-2 text-[#354F52]">
               <TerminalSquare className="w-4 h-4" /> Context Parameters

@@ -10,7 +10,7 @@ export default function EvolvingSystemsList({ projects }: { projects: any[] }) {
 
   if (!projects || projects.length === 0) {
     return (
-      <div className="w-full text-center text-[#52796F] text-xl py-32 font-mono">
+      <div className="w-full text-center text-[#52796F] text-xl py-32 font-inter uppercase tracking-widest text-[10px]">
         System offline. No active nodes found.
       </div>
     );
@@ -32,7 +32,7 @@ export default function EvolvingSystemsList({ projects }: { projects: any[] }) {
       <div className="flex flex-col gap-8 w-full">
         <div className="flex items-center gap-3">
           <Server className="w-5 h-5 text-[#84A98C]" />
-          <span className="text-xs font-mono uppercase tracking-widest text-[#52796F]">System Access Protocol</span>
+          <span className="text-xs font-inter uppercase tracking-widest text-[10px] uppercase tracking-widest text-[#52796F]">System Access Protocol</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -43,11 +43,11 @@ export default function EvolvingSystemsList({ projects }: { projects: any[] }) {
             <div className="flex items-center justify-between mb-8 relative z-10">
               <div className="flex items-center gap-3">
                 <Globe className="w-5 h-5 text-[#84A98C]" />
-                <span className="font-mono text-xs uppercase tracking-widest text-[#2F3E46] font-bold">Production</span>
+                <span className="font-inter uppercase tracking-widest text-[10px] text-xs uppercase tracking-widest text-[#2F3E46] font-bold">Production</span>
               </div>
               <div className="flex items-center gap-2 px-3 py-1 bg-white border border-[#84A98C]/20 rounded-full">
                 <div className="w-1.5 h-1.5 bg-[#84A98C] rounded-full animate-pulse" />
-                <span className="text-[9px] font-mono uppercase text-[#84A98C] tracking-wider">Live</span>
+                <span className="text-[9px] font-inter uppercase tracking-widest text-[10px] uppercase text-[#84A98C] tracking-wider">Live</span>
               </div>
             </div>
 
@@ -60,12 +60,12 @@ export default function EvolvingSystemsList({ projects }: { projects: any[] }) {
                   onClick={(e) => { e.stopPropagation(); posthog.capture('system_access_production', { project: project.title }); }}
                   className="w-full flex items-center justify-between px-6 py-4 bg-[#2F3E46] text-[#FEFAE0] rounded-xl hover:bg-[#354F52] hover:shadow-lg hover:shadow-[#84A98C]/20 transition-all group/btn"
                 >
-                  <span className="font-mono text-xs uppercase tracking-widest">Initialize System</span>
+                  <span className="font-inter uppercase tracking-widest text-[10px] text-xs uppercase tracking-widest">Initialize System</span>
                   <Rocket className="w-4 h-4 group-hover/btn:-translate-y-1 group-hover/btn:translate-x-1 transition-transform" />
                 </a>
               ) : (
                 <div className="w-full flex items-center justify-between px-6 py-4 bg-[#E9EDC9] border border-[#84A98C]/20 text-[#52796F] rounded-xl opacity-70 cursor-not-allowed">
-                  <span className="font-mono text-xs uppercase tracking-widest">Awaiting Deployment</span>
+                  <span className="font-inter uppercase tracking-widest text-[10px] text-xs uppercase tracking-widest">Awaiting Deployment</span>
                   <ShieldCheck className="w-4 h-4" />
                 </div>
               )}
@@ -79,11 +79,11 @@ export default function EvolvingSystemsList({ projects }: { projects: any[] }) {
             <div className="flex items-center justify-between mb-8 relative z-10">
               <div className="flex items-center gap-3">
                 <Github className="w-5 h-5 text-[#D4A373]" />
-                <span className="font-mono text-xs uppercase tracking-widest text-[#2F3E46] font-bold">Source Code</span>
+                <span className="font-inter uppercase tracking-widest text-[10px] text-xs uppercase tracking-widest text-[#2F3E46] font-bold">Source Code</span>
               </div>
               <div className="flex items-center gap-2 px-3 py-1 bg-white border border-[#D4A373]/20 rounded-full">
                 <Database className="w-3 h-3 text-[#D4A373]" />
-                <span className="text-[9px] font-mono uppercase text-[#D4A373] tracking-wider">Public Repository</span>
+                <span className="text-[9px] font-inter uppercase tracking-widest text-[10px] uppercase text-[#D4A373] tracking-wider">Public Repository</span>
               </div>
             </div>
 
@@ -96,12 +96,12 @@ export default function EvolvingSystemsList({ projects }: { projects: any[] }) {
                   onClick={(e) => { e.stopPropagation(); posthog.capture('system_access_github', { project: project.title }); }}
                   className="w-full flex items-center justify-between px-6 py-4 bg-white border border-[#D4A373]/30 text-[#2F3E46] rounded-xl hover:bg-[#FEFAE0] hover:border-[#D4A373]/50 transition-all group/btn"
                 >
-                  <span className="font-mono text-xs uppercase tracking-widest">Access Repository</span>
+                  <span className="font-inter uppercase tracking-widest text-[10px] text-xs uppercase tracking-widest">Access Repository</span>
                   <Github className="w-4 h-4 group-hover/btn:scale-110 transition-transform text-[#D4A373]" />
                 </a>
               ) : (
                 <div className="w-full flex items-center justify-between px-6 py-4 bg-white border border-[#D4A373]/10 text-[#52796F] rounded-xl opacity-70 cursor-not-allowed">
-                  <span className="font-mono text-xs uppercase tracking-widest">Classified Access</span>
+                  <span className="font-inter uppercase tracking-widest text-[10px] text-xs uppercase tracking-widest">Classified Access</span>
                   <ShieldCheck className="w-4 h-4" />
                 </div>
               )}
@@ -138,7 +138,7 @@ export default function EvolvingSystemsList({ projects }: { projects: any[] }) {
               Active <span className="font-serif italic text-[#84A98C]">Infrastructure.</span>
             </h2>
           </div>
-          <div className="flex items-center gap-4 text-[#52796F] text-xs font-mono uppercase tracking-widest">
+          <div className="flex items-center gap-4 text-[#52796F] text-xs font-inter uppercase tracking-widest text-[10px] uppercase tracking-widest">
             <span className="flex items-center gap-2"><Cpu className="w-4 h-4 text-[#84A98C]"/> Runtime: OK</span>
             <span className="flex items-center gap-2"><Database className="w-4 h-4 text-[#84A98C]"/> Data: SYNCHED</span>
           </div>
@@ -172,7 +172,7 @@ export default function EvolvingSystemsList({ projects }: { projects: any[] }) {
 
                   {/* Content Side */}
                   <div className={`w-full md:w-1/2 flex flex-col ${isEven ? 'md:text-right md:items-end' : 'md:text-left md:items-start'}`}>
-                    <span className={`text-[10px] uppercase tracking-[0.3em] ${deploymentState.color} mb-4 block font-bold ${deploymentState.bg} px-3 py-1 border ${deploymentState.border} rounded-full w-fit font-jetbrains transition-colors ${isActive ? 'bg-[#FEFAE0]' : 'group-hover:bg-[#FEFAE0]'}`}>
+                    <span className={`text-[10px] uppercase tracking-[0.3em] ${deploymentState.color} mb-4 block font-bold ${deploymentState.bg} px-3 py-1 border ${deploymentState.border} rounded-full w-fit font-inter transition-colors ${isActive ? 'bg-[#FEFAE0]' : 'group-hover:bg-[#FEFAE0]'}`}>
                       {deploymentState.status}
                     </span>
                     <h3 className={`text-4xl md:text-5xl font-light mb-6 transition-colors ${isActive ? 'text-[#84A98C]' : 'text-[#2F3E46] group-hover:text-[#84A98C]'}`}>
@@ -181,7 +181,7 @@ export default function EvolvingSystemsList({ projects }: { projects: any[] }) {
                     
                     <div className={`flex items-center gap-2 mb-6 transition-opacity duration-300 ${isEven ? 'md:flex-row-reverse' : ''} ${isActive ? 'opacity-100' : 'opacity-60 group-hover:opacity-100'}`}>
                       {isActive ? <ChevronUp className="w-5 h-5 text-[#D4A373]" /> : <ChevronDown className="w-5 h-5 text-[#D4A373]" />}
-                      <span className="text-xs font-mono uppercase tracking-widest text-[#D4A373]">
+                      <span className="text-xs font-inter uppercase tracking-widest text-[10px] uppercase tracking-widest text-[#D4A373]">
                         {isActive ? 'Collapse Diagnostics' : 'Expand System Architecture'}
                       </span>
                     </div>
@@ -205,7 +205,7 @@ export default function EvolvingSystemsList({ projects }: { projects: any[] }) {
                            <div className="absolute bottom-0 left-0 w-40 h-40 bg-[#84A98C]/10 blur-[60px] rounded-full" />
                            <Network className="w-8 h-8 text-[#84A98C]/40 mb-auto" />
                            <div>
-                             <div className="text-[#52796F] font-mono text-[10px] uppercase tracking-widest mb-2">System Schema Output</div>
+                             <div className="text-[#52796F] font-inter uppercase tracking-widest text-[10px] text-[10px] uppercase tracking-widest mb-2">System Schema Output</div>
                              <div className="h-1 w-24 bg-[#84A98C]/10 rounded-full mb-2 overflow-hidden">
                                <motion.div 
                                  initial={{ x: "-100%" }} 
@@ -248,7 +248,7 @@ export default function EvolvingSystemsList({ projects }: { projects: any[] }) {
                           <div className="flex flex-col h-full">
                             <div className="flex items-center gap-3 mb-8">
                               <LayoutGrid className="w-5 h-5 text-[#84A98C]" />
-                              <span className="text-xs font-mono uppercase tracking-widest text-[#52796F]">System Architecture</span>
+                              <span className="text-xs font-inter uppercase tracking-widest text-[10px] uppercase tracking-widest text-[#52796F]">System Architecture</span>
                             </div>
 
                             <div className="flex-1 relative border border-[#84A98C]/20 rounded-2xl bg-white/50 backdrop-blur-sm p-8 shadow-inner overflow-hidden flex flex-col justify-between min-h-[300px]">
@@ -279,7 +279,7 @@ export default function EvolvingSystemsList({ projects }: { projects: any[] }) {
                                 {(project.techStack || ['System Layer 1', 'Orchestration', 'Validation UI', 'Data Pipeline']).slice(0, 4).map((tech: string, idx: number) => (
                                   <div key={idx} className="bg-white/80 border border-[#84A98C]/20 p-4 rounded-xl shadow-sm flex flex-col gap-2 items-center text-center hover:bg-[#FEFAE0] transition-colors cursor-default">
                                     <Layers className="w-4 h-4 text-[#84A98C]" />
-                                    <span className="text-[10px] font-mono text-[#2F3E46] uppercase tracking-wider">{tech}</span>
+                                    <span className="text-[10px] font-inter uppercase tracking-widest text-[10px] text-[#2F3E46] uppercase tracking-wider">{tech}</span>
                                   </div>
                                 ))}
                               </div>

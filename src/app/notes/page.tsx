@@ -1,7 +1,7 @@
 import { sanityFetch } from "@/sanity/lib/live";
 import { ALL_LAB_NOTES_QUERY } from "@/sanity/lib/queries";
-import LabNotesHero3D from "@/components/LabNotesHero3D";
 import LabNotesList from "@/components/LabNotesList";
+import { LabNotesHero } from "@/components/hero/meadow/ClientHeroes";
 
 export const revalidate = 60;
 
@@ -10,16 +10,16 @@ export default async function LabNotesPage() {
   const labNotes = data as any[];
 
   return (
-    <div className="relative min-h-screen bg-[#FAEDCD]">
+    <div className="relative min-h-screen bg-[var(--bg-page)] transition-colors duration-1000 ease-in-out">
       
       {/* 3D Immersive Hero */}
-      <LabNotesHero3D />
+      <LabNotesHero />
 
       {/* Raw / Unfinished Feed */}
       <section className="max-w-3xl mx-auto px-6 flex flex-col gap-24 relative mt-20 pb-40">
         
         {/* Background connector line */}
-        <div className="absolute left-[24px] md:left-1/2 top-0 bottom-0 w-[1px] bg-[#354F52]/10 md:-translate-x-1/2 pointer-events-none" />
+        <div className="absolute left-[24px] md:left-1/2 top-0 bottom-0 w-[1px] bg-text-body/10 md:-translate-x-1/2 pointer-events-none transition-colors duration-1000 ease-in-out" />
 
         <LabNotesList notes={labNotes} />
         

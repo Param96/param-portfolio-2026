@@ -115,7 +115,7 @@ export default function Navbar() {
                     <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${scrolled ? "bg-[#D4A373]" : "bg-[#84A98C]"}`}></span>
                     <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${scrolled ? "bg-[#D4A373]" : "bg-[#52796F]"}`}></span>
                   </span>
-                  <span className={`text-[9px] font-jetbrains uppercase tracking-[0.25em] transition-colors duration-500 ${scrolled ? "text-[#D4A373]" : "text-[#52796F]"}`}>
+                  <span className={`text-[9px] font-inter uppercase tracking-[0.25em] transition-colors duration-500 ${scrolled ? "text-[#D4A373]" : "text-[#52796F]"}`}>
                     Systems
                   </span>
                 </div>

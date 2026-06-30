@@ -1,111 +1,105 @@
 "use client";
-import { motion } from "framer-motion";
-import { usePathname } from "next/navigation";
-import { useMemo } from "react";
+import { useRef, useState, useEffect } from "react";
+import { useFrame } from "@react-three/fiber";
+import * as THREE from "three";
+import { useLivingSystemStore } from "@/lib/store";
+import { useMousePhysics } from "@/hooks/useMousePhysics";
+import { useThemeColors } from "@/hooks/useThemeColors";
+
+import AwakeningPlatform from "./hero/awakening/AwakeningPlatform";
+import IntelligenceCore from "./hero/awakening/IntelligenceCore";
+import KnowledgeTree from "./hero/awakening/KnowledgeTree";
+import HolographicArchives from "./hero/awakening/HolographicArchives";
+import LivingEcosystem from "./hero/awakening/LivingEcosystem";
 
 export default function AnimatedBackground() {
-  const pathname = usePathname();
+  const { timeOfDayTheme, cinematicPhase, hasSeenCinematic } = useLivingSystemStore();
+  const themeColors = useThemeColors();
+  const groupRef = useRef<THREE.Group>(null);
+  const cameraTarget = useRef(new THREE.Vector3(0, 0, 15)); // Start far back
+  const [mounted, setMounted] = useState(false);
 
-  // Define route-specific palettes
-  const palette = useMemo(() => {
-    if (pathname === "/projects") {
-      return {
-        blob1: "#D4A373", // Light Bronze
-        blob2: "#FAEDCD", // Papaya Whip
-        blob3: "#CCD5AE", // Tea Green
-        base: "#FEFAE0"
-      };
+  useEffect(() => setMounted(true), []);
+
+  const isLight = timeOfDayTheme === 'dawn' || timeOfDayTheme === 'day';
+
+  useFrame((state, delta) => {
+    if (!mounted) return;
+
+    // Determine if cinematic is complete
+    const isComplete = cinematicPhase === 7 || (hasSeenCinematic && cinematicPhase === 0);
+
+    // ── CAMERA ORCHESTRATION ──
+    if (!isComplete) {
+      // Phase 1 (0-8s): Big Bang - Camera far away
+      if (cinematicPhase === 1) {
+        cameraTarget.current.set(0, 0, 25);
+      }
+      // Phase 2-5: Slowly drift forward
+      else if (cinematicPhase > 1 && cinematicPhase <= 5) {
+        cameraTarget.current.z = THREE.MathUtils.damp(cameraTarget.current.z, 12, 0.2, delta);
+        cameraTarget.current.y = THREE.MathUtils.damp(cameraTarget.current.y, 2, 0.2, delta);
+      }
+      // Phase 6: Core inspection (Intelligence)
+      else if (cinematicPhase === 6) {
+        cameraTarget.current.z = THREE.MathUtils.damp(cameraTarget.current.z, 8, 0.5, delta);
+      }
+      // Phase 7: The Reveal (Push through into the light)
+      else if (cinematicPhase === 7) {
+        cameraTarget.current.z = THREE.MathUtils.damp(cameraTarget.current.z, 0.5, 1.5, delta); // Push into the core
+        cameraTarget.current.y = THREE.MathUtils.damp(cameraTarget.current.y, 2, 1.5, delta);
+      }
+      
+      // Apply camera position
+      state.camera.position.lerp(cameraTarget.current, 0.02);
+      state.camera.lookAt(0, 2, 0); // Always look at the core
+    } else {
+      // Cinematic is over, allow mouse-driven parallax
+      const mouseState = useMousePhysics.getState();
+      const newTargetX = THREE.MathUtils.damp(mouseState.target.x, mouseState.mouse.x, 3, delta);
+      const newTargetY = THREE.MathUtils.damp(mouseState.target.y, mouseState.mouse.y, 3, delta);
+      
+      useMousePhysics.setState({ target: { x: newTargetX, y: newTargetY } });
+
+      if (groupRef.current) {
+        const rotX = newTargetY * 0.05; 
+        const rotY = newTargetX * 0.05; 
+        groupRef.current.rotation.x = THREE.MathUtils.damp(groupRef.current.rotation.x, rotX, 4, delta);
+        groupRef.current.rotation.y = THREE.MathUtils.damp(groupRef.current.rotation.y, rotY, 4, delta);
+      }
+
+      // Camera gently settles to default viewing distance (as if we passed through to the other side)
+      state.camera.position.lerp(new THREE.Vector3(0, 1, 10), 0.02);
+      state.camera.lookAt(0, 0, 0);
     }
-    if (pathname === "/research") {
-      return {
-        blob1: "#354F52", // Dark Slate Grey
-        blob2: "#52796F", // Deep Teal
-        blob3: "#84A98C", // Muted Teal
-        base: "#FAEDCD"
-      };
-    }
-    if (pathname === "/blog") {
-      return {
-        blob1: "#2F3E46", // Charcoal Blue
-        blob2: "#CCD5AE", // Tea Green
-        blob3: "#84A98C", // Muted Teal
-        base: "#FEFAE0"
-      };
-    }
-    if (pathname === "/lab-notes") {
-      return {
-        blob1: "#E9EDC9", // Beige
-        blob2: "#2F3E46", // Charcoal Blue
-        blob3: "#52796F", // Deep Teal
-        base: "#FAEDCD"
-      };
-    }
-    // Default / Homepage
-    return {
-      blob1: "#D4A373", // Light Bronze
-      blob2: "#84A98C", // Muted Teal
-      blob3: "#CCD5AE", // Tea Green
-      base: "#FEFAE0"
-    };
-  }, [pathname]);
+  });
 
   return (
-    <motion.div 
-      className="fixed inset-0 overflow-hidden pointer-events-none z-[-1]"
-      animate={{ backgroundColor: palette.base }}
-      transition={{ duration: 1.5, ease: "easeInOut" }}
-    >
-      {/* Blob 1 */}
-      <motion.div
-        className="absolute -top-[20%] -left-[10%] w-[50vw] h-[50vw] rounded-full blur-[120px] opacity-30 mix-blend-multiply"
-        animate={{
-          background: `radial-gradient(circle, ${palette.blob1} 0%, transparent 70%)`,
-          x: [0, 50, -20, 0],
-          y: [0, -30, 40, 0],
-          scale: [1, 1.1, 0.9, 1],
-        }}
-        transition={{
-          background: { duration: 1.5, ease: "easeInOut" },
-          x: { duration: 40, repeat: Infinity, ease: "easeInOut" },
-          y: { duration: 40, repeat: Infinity, ease: "easeInOut" },
-          scale: { duration: 40, repeat: Infinity, ease: "easeInOut" },
-        }}
+    <group ref={groupRef}>
+      <ambientLight intensity={isLight ? 0.8 : 0.2} color={themeColors.bgMain} />
+      
+      {/* Primary Key Light */}
+      <directionalLight 
+        position={[10, 20, 10]} 
+        intensity={isLight ? 2 : 0.8} 
+        color={themeColors.accentTechnical} 
+        castShadow
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
+      />
+      
+      {/* Secondary Fill Light */}
+      <directionalLight 
+        position={[-10, 10, -10]} 
+        intensity={isLight ? 1 : 0.4} 
+        color={themeColors.accentGlow} 
       />
 
-      {/* Blob 2 */}
-      <motion.div
-        className="absolute -bottom-[20%] -right-[10%] w-[60vw] h-[60vw] rounded-full blur-[140px] opacity-30 mix-blend-multiply"
-        animate={{
-          background: `radial-gradient(circle, ${palette.blob2} 0%, transparent 70%)`,
-          x: [0, -60, 30, 0],
-          y: [0, 40, -50, 0],
-          scale: [1, 0.9, 1.2, 1],
-        }}
-        transition={{
-          background: { duration: 1.5, ease: "easeInOut" },
-          x: { duration: 50, repeat: Infinity, ease: "easeInOut" },
-          y: { duration: 50, repeat: Infinity, ease: "easeInOut" },
-          scale: { duration: 50, repeat: Infinity, ease: "easeInOut" },
-        }}
-      />
-
-      {/* Blob 3 */}
-      <motion.div
-        className="absolute top-[30%] left-[30%] w-[40vw] h-[40vw] rounded-full blur-[100px] opacity-20 mix-blend-multiply"
-        animate={{
-          background: `radial-gradient(circle, ${palette.blob3} 0%, transparent 70%)`,
-          x: [0, 100, -80, 0],
-          y: [0, 100, -40, 0],
-        }}
-        transition={{
-          background: { duration: 1.5, ease: "easeInOut" },
-          x: { duration: 60, repeat: Infinity, ease: "easeInOut" },
-          y: { duration: 60, repeat: Infinity, ease: "easeInOut" },
-        }}
-      />
-
-      {/* Heavy Noise Overlay */}
-      <div className="absolute inset-0 noise-overlay opacity-40 mix-blend-overlay" />
-    </motion.div>
+      <AwakeningPlatform />
+      <IntelligenceCore />
+      <KnowledgeTree />
+      <HolographicArchives />
+      <LivingEcosystem />
+    </group>
   );
 }

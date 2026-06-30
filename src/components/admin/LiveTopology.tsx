@@ -40,7 +40,7 @@ export default function LiveTopology() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4A373] opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#D4A373]"></span>
           </span>
-          <span className="text-[10px] text-[#D4A373] uppercase tracking-widest font-mono">Syncing Edge</span>
+          <span className="text-[10px] text-[#D4A373] uppercase tracking-widest font-inter uppercase tracking-widest text-[10px]">Syncing Edge</span>
         </div>
       </div>
 

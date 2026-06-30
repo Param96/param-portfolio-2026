@@ -7,9 +7,9 @@ import {
   ArrowRight,
 } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
-import SectionHeader from "@/components/SectionHeader";
 import GlowCard from "@/components/GlowCard";
 import TerminalBlock from "@/components/TerminalBlock";
+import { AILabHero } from "@/components/hero/meadow/ClientHeroes";
 
 export const metadata = {
   title: "AI Lab",
@@ -70,15 +70,9 @@ const labModules = [
 
 export default function AILabPage() {
   return (
-    <div className="min-h-screen pt-28 pb-20">
-      <div className="max-w-6xl mx-auto px-6">
-        <AnimatedSection>
-          <SectionHeader
-            label="AI Lab"
-            title="Engineering Lab"
-            subtitle="A live engineering environment for AI experiments, model benchmarks, and system monitoring."
-          />
-        </AnimatedSection>
+    <div className="min-h-screen transition-colors duration-1000 ease-in-out bg-[var(--bg-page)]">
+      <AILabHero />
+      <div className="max-w-6xl mx-auto px-6 pt-24 pb-20 relative z-10">
 
         {/* Live Terminal */}
         <AnimatedSection delay={100}>
@@ -95,7 +89,7 @@ export default function AILabPage() {
 
         {/* Lab Modules Grid */}
         <AnimatedSection delay={200}>
-          <h3 className="text-xl font-bold text-white mb-6">Lab Modules</h3>
+          <h3 className="text-xl font-bold text-[var(--text-primary)] mb-6">Lab Modules</h3>
         </AnimatedSection>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           {labModules.map((module, index) => {
@@ -105,18 +99,18 @@ export default function AILabPage() {
                 <GlowCard glowColor={module.glowColor} className="p-6 h-full">
                   <div className="flex items-start gap-4">
                     <div className="p-3 rounded-xl glass shrink-0">
-                      <Icon className="w-6 h-6 text-slate-400" />
+                      <Icon className="w-6 h-6 text-[var(--text-muted)]" />
                     </div>
                     <div>
                       <div className="flex items-center gap-3 mb-2">
-                        <h4 className="text-lg font-semibold text-white">
+                        <h4 className="text-lg font-semibold text-[var(--text-primary)]">
                           {module.title}
                         </h4>
-                        <span className="px-2 py-0.5 rounded-full bg-slate-800 text-slate-500 text-xs border border-slate-700">
+                        <span className="px-2 py-0.5 rounded-full bg-[var(--surface-sunken)] text-[var(--text-secondary)] text-xs border border-[var(--border-subtle)]">
                           {module.status}
                         </span>
                       </div>
-                      <p className="text-sm text-slate-400 leading-relaxed">
+                      <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
                         {module.description}
                       </p>
                     </div>
@@ -130,10 +124,10 @@ export default function AILabPage() {
         {/* Engineering Philosophy */}
         <AnimatedSection delay={600}>
           <GlowCard glowColor="indigo" className="p-8 text-center">
-            <h3 className="text-xl font-bold text-white mb-3">
+            <h3 className="text-xl font-bold text-[var(--text-primary)] mb-3">
               Full Lab Access Coming Soon
             </h3>
-            <p className="text-slate-400 max-w-lg mx-auto mb-6">
+            <p className="text-[var(--text-secondary)] max-w-lg mx-auto mb-6">
               The complete AI Lab with interactive terminal, model playground,
               and live benchmarks is under active development. In the meantime,
               explore my projects and research.
@@ -141,14 +135,14 @@ export default function AILabPage() {
             <div className="flex items-center justify-center gap-4">
               <Link
                 href="/projects"
-                className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl glass text-slate-300 hover:text-white hover:bg-white/[0.06] transition-all"
+                className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl glass text-[var(--text-primary)] hover:bg-[var(--surface-raised)] transition-all"
               >
                 View Projects
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
                 href="/research"
-                className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl glass text-slate-300 hover:text-white hover:bg-white/[0.06] transition-all"
+                className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl glass text-[var(--text-primary)] hover:bg-[var(--surface-raised)] transition-all"
               >
                 View Research
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -161,7 +155,7 @@ export default function AILabPage() {
           <div className="mt-16 text-center">
             <Link
               href="/"
-              className="text-sm text-slate-500 hover:text-slate-300 transition-colors"
+              className="text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
             >
               ← Back to Home
             </Link>

@@ -31,7 +31,7 @@ export default function AILabSection() {
                 </div>
              </div>
 
-             <div className="bg-[#1C1C1C] rounded-xl p-5 font-mono text-sm text-[#A3B18A] overflow-x-auto relative">
+             <div className="bg-[#1C1C1C] rounded-xl p-5 font-inter uppercase tracking-widest text-[10px] text-sm text-[#A3B18A] overflow-x-auto relative">
                 <div className="absolute top-0 bottom-0 left-4 w-[1px] bg-white/10" />
                 <motion.pre 
                   initial={{ opacity: 0.5 }}

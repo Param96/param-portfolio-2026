@@ -39,7 +39,7 @@ export default async function AdminDashboard() {
   const recentActivity = rawRecent as any;
 
   return (
-    <div className="min-h-screen bg-[#1A1F22] text-[#E0E0E0] font-sans selection:bg-[#D4A373] selection:text-[#111]">
+    <div className="min-h-screen bg-[#1A1F22] text-[#E0E0E0] font-inter selection:bg-[#D4A373] selection:text-[#111]">
       {/* ── TOP NAV ── */}
       <header className="fixed top-0 w-full z-50 border-b border-white/5 bg-[#1A1F22]/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">

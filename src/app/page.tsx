@@ -2,7 +2,8 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { HOMEPAGE_QUERY } from "@/sanity/lib/queries";
 import ModuleRenderer from "@/components/cms/ModuleRenderer";
 
-import Hero from "@/components/Hero";
+import TheClearingHero from "@/components/hero/TheClearingHero";
+import FounderIntro from "@/components/FounderIntro";
 import CurrentExperiments from "@/components/CurrentExperiments";
 import SystemsGrowthArchitecture from "@/components/SystemsGrowthArchitecture";
 import ResearchSystems from "@/components/ResearchSystems";
@@ -27,22 +28,25 @@ export default async function Home() {
   // Fallback to the original hardcoded layout if no CMS data exists
   return (
     <div className="relative">
-      {/* SECTION 1: Cinematic Hero Environment */}
-      <Hero />
+      {/* HERO SECTION */}
+      <TheClearingHero />
       
-      {/* SECTION 2: Current Experiments */}
+      {/* SECTION 2: Founder Intro */}
+      <FounderIntro />
+      
+      {/* SECTION 3: Current Experiments */}
       <CurrentExperiments />
-      
-      {/* SECTION 3: Systems Growth Architecture & Certifications */}
+
+      {/* SECTION 4: Systems Growth Architecture & Certifications */}
       <SystemsGrowthArchitecture />
       
-      {/* SECTION 4: Research & Systems */}
+      {/* SECTION 6: Research & Systems */}
       <ResearchSystems />
       
-      {/* SECTION 5: Founder & E-Cell */}
+      {/* SECTION 7: Founder & E-Cell */}
       <FounderECell />
       
-      {/* SECTION 6: Lab Notes */}
+      {/* SECTION 8: Lab Notes */}
       <LabNotesPreview />
     </div>
   );

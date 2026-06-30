@@ -30,43 +30,46 @@ export default function SystemsGrowthArchitecture() {
   return (
     <section 
       ref={containerRef}
-      className="relative w-full bg-[#2F3E46] overflow-hidden"
+      className="relative w-full bg-bg-page overflow-hidden transition-colors duration-1000 ease-in-out"
     >
       {/* ── ATMOSPHERIC FOG BACKGROUND ── */}
       <framerMotion.div 
         style={{ y: fogY }}
         className="absolute inset-0 pointer-events-none z-0"
       >
-        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[#354F52]/40 rounded-full blur-[120px] mix-blend-screen" />
-        <div className="absolute bottom-1/4 right-1/4 w-[800px] h-[800px] bg-[#52796F]/20 rounded-full blur-[150px] mix-blend-screen" />
+        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-text-body/40 rounded-full blur-[120px] mix-blend-screen transition-colors duration-1000 ease-in-out" />
+        <div className="absolute bottom-1/4 right-1/4 w-[800px] h-[800px] bg-accent-technical/20 rounded-full blur-[150px] mix-blend-screen transition-colors duration-1000 ease-in-out" />
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] mix-blend-overlay" />
       </framerMotion.div>
 
-      {/* ── HEADER ── */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-32 text-center" data-cursor="text">
-        <framerMotion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight text-[#FEFAE0] mb-6"
-        >
-          Systems Growth <br />
-          <span className="font-bold italic text-[#D4A373]">Architecture</span>
-        </framerMotion.h2>
-        <framerMotion.p 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="text-[#84A98C] text-sm tracking-[0.2em] uppercase font-bold"
-        >
-          Evolving Intelligence Ecosystem
-        </framerMotion.p>
-      </div>
+      {/* ── 3D TREE SECTION (Header + Canvas) ── */}
+      <div className="relative z-10 w-full flex flex-col bg-[#2F3E46] pt-24 pb-10">
+        {/* ── HEADER ── */}
+        <div className="relative z-20 max-w-7xl mx-auto px-6 text-center" data-cursor="text">
+          <framerMotion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight text-white mb-6 drop-shadow-md"
+          >
+            Systems Growth <br />
+            <span className="font-bold italic text-[var(--amber)]">Architecture</span>
+          </framerMotion.h2>
+          <framerMotion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="text-[#00FFCC] text-sm tracking-[0.2em] uppercase font-bold drop-shadow-md"
+          >
+            Evolving Intelligence Ecosystem
+          </framerMotion.p>
+        </div>
 
-      {/* ── 3D TREE CANVAS ── */}
-      <div className="relative z-10 w-full h-[100vh] min-h-[800px] mt-10">
+        {/* ── CANVAS ── */}
+        <div className="w-full h-[80vh] min-h-[600px] mt-10">
+
         <Canvas 
           camera={{ position: [0, 0, 14], fov: 45 }}
           className="w-full h-full"
@@ -83,15 +86,16 @@ export default function SystemsGrowthArchitecture() {
           {/* Interactive Tree Scene */}
           <Scene />
         </Canvas>
+        </div>
       </div>
 
       {/* ── CERTIFICATIONS ENVIRONMENT (2D) ── */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 pb-32 mt-20">
         <div className="text-center mb-20" data-cursor="text">
-          <h3 className="text-3xl md:text-5xl font-light tracking-tight text-[#FEFAE0] mb-4">
+          <h3 className="text-3xl md:text-5xl font-light tracking-tight text-text-main mb-4 transition-colors duration-1000 ease-in-out">
             Learning Infrastructure
           </h3>
-          <p className="text-[#84A98C] text-sm tracking-[0.2em] uppercase font-bold">
+          <p className="text-[var(--moss)] text-sm tracking-[0.2em] uppercase font-bold">
             Technical Foundations & Certifications
           </p>
         </div>
@@ -104,17 +108,17 @@ export default function SystemsGrowthArchitecture() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             data-cursor="system"
-            className="group relative bg-[#354F52]/30 border border-[#52796F]/30 p-10 lg:p-14 rounded-3xl overflow-hidden"
+            className="group relative bg-text-body/30 border border-[#52796F]/30 p-10 lg:p-14 rounded-3xl overflow-hidden transition-colors duration-1000 ease-in-out"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-[#FEFAE0]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-            <Award className="w-10 h-10 text-[#D4A373] mb-8" />
-            <h4 className="text-2xl font-bold text-[#FEFAE0] mb-2">IBM Full Stack Software Developer</h4>
-            <p className="text-[#CAD2C5] mb-8 text-sm leading-relaxed">
+            <Award className="w-10 h-10 text-[var(--amber)] mb-8" />
+            <h4 className="text-2xl font-bold text-text-main mb-2 transition-colors duration-1000 ease-in-out">IBM Full Stack Software Developer</h4>
+            <p className="text-[var(--text-dim)] mb-8 text-sm leading-relaxed">
               Comprehensive architectural certification spanning cloud native deployment, microservices, and modern frontend frameworks.
             </p>
             <div className="flex flex-wrap gap-2">
               {["React", "Node.js", "Docker", "Kubernetes", "CI/CD"].map((tech) => (
-                <span key={tech} className="px-3 py-1 bg-[#2F3E46] border border-[#52796F]/30 text-xs text-[#84A98C] font-bold tracking-wider uppercase rounded-sm">
+                <span key={tech} className="px-3 py-1 bg-[var(--bark)] border border-[#52796F]/30 text-xs text-[var(--moss)] font-bold tracking-wider uppercase rounded-sm transition-colors duration-1000 ease-in-out">
                   {tech}
                 </span>
               ))}
@@ -128,17 +132,17 @@ export default function SystemsGrowthArchitecture() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             data-cursor="system"
-            className="group relative bg-[#354F52]/30 border border-[#52796F]/30 p-10 lg:p-14 rounded-3xl overflow-hidden"
+            className="group relative bg-text-body/30 border border-[#52796F]/30 p-10 lg:p-14 rounded-3xl overflow-hidden transition-colors duration-1000 ease-in-out"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-[#D4A373]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-            <BrainCircuit className="w-10 h-10 text-[#84A98C] mb-8" />
-            <h4 className="text-2xl font-bold text-[#FEFAE0] mb-2">Machine Learning Specialization</h4>
-            <p className="text-[#CAD2C5] mb-8 text-sm leading-relaxed">
+            <BrainCircuit className="w-10 h-10 text-[var(--moss)] mb-8" />
+            <h4 className="text-2xl font-bold text-text-main mb-2 transition-colors duration-1000 ease-in-out">Machine Learning Specialization</h4>
+            <p className="text-[var(--text-dim)] mb-8 text-sm leading-relaxed">
               Foundational intelligence systems certification by Stanford / Andrew Ng covering deep learning, neural networks, and model optimization.
             </p>
             <div className="flex flex-wrap gap-2">
               {["Neural Networks", "Supervised Learning", "TensorFlow"].map((tech) => (
-                <span key={tech} className="px-3 py-1 bg-[#2F3E46] border border-[#52796F]/30 text-xs text-[#D4A373] font-bold tracking-wider uppercase rounded-sm">
+                <span key={tech} className="px-3 py-1 bg-[var(--bark)] border border-[#52796F]/30 text-xs text-[var(--amber)] font-bold tracking-wider uppercase rounded-sm transition-colors duration-1000 ease-in-out">
                   {tech}
                 </span>
               ))}
@@ -292,7 +296,7 @@ function SystemNode({ data, delay }: { data: typeof NODES[0], delay: number }) {
           transition={{ duration: 0.4 }}
           className="flex flex-col items-center whitespace-nowrap"
         >
-          <h4 className="text-[#FEFAE0] font-bold text-sm tracking-widest uppercase bg-[#2F3E46]/80 backdrop-blur-md px-4 py-2 border border-[#52796F]/50 shadow-[0_0_20px_rgba(47,62,70,0.5)]">
+          <h4 className="text-white font-bold text-sm tracking-widest uppercase bg-[#232A2E]/80 backdrop-blur-md px-4 py-2 border border-[#52796F]/50 shadow-[0_0_20px_rgba(47,62,70,0.5)] transition-colors duration-1000 ease-in-out">
             {data.title}
           </h4>
           
@@ -304,7 +308,7 @@ function SystemNode({ data, delay }: { data: typeof NODES[0], delay: number }) {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  className="text-[#CAD2C5] text-[10px] uppercase tracking-widest font-mono"
+                  className="text-[#FEFAE0] text-[10px] uppercase tracking-widest font-inter drop-shadow-md"
                 >
                   {tech}
                 </framerMotion.span>

@@ -1,57 +1,117 @@
 @import "tailwindcss";
 
 @theme {
-  /* Core Brand Colors mapping for Tailwind classes */
-  --color-slate-950: #FEFAE0; /* Cornsilk - Main Background */
-  --color-slate-900: #FAEDCD; /* Papaya Whip - Secondary Background */
-  --color-slate-800: #E9EDC9; /* Beige - Alternative Surface */
-  --color-slate-700: #CAD2C5; /* Ash Grey - Muted Surface */
-  --color-slate-600: #84A98C; /* Muted Teal */
-  --color-slate-500: #52796F; /* Deep Teal - Muted text */
-  --color-slate-400: #354F52; /* Dark Slate Grey - Secondary Text */
-  --color-slate-300: #354F52; /* Dark Slate Grey - Secondary Text */
-  --color-slate-200: #2F3E46; /* Charcoal Blue - Primary Text */
-  --color-slate-100: #2F3E46; /* Charcoal Blue */
-  --color-slate-50: #2F3E46;  /* Charcoal Blue */
+  /* Dynamic Backgrounds */
+  --color-bg-page: var(--bg-page);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-nature-section: var(--bg-nature-section);
+
+  /* The One True Palette */
+  --color-cream: var(--cream);
+  --color-cream-deep: var(--cream-deep);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-moss: var(--moss);
+  --color-moss-dim: var(--moss-dim);
+  --color-amber: var(--amber);
+  --color-amber-deep: var(--amber-deep);
+  --color-bark: var(--bark);
+  --color-stone: var(--stone);
+
+  /* Dynamic Typography mapped to page theme */
+  --color-text-main: var(--text-main);
+  --color-text-dim: var(--text-dim);
+  --color-border-line: var(--border-line);
 }
 
 /* ===================================================================
-   DESIGN SYSTEM — Param Patel Portfolio
-   Premium Editorial Technology Brand × Calm Research Lab
+   GLOBAL THEME ENGINE — LIVING MEADOW
    =================================================================== */
 
 :root {
-  /* --- Base Backgrounds --- */
-  --bg-main: #FEFAE0; /* Cornsilk */
-  --bg-secondary: #FAEDCD; /* Papaya Whip */
-  --bg-section: #E9EDC9; /* Beige */
-  --bg-elevated: #FFFFFF; /* White */
-  --bg-muted: #CCD5AE; /* Tea Green */
+  /* The True Palette (Static) - Enhanced for High Contrast */
+  --cream: #faf7f0;
+  /* Brighter, crisper off-white */
+  --cream-deep: #ede8d8;
+  /* Distinct, warm surface tone */
+  --ink: #0d1114;
+  /* Richer, deeper near-black */
+  --ink-soft: #424e57;
+  /* Dark enough to remain readable */
+  --moss: #3a5c43;
+  /* Punchier, deeper forest green */
+  --moss-dim: #728c79;
+  /* Clearer muted sage */
+  --amber: #e35d2b;
+  /* Vibrant, energetic terracotta/orange */
+  --amber-deep: #b83f14;
+  /* Richer burnt orange */
+  --bark: #291d15;
+  /* Deep espresso brown (much darker) */
+  --stone: rgba(13, 17, 20, 0.15);
+  --stone-hover: rgba(13, 17, 20, 0.30);
 
-  /* --- Borders & Lines --- */
-  --border-subtle: rgba(47, 62, 70, 0.05); /* Charcoal Blue at 5% opacity for softness */
-  --divider: rgba(47, 62, 70, 0.08);
+  /* Motion */
+  --ease-organic: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  /* --- Text Colors --- */
-  --text-primary: #2F3E46; /* Charcoal Blue */
-  --text-secondary: #354F52; /* Dark Slate Grey */
-  --text-muted: #52796F; /* Deep Teal */
-  --text-label: #84A98C; /* Muted Teal */
+  /* DEFAULT: Day / Dawn */
+  --bg-page: var(--cream);
+  --bg-surface: var(--cream-deep);
+  --bg-nature-section: #dce3d5;
+  /* Crisp, light sage */
+  --text-main: var(--ink);
+  --text-dim: var(--ink-soft);
+  --border-line: var(--stone);
+}
 
-  /* --- Accents --- */
-  --accent-primary: #D4A373; /* Light Bronze */
-  --accent-technical: #52796F; /* Deep Teal */
-  --accent-calm: #84A98C; /* Muted Teal */
+[data-theme="day"],
+[data-theme="dawn"] {
+  --bg-page: var(--cream);
+  --bg-surface: var(--cream-deep);
+  --bg-nature-section: #dce3d5;
+  --text-main: var(--ink);
+  --text-dim: var(--ink-soft);
+  --border-line: var(--stone);
+}
+
+[data-theme="dusk"] {
+  /* True Golden Hour - Vibrant but readable */
+  --bg-page: #f2d7bc;
+  /* Warm glowing peach/gold */
+  --bg-surface: #e6c5a3;
+  /* Deeper golden surface */
+  --bg-nature-section: #d9966c;
+  /* Warm terracotta accent */
+  --text-main: var(--bark);
+  /* Espresso text for sharp contrast */
+  --text-dim: #5c4333;
+  --border-line: rgba(41, 29, 21, 0.15);
+}
+
+[data-theme="night"] {
+  /* Immersive Midnight - High contrast dark mode */
+  --bg-page: #131618;
+  /* Deep obsidian/midnight */
+  --bg-surface: #1d2226;
+  /* Slightly elevated dark card */
+  --bg-nature-section: #1b2620;
+  /* Very dark, moody forest green */
+  --text-main: var(--cream);
+  /* Glowing cream text */
+  --text-dim: #9caab3;
+  /* Cool, readable gray-blue */
+  --border-line: rgba(250, 247, 240, 0.12);
 }
 
 /* --- Base --- */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--border-subtle) transparent;
+  scrollbar-color: var(--moss-dim) transparent;
 }
 
 *::-webkit-scrollbar {
-  width: 4px;
+  width: 6px;
 }
 
 *::-webkit-scrollbar-track {
@@ -59,33 +119,41 @@
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: var(--border-subtle);
-  border-radius: 4px;
+  background-color: var(--moss-dim);
+  border-radius: 6px;
 }
 
 ::selection {
-  background-color: rgba(221, 161, 94, 0.2); /* Sunlit clay selection */
-  color: var(--text-primary);
+  background-color: var(--amber);
+  color: var(--cream);
 }
 
 html {
   scroll-behavior: smooth;
-  background-color: var(--bg-main);
+  background-color: var(--bg-page);
+  transition: background-color 1s var(--ease-organic), color 1s var(--ease-organic);
 }
 
 body {
-  background-color: var(--bg-main);
-  color: var(--text-primary);
-  font-family: 'Satoshi', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  /* Typography handled by layout.tsx variables */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  transition: background-color 1s var(--ease-organic), color 1s var(--ease-organic);
 }
 
-.font-satoshi {
-  font-family: 'Satoshi', system-ui, -apple-system, sans-serif;
+/* Typography Utility Classes */
+.font-fraunces {
+  font-family: var(--font-fraunces), "Georgia", serif;
 }
 
+.font-inter {
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+/* Hide default cursor on desktop since we have CustomCursor */
 @media (pointer: fine) {
   * {
     cursor: none !important;
@@ -94,86 +162,27 @@ body {
 
 /* --- Utility Classes --- */
 @layer utilities {
-  /* Gradients */
-  .gradient-text {
-    background: linear-gradient(180deg, #2F3E46 0%, #354F52 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+  .pull-quote {
+    font-family: var(--font-fraunces), "Georgia", serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    line-height: 1.4;
+    color: var(--text-main);
   }
 
-  .gradient-text-warm {
-    background: linear-gradient(180deg, #D4A373 0%, #D4A373 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  /* Cards & Surfaces - Matte Premium Aesthetic */
-  .glass {
-    background-color: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border-subtle);
-    box-shadow: 0 4px 32px rgba(47, 62, 70, 0.03); /* Soft wide shadow */
-  }
-
-  .glass-strong {
-    background-color: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(30px);
-    border: 1px solid var(--border-subtle);
-    box-shadow: 0 8px 48px rgba(47, 62, 70, 0.05); /* Elevated but very soft */
-  }
-
-  /* Typography */
-  .terminal-text {
-    font-family: var(--font-jetbrains), "JetBrains Mono", monospace;
-  }
-
-  /* Backgrounds */
-  .grid-bg {
-    /* Removed explicit grid pattern for a cleaner editorial look */
-    background: transparent;
-  }
-
-  .noise-overlay::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .spotlight {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(120px);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .border-gradient {
-    position: relative;
-  }
-
-  .border-gradient::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(180deg, rgba(47,62,70,0.06), rgba(47,62,70,0));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
+  .pull-quote strong {
+    color: var(--amber);
+    /* This vibrant amber will look incredible against the dark night theme now */
+    font-weight: 400;
   }
 }
 
 /* --- Reduced Motion --- */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

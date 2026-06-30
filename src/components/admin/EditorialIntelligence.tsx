@@ -14,7 +14,7 @@ export default function EditorialIntelligence() {
     <div className="w-full bg-[#111] border border-white/5 rounded-2xl p-6 mt-8">
       <div className="flex items-center justify-between mb-8">
         <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-[#FEFAE0]">Editorial Intelligence & Resonance</h3>
-        <span className="text-[10px] text-white/30 uppercase tracking-widest font-mono">PostHog Engine</span>
+        <span className="text-[10px] text-white/30 uppercase tracking-widest font-inter uppercase tracking-widest text-[10px]">PostHog Engine</span>
       </div>
 
       <div className="flex flex-col gap-4">

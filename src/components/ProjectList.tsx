@@ -32,7 +32,7 @@ export default function ProjectList({ projects }: { projects: any[] }) {
               {project.coverImageUrl ? (
                 <img src={project.coverImageUrl} alt={project.title} className="w-full h-full object-cover mix-blend-multiply" />
               ) : (
-                <span className="font-jetbrains text-[#52796F]/50 tracking-widest text-sm uppercase">ARCH_{i+1}_{project.title.replace(/\s+/g, '_')}</span>
+                <span className="font-inter text-[#52796F]/50 tracking-widest text-sm uppercase">ARCH_{i+1}_{project.title.replace(/\s+/g, '_')}</span>
               )}
             </div>
 

@@ -2,14 +2,15 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-import Navbar from "./Navbar";
+import LotusBloomNav from "./ui/LotusBloomNav";
 import Footer from "./Footer";
 import CustomCursor from "./CustomCursor";
-import AnimatedBackground from "./AnimatedBackground";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function PublicLayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith("/admin");
+  const isHomepage = pathname === "/";
 
   useEffect(() => {
     if (isAdmin) {
@@ -18,6 +19,7 @@ export default function PublicLayoutWrapper({ children }: { children: React.Reac
       document.body.classList.remove("admin-mode");
     }
   }, [isAdmin]);
+
 
   if (isAdmin) {
     return (
@@ -30,11 +32,19 @@ export default function PublicLayoutWrapper({ children }: { children: React.Reac
 
   return (
     <>
-      <AnimatedBackground />
       <CustomCursor />
-      <Navbar />
-      <main className="relative z-10">{children}</main>
-      <Footer />
+      <AnimatePresence>
+        <motion.div
+          key="public-layout"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, ease: "easeInOut" }}
+        >
+          <LotusBloomNav />
+          <main className="relative z-10 transition-all duration-700">{children}</main>
+          <Footer />
+        </motion.div>
+      </AnimatePresence>
     </>
   );
 }

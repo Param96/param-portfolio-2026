@@ -62,7 +62,7 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
             </span>
             <div className="flex gap-2 flex-wrap">
               {research.domains?.map((domain: string, i: number) => (
-                <span key={i} className="text-[10px] uppercase tracking-widest text-[#52796F] font-jetbrains border-b border-[#52796F]/20 pb-1">
+                <span key={i} className="text-[10px] uppercase tracking-widest text-[#52796F] font-inter border-b border-[#52796F]/20 pb-1">
                   {domain}
                 </span>
               ))}
@@ -81,7 +81,7 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
         {/* Meta / Role Block */}
         <div className="bg-[#FEFAE0] border border-[#354F52]/5 p-8 md:p-12 mb-20 shadow-lg relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-[#D4A373]/10 blur-2xl" />
-          <h3 className="text-[10px] uppercase tracking-widest font-bold text-[#84A98C] mb-6 flex items-center gap-2 font-jetbrains">
+          <h3 className="text-[10px] uppercase tracking-widest font-bold text-[#84A98C] mb-6 flex items-center gap-2 font-inter">
             <Database className="w-4 h-4" /> Project Metadata
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
