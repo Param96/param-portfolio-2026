@@ -38,8 +38,8 @@ const currentFocus = [
 
 export default function ContactPage() {
   return (
-    <div className="relative min-h-screen bg-[var(--bg-page)] transition-colors duration-1000 ease-in-out">
-      {/* 3D Immersive Hero */}
+    <div className="relative w-full bg-[var(--bg-main)] min-h-screen transition-colors duration-1000 ease-in-out pb-32">
+      {/* ── HERO ── */}
       <ContactHero />
 
       {/* ── SECURE COMM-LINK (Form) ── */}

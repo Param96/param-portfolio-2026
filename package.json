@@ -36,6 +36,7 @@
     "postprocessing": "^6.39.1",
     "react": "latest",
     "react-dom": "latest",
+    "resend": "^6.16.0",
     "sanity": "^5.30.0",
     "styled-components": "^6.4.2",
     "tailwind-merge": "^3.6.0",

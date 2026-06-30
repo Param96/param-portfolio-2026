@@ -11,18 +11,40 @@ export default function SecureCommLinkForm() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [sliderWidth, setSliderWidth] = useState(0);
 
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
   useEffect(() => {
     if (trackRef.current && isOpen) {
       setSliderWidth(trackRef.current.offsetWidth);
     }
   }, [isOpen, formState]);
 
-  const handleDragEnd = (event: any, info: any) => {
+  const handleDragEnd = async (event: any, info: any) => {
     // If dragged past 75% of track
     if (info.offset.x > (sliderWidth * 0.75)) {
       setFormState("transmitting");
-      setTimeout(() => {
+      
+      try {
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            subject: "Secure Comm-Link Transmission",
+            message: formData.message,
+          }),
+        });
+
+        if (!res.ok) throw new Error("Transmission failed");
+
         setFormState("sent");
+        setFormData({ name: "", email: "", message: "" });
+        
         // After showing success for 2 seconds, reset the tree and grow a new fruit!
         setTimeout(() => {
           setIsOpen(false);
@@ -31,7 +53,11 @@ export default function SecureCommLinkForm() {
             setFruitState("hanging");
           }, 500); // Wait for tree to fade back in before fully resetting state
         }, 2000);
-      }, 2500);
+      } catch (err) {
+        console.error(err);
+        setFormState("idle");
+        alert("Transmission Failed. Please check your connection and try again.");
+      }
     }
   };
 
@@ -120,17 +146,17 @@ export default function SecureCommLinkForm() {
               <div className="flex flex-col md:flex-row gap-8">
                 <div className="flex flex-col gap-3 w-full group">
                   <label className="text-[10px] font-bold uppercase tracking-widest text-[#52796F] group-focus-within:text-[#D4A373] transition-colors">Identifier (Name)</label>
-                  <input type="text" className="w-full bg-transparent border-b border-[#2F3E46]/20 px-0 py-3 text-[#2F3E46] focus:outline-none focus:border-[#D4A373] transition-colors font-medium placeholder:text-[#2F3E46]/30" placeholder="Jane Doe" />
+                  <input type="text" value={formData.name} onChange={(e) => setFormData(prev => ({...prev, name: e.target.value}))} className="w-full bg-transparent border-b border-[#2F3E46]/20 px-0 py-3 text-[#2F3E46] focus:outline-none focus:border-[#D4A373] transition-colors font-medium placeholder:text-[#2F3E46]/30" placeholder="Jane Doe" />
                 </div>
                 <div className="flex flex-col gap-3 w-full group">
                   <label className="text-[10px] font-bold uppercase tracking-widest text-[#52796F] group-focus-within:text-[#D4A373] transition-colors">Return Vector (Email)</label>
-                  <input type="email" className="w-full bg-transparent border-b border-[#2F3E46]/20 px-0 py-3 text-[#2F3E46] focus:outline-none focus:border-[#D4A373] transition-colors font-medium placeholder:text-[#2F3E46]/30" placeholder="jane@example.com" />
+                  <input type="email" value={formData.email} onChange={(e) => setFormData(prev => ({...prev, email: e.target.value}))} className="w-full bg-transparent border-b border-[#2F3E46]/20 px-0 py-3 text-[#2F3E46] focus:outline-none focus:border-[#D4A373] transition-colors font-medium placeholder:text-[#2F3E46]/30" placeholder="jane@example.com" />
                 </div>
               </div>
 
               <div className="flex flex-col gap-3 group">
                 <label className="text-[10px] font-bold uppercase tracking-widest text-[#52796F] group-focus-within:text-[#D4A373] transition-colors">Payload (Message)</label>
-                <textarea rows={4} className="w-full bg-transparent border-b border-[#2F3E46]/20 px-0 py-3 text-[#2F3E46] focus:outline-none focus:border-[#D4A373] transition-colors resize-none font-medium placeholder:text-[#2F3E46]/30" placeholder="How can we collaborate?" />
+                <textarea rows={4} value={formData.message} onChange={(e) => setFormData(prev => ({...prev, message: e.target.value}))} className="w-full bg-transparent border-b border-[#2F3E46]/20 px-0 py-3 text-[#2F3E46] focus:outline-none focus:border-[#D4A373] transition-colors resize-none font-medium placeholder:text-[#2F3E46]/30" placeholder="How can we collaborate?" />
               </div>
             </div>
 
