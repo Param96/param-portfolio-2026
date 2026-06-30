@@ -50,7 +50,7 @@ export default function LotusBloomNav() {
   };
 
   // Organic ease for unfurling
-  const unfurlEase = [0.34, 1.56, 0.64, 1]; // ease-out-back
+  // (Inlined into the animation config below)
 
   // Pre-calculate geometry and random organic offsets for the spokes
   const NUM_PETALS = navLinks.length;
@@ -195,7 +195,7 @@ export default function LotusBloomNav() {
                           animate={{ scale: spoke.outerScale, rotate: 0 }}
                           transition={{ 
                             duration: 0.9, 
-                            ease: unfurlEase, 
+                            ease: [0.34, 1.56, 0.64, 1], 
                             delay: 0.42 + (spoke.i * 0.06) 
                           }}
                           style={{ originX: 0.5, originY: 1 }}
@@ -241,7 +241,7 @@ export default function LotusBloomNav() {
                           animate={{ scale: spoke.innerScale, rotate: 0 }}
                           transition={{ 
                             duration: 0.8, 
-                            ease: unfurlEase, 
+                            ease: [0.34, 1.56, 0.64, 1], 
                             delay: spoke.i * 0.06 
                           }}
                           style={{ originX: 0.5, originY: 1 }}
