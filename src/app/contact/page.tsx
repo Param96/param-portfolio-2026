@@ -7,6 +7,7 @@ import { socialLinks } from "@/data/social";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import posthog from "posthog-js";
+import QuotesSection from "@/components/sections/QuotesSection";
 
 const ContactHero = dynamic(() => import("@/components/hero/meadow/ContactHero"), { ssr: false });
 
@@ -127,29 +128,7 @@ export default function ContactPage() {
       </section>
 
       {/* ── PERSONAL QUOTES (Editorial) ── */}
-      <section className="w-full py-40 px-6 md:px-24">
-        <div className="max-w-6xl mx-auto flex flex-col gap-32">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl md:text-8xl font-light tracking-tighter text-[var(--text-main)] leading-[1.1] max-w-4xl"
-          >
-            "I like ambitious people with weird ideas."
-          </motion.h2>
-          
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl md:text-8xl font-serif italic tracking-tighter text-[var(--amber-deep)] leading-[1.1] max-w-5xl self-end text-right"
-          >
-            "I enjoy building systems that feel slightly impossible."
-          </motion.h2>
-        </div>
-      </section>
+      <QuotesSection />
 
       {/* ── SOCIAL CONNECTION ENVIRONMENT (Nodes) ── */}
       <section className="w-full pt-20 pb-40 px-6 md:px-24 border-t border-[var(--border-line)]">
