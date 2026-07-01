@@ -149,6 +149,14 @@ export const LAB_NOTE_BY_SLUG_QUERY = groq`
 `;
 
 // Research
+export const RESEARCH_PAGE_QUERY = groq`
+  *[_type == "researchPage"][0] {
+    roleTitle,
+    roleDescription,
+    node1,
+    node2
+  }
+`;
 export const ALL_RESEARCH_QUERY = groq`
   *[_type == "research"] | order(publishedAt desc) {
     _id,
