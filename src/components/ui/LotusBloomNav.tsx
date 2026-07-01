@@ -371,7 +371,7 @@ export default function LotusBloomNav() {
         onClick={toggleNav}
         whileHover="hover"
         className={cn(
-          "fixed bottom-6 right-6 z-[110] w-16 h-16 rounded-full flex items-center justify-center transition-all duration-500 group focus:outline-none focus:ring-4 focus:ring-[#FAC775]/30",
+          "fixed bottom-24 md:bottom-32 right-6 md:right-12 z-[110] w-16 h-16 rounded-full flex items-center justify-center transition-all duration-500 group focus:outline-none focus:ring-4 focus:ring-[#FAC775]/30",
           isOpen 
             ? "bg-[#1a1a1a] border border-[#F5C4B3]/20 hover:border-[#D85A30] shadow-[0_0_20px_rgba(250,199,117,0.2)]" 
             : "bg-[#D85A30] hover:bg-[#E3693F] shadow-[0_0_30px_rgba(250,199,117,0.35)] hover:shadow-[0_0_40px_rgba(250,199,117,0.5)] border border-transparent"
