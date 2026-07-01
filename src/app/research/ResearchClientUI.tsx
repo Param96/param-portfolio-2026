@@ -5,18 +5,12 @@ import { Network, Database, BrainCircuit, Layers, Workflow, CheckCircle, LayoutG
 import { useState } from "react";
 import dynamic from "next/dynamic";
 
-const ResearchHero = dynamic(() => import("@/components/hero/meadow/ResearchHero"), { ssr: false });
-
 export default function ResearchClientUI({ content }: { content: any }) {
   const [activeResearch, setActiveResearch] = useState<string | null>(null);
 
   return (
+  return (
     <>
-      {/* 3D Hero Section */}
-      <div className="absolute inset-x-0 top-0 h-screen -mt-24 pointer-events-none -z-10">
-        <ResearchHero />
-      </div>
-
       <div className="mb-24 mt-20">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
