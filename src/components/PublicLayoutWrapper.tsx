@@ -52,6 +52,16 @@ export default function PublicLayoutWrapper({ children }: { children: React.Reac
               AI Engineer & Builder
             </span>
           </Link>
+
+          {/* Global Back to Home Button (Hidden on Homepage) */}
+          {!isHomepage && (
+            <Link 
+              href="/"
+              className="fixed top-6 left-1/2 -translate-x-1/2 md:top-8 z-[100] flex items-center gap-2 px-4 py-2 rounded-full font-inter text-[10px] tracking-widest uppercase pointer-events-auto bg-black/20 hover:bg-black/40 backdrop-blur-md border border-white/10 text-white/80 hover:text-white transition-all duration-300 shadow-sm"
+            >
+              <span className="text-[var(--amber)]">←</span> Back to Home
+            </Link>
+          )}
           <main className="relative z-10 transition-all duration-700">{children}</main>
           <Footer />
         </motion.div>
