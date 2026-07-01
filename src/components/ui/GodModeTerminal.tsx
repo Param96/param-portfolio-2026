@@ -44,6 +44,7 @@ export default function GodModeTerminal() {
           "  theme night  - Override theme to midnight",
           "  github       - Fetch live repository telemetry",
           "  telemetry    - Fetch live repository telemetry",
+          "  ask [msg]    - Query Param's neural network clone",
           "  reboot       - Reload the system"
         ]);
         break;
@@ -103,6 +104,33 @@ export default function GodModeTerminal() {
       case "":
         break;
       default:
+        // Handle ask command (since it includes spaces, we check prefix)
+        if (trimmed.startsWith("ask ")) {
+          const query = cmd.substring(4).trim();
+          if (!query) {
+            setHistory(prev => [...prev, "Usage: ask [your question]"]);
+            break;
+          }
+          
+          setHistory(prev => [...prev, "Connecting to Param's neural network..."]);
+          try {
+            const res = await fetch("/api/chat", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ message: query }),
+            });
+            const json = await res.json();
+            
+            if (!res.ok) throw new Error(json.error || "Connection failed");
+            
+            setHistory(prev => [...prev, `[PARAM-AI]: ${json.text}`]);
+          } catch (err: any) {
+            setHistory(prev => [...prev, `[ERROR]: ${err.message || "Neural link severed."}`]);
+          }
+          break;
+        }
+
+        // If it falls all the way down here, it's not a valid exact command and not an "ask " command
         setHistory(prev => [...prev, `Command not found: ${trimmed}`]);
         break;
     }
