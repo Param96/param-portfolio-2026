@@ -3,95 +3,190 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 import { useLivingSystemStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 export default function Footer() {
   const pathname = usePathname();
-  const timeOfDayTheme = useLivingSystemStore((state) => state.timeOfDayTheme);
-  const isNight = timeOfDayTheme === "night";
 
-  const getFooterText = () => {
-    switch (pathname) {
-      case "/research":
-        return (
-          <>
-            Researching <span className="font-fraunces italic font-normal text-[var(--amber)]">intelligent systems</span>, <br />
-            verification workflows, and evolving infrastructure.
-          </>
-        );
-      case "/projects":
-        return (
-          <>
-            Building <span className="font-fraunces italic font-normal text-[var(--amber)]">evolving systems</span> <br />
-            through experimentation and applied AI workflows.
-          </>
-        );
-      case "/contact":
-        return (
-          <>
-            Open to <span className="font-fraunces italic font-normal text-[var(--amber)]">ambitious ideas,</span> <br />
-            startup experiments, and meaningful collaborations.
-          </>
-        );
+  // Route-based configuration
+  const getFooterProps = () => {
+    if (pathname === "/projects" || pathname === "/work") {
+      return {
+        locationTheme: "daylight" as const,
+        signatureLabel: "DAYLIGHT — FIELD",
+        quotePool: [
+          "Building evolving systems.",
+          "Experimental engineering at scale.",
+          "Rapid iteration over perfection."
+        ]
+      };
+    }
+    if (pathname === "/resume" || pathname === "/about") {
+      return {
+        locationTheme: "dusk" as const,
+        signatureLabel: "DUSK — RIDGE",
+        quotePool: [
+          "Curiosity is the engine of progress.",
+          "Reflecting on the architecture of thought.",
+          "The best systems feel organic."
+        ]
+      };
+    }
+    if (pathname === "/contact") {
+      return {
+        locationTheme: "night" as const,
+        signatureLabel: "NIGHT — HOLLOW",
+        quotePool: [
+          "Open to ambitious ideas.",
+          "Send a signal into the void.",
+          "Looking for weird experiments."
+        ]
+      };
+    }
+    // Default (Home)
+    return {
+      locationTheme: "morning" as const,
+      signatureLabel: "MORNING — MEADOW",
+      quotePool: [
+        "Building systems that feel slightly impossible.",
+        "Agentic loops and quiet interfaces.",
+        "Engineering the next paradigm."
+      ]
+    };
+  };
+
+  const { locationTheme, signatureLabel, quotePool } = getFooterProps();
+
+  const getThemeConfig = () => {
+    switch (locationTheme) {
+      case "morning":
+        return {
+          bg: "bg-[var(--cream)]",
+          border: "border-text-primary/10",
+          text: "text-[var(--text-main)]",
+          muted: "text-[var(--moss)]",
+          motif: (
+            <svg className="w-48 h-48 opacity-5 text-current" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+              <path d="M50 90 Q30 50 50 10 Q70 50 50 90 Z" strokeWidth="0.5"/>
+              <path d="M50 10 V90" strokeWidth="0.5"/>
+            </svg>
+          )
+        };
+      case "daylight":
+        return {
+          bg: "bg-[var(--bark)]",
+          border: "border-text-primary/15",
+          text: "text-[var(--cream)]",
+          muted: "text-white/40",
+          motif: (
+            <svg className="w-64 h-64 opacity-5 text-current" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+              <circle cx="50" cy="50" r="40" strokeWidth="0.5"/>
+              <circle cx="50" cy="50" r="30" strokeWidth="0.5"/>
+              <circle cx="50" cy="50" r="20" strokeWidth="0.5"/>
+            </svg>
+          )
+        };
+      case "dusk":
+        return {
+          bg: "bg-gradient-to-b from-[var(--cream)] to-[var(--graphite)]",
+          border: "border-black/10",
+          text: "text-[var(--text-main)]",
+          muted: "text-black/40",
+          motif: (
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-current to-transparent opacity-10 mt-12" />
+          )
+        };
+      case "night":
+        return {
+          bg: "bg-[var(--void)]",
+          border: "border-white/10",
+          text: "text-[var(--silver)]",
+          muted: "text-white/40",
+          motif: (
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+               <div className="w-1 h-1 bg-[var(--amber)] rounded-full blur-[1px] absolute top-1/4 left-1/4" />
+               <div className="w-1.5 h-1.5 bg-[var(--amber)] rounded-full blur-[2px] absolute top-1/3 right-1/3" />
+            </div>
+          )
+        };
       default:
-        return (
-          <>
-            Open to building <span className="font-fraunces italic font-normal text-[var(--amber)]">ambitious systems,</span> <br />
-            startup experiments, and intelligent workflows.
-          </>
-        );
+        return { bg: "bg-[var(--cream)]", border: "border-text-primary/10", text: "text-[var(--text-main)]", muted: "text-[var(--moss)]", motif: null };
     }
   };
 
-  return (
-    <footer className="relative w-full py-32 flex flex-col items-center justify-center bg-[var(--bark)] overflow-hidden text-center text-[var(--cream)] transition-colors duration-1000 ease-[var(--ease-organic)] mt-24">
-      {/* Amber distant lantern glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[var(--amber)] rounded-full opacity-10 blur-[120px] pointer-events-none" />
-      
-      {/* Night-time specific living detail: tiny firefly */}
-      {isNight && (
-        <motion.div 
-          animate={{ y: [0, -30, 0], x: [0, 15, -15, 0], opacity: [0, 0.8, 0] }} 
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }} 
-          className="absolute top-1/3 left-[20%] w-1.5 h-1.5 bg-[var(--amber)] rounded-full blur-[1px]" 
-        />
-      )}
+  const config = getThemeConfig();
+  
+  // Pick a random quote on mount
+  const [quote, setQuote] = useState(quotePool[0]);
+  useEffect(() => {
+    setQuote(quotePool[Math.floor(Math.random() * quotePool.length)]);
+  }, [quotePool]);
 
-      <div className="max-w-4xl mx-auto px-6 relative z-10">
+  return (
+    <footer className={cn("relative w-full py-16 overflow-hidden transition-colors duration-1000 ease-[var(--ease-organic)] mt-24 border-t", config.bg, config.border)}>
+      
+      {/* Decorative Motif */}
+      <div className={cn("absolute right-0 bottom-0 pointer-events-none flex items-end justify-end p-12", config.text)}>
+        {config.motif}
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 flex flex-col h-full justify-between gap-24">
+        
+        {/* Top: Quote */}
         <motion.div 
-          initial={{ opacity: 0, y: 20 }} 
+          initial={{ opacity: 0, y: 15 }} 
           whileInView={{ opacity: 1, y: 0 }} 
           viewport={{ once: true, margin: "-50px" }} 
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="max-w-xl"
         >
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-fraunces tracking-tight leading-[1.2] mb-12 text-[var(--cream)]">
-            {getFooterText()}
-          </h2>
+          <p className={cn("text-2xl md:text-3xl font-serif italic tracking-tight leading-[1.3]", config.text)}>
+            "{quote}"
+          </p>
+        </motion.div>
+
+        {/* Bottom Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 items-end gap-12 md:gap-4 pb-8">
           
-          <div className="flex gap-8 justify-center mt-12">
-            {["GitHub", "LinkedIn", "Twitter"].map((social) => (
+          {/* Left: Signature */}
+          <div className="flex flex-col items-start gap-1">
+            <span className={cn("font-fraunces text-lg md:text-xl font-medium tracking-tight", config.text)}>
+              Param Patel
+            </span>
+            <span className={cn("font-inter text-[10px] uppercase tracking-widest", config.muted)}>
+              {signatureLabel}
+            </span>
+          </div>
+
+          {/* Center: Nav Links */}
+          <div className="flex items-center md:justify-center gap-6 md:gap-8">
+            {[
+              { name: "Home", href: "/" },
+              { name: "Work", href: "/projects" },
+              { name: "About", href: "/resume" }, // Or '/about' if exists, using /resume for now
+              { name: "Contact", href: "/contact" }
+            ].map((link) => (
               <Link 
-                key={social}
-                href={`https://${social.toLowerCase()}.com`} 
-                className="font-inter text-sm text-[var(--moss)] hover:text-[var(--amber)] hover:-translate-y-0.5 transition-all duration-700 ease-[var(--ease-organic)]"
+                key={link.name}
+                href={link.href} 
+                className={cn("relative group font-inter text-[10px] uppercase tracking-widest transition-colors duration-500", config.muted, "hover:text-[var(--amber)]")}
               >
-                {social}
+                {link.name}
+                {/* Underline-in-from-center effect */}
+                <span className="absolute -bottom-1 left-1/2 w-0 h-[1px] bg-[var(--amber)] transition-all duration-300 group-hover:w-full group-hover:left-0" />
               </Link>
             ))}
           </div>
 
-          {pathname !== "/" && (
-            <div className="mt-16 text-center">
-              <Link
-                href="/"
-                className="text-sm font-inter text-[var(--moss)] hover:text-[var(--cream)] transition-colors duration-500 flex items-center justify-center gap-2"
-              >
-                <span className="text-[var(--amber)]">←</span> Back to Home
-              </Link>
-            </div>
-          )}
-        </motion.div>
+          {/* Right: Terminal Toggle Anchor */}
+          <div className="flex md:justify-end items-end h-[48px]">
+            {/* The actual OracleRootTrigger floats, but this serves as the structural anchor space for it.
+                We leave this space empty so the fixed trigger doesn't overlap content. */}
+          </div>
+        </div>
+
       </div>
     </footer>
   );

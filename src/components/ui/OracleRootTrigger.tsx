@@ -47,16 +47,16 @@ export function OracleRootTrigger({ timeOfDayTheme, onOpen, isOpen }: OracleRoot
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.5 }}
-          className="fixed bottom-4 md:bottom-6 left-4 md:left-6 z-40"
+          className="fixed bottom-6 md:bottom-12 right-6 md:right-12 z-[110]"
         >
           {/* Tooltip (Desktop Only) */}
           <AnimatePresence>
             {isHovered && !isSparking && (
               <motion.div
-                initial={{ opacity: 0, x: -10 }}
+                initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -5 }}
-                className="absolute left-14 top-1/2 -translate-y-1/2 whitespace-nowrap text-[10px] font-mono tracking-widest uppercase px-3 py-1.5 rounded-md pointer-events-none hidden md:block"
+                exit={{ opacity: 0, x: 5 }}
+                className="absolute right-14 top-1/2 -translate-y-1/2 whitespace-nowrap text-[10px] font-mono tracking-widest uppercase px-3 py-1.5 rounded-md pointer-events-none hidden md:block"
                 style={{ backgroundColor: "rgba(0,0,0,0.8)", color: colors.hover, border: `1px solid ${colors.glow}` }}
               >
                 Oracle Root — press ~ or tap to open
