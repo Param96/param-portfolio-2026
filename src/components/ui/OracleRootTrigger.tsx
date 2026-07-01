@@ -8,10 +8,10 @@ import { useLivingSystemStore, TimeOfDayTheme } from "@/lib/store";
 // TIME OF DAY THEME MAPPING for Trigger
 // ─────────────────────────────────────────────────────────
 const THEMES = {
-  dawn: { idle: "rgba(212, 163, 115, 0.85)", hover: "rgba(212, 163, 115, 1)", glow: "rgba(212, 163, 115, 0.6)" },
-  day: { idle: "rgba(47, 62, 70, 0.85)", hover: "rgba(47, 62, 70, 1)", glow: "rgba(47, 62, 70, 0.5)" },
-  dusk: { idle: "rgba(229, 152, 155, 0.85)", hover: "rgba(229, 152, 155, 1)", glow: "rgba(229, 152, 155, 0.6)" },
-  night: { idle: "rgba(132, 169, 140, 0.85)", hover: "rgba(132, 169, 140, 1)", glow: "rgba(132, 169, 140, 0.6)" },
+  dawn: { idle: "#8b5a2b", hover: "#654321", glow: "rgba(139, 90, 43, 0.3)", bg: "rgba(255, 255, 255, 0.6)", hoverBg: "rgba(255, 255, 255, 0.9)" },
+  day: { idle: "#1c2e26", hover: "#000000", glow: "rgba(28, 46, 38, 0.3)", bg: "rgba(255, 255, 255, 0.7)", hoverBg: "rgba(255, 255, 255, 1)" },
+  dusk: { idle: "#7a3f41", hover: "#502628", glow: "rgba(122, 63, 65, 0.3)", bg: "rgba(255, 255, 255, 0.4)", hoverBg: "rgba(255, 255, 255, 0.8)" },
+  night: { idle: "#b0d2ba", hover: "#ffffff", glow: "rgba(176, 210, 186, 0.3)", bg: "rgba(0, 0, 0, 0.5)", hoverBg: "rgba(0, 0, 0, 0.8)" },
 };
 
 interface OracleRootTriggerProps {
@@ -71,11 +71,11 @@ export function OracleRootTrigger({ timeOfDayTheme, onOpen, isOpen }: OracleRoot
             onFocus={() => setIsHovered(true)}
             onBlur={() => setIsHovered(false)}
             aria-label="Open Oracle Root terminal"
-            className="w-12 h-12 flex items-center justify-center rounded-full outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent relative group backdrop-blur-md shadow-sm border border-white/10 dark:border-white/5"
+            className="w-14 h-14 flex items-center justify-center rounded-full outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent relative group backdrop-blur-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/10 dark:border-white/10 transition-colors duration-300"
             style={{ 
-              backgroundColor: isHovered ? "rgba(0,0,0,0.1)" : "rgba(0,0,0,0.03)",
+              backgroundColor: isHovered ? (colors as any).hoverBg : (colors as any).bg,
               color: isHovered || isSparking ? colors.hover : colors.idle,
-              filter: isHovered || isSparking ? `drop-shadow(0 0 8px ${colors.glow})` : "none",
+              boxShadow: isHovered ? `0 0 15px ${colors.glow}` : "none",
             }}
             whileHover={reducedMotion ? {} : { scale: 1.05 }}
             whileTap={reducedMotion ? {} : { scale: 0.95 }}
@@ -102,7 +102,7 @@ export function OracleRootTrigger({ timeOfDayTheme, onOpen, isOpen }: OracleRoot
             </AnimatePresence>
 
             {/* Sigil SVG */}
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 relative z-20">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7 relative z-20">
               <path d="M12 4v4" />
               <path d="M12 8c-3 2-5 5-6 10" />
               <path d="M12 8c3 2 5 5 6 10" />
