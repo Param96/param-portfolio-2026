@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useMemo, memo } from "react";
+import ReactMarkdown from 'react-markdown';
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useLivingSystemStore } from "@/lib/store";
 import { ORACLE_COMMANDS, parseCommand, OutputLine } from "@/lib/oracle-commands";
@@ -109,10 +110,16 @@ const TerminalLine = memo(({ line, colors, onClearComplete }: { line: OutputLine
       animate={isWilting ? { opacity: 0, y: 15, rotate: Math.random() * 2 - 1 } : { opacity: 1, y: 0, rotate: 0 }} 
       transition={{ duration: isWilting ? 0.5 : 0.3 }}
       style={{ color: colorStyle }}
-      className={`mt-1 font-mono text-xs ${line.type === "ai" ? "italic" : ""}`}
+      className={`mt-2 mb-2 font-mono text-xs ${line.type === "ai" ? "leading-relaxed" : ""} [&_p]:inline-block [&_p]:mb-2 [&_a]:underline hover:[&_a]:text-[var(--amber)] [&_ul]:list-disc [&_ul]:ml-4 [&_ul]:mb-2 [&_ol]:list-decimal [&_ol]:ml-4 [&_ol]:mb-2 [&_strong]:font-bold [&_em]:italic [&_code]:bg-black/20 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded`}
     >
       {line.type === "user" ? <span className="opacity-50 mr-2">⌥</span> : null}
-      {isTypewriter ? displayedText : line.text}
+      {line.type === "ai" ? (
+        <ReactMarkdown>
+          {isTypewriter ? displayedText : line.text}
+        </ReactMarkdown>
+      ) : (
+        isTypewriter ? displayedText : line.text
+      )}
     </motion.div>
   );
 });
@@ -283,7 +290,11 @@ export default function OracleRootTerminal() {
                 </div>
 
                 {/* Scrollable Output */}
-                <div ref={scrollRef} className="flex-1 p-6 overflow-y-auto scroll-smooth">
+                <div 
+                  ref={scrollRef} 
+                  className="flex-1 p-6 overflow-y-auto scroll-smooth cursor-text"
+                  onClick={() => inputRef.current?.focus()}
+                >
                   {history.map(line => (
                     <TerminalLine 
                       key={line.id} 
