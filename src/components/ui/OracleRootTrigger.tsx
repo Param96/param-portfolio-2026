@@ -8,10 +8,10 @@ import { useLivingSystemStore, TimeOfDayTheme } from "@/lib/store";
 // TIME OF DAY THEME MAPPING for Trigger
 // ─────────────────────────────────────────────────────────
 const THEMES = {
-  dawn: { idle: "rgba(212, 163, 115, 0.5)", hover: "rgba(212, 163, 115, 1)", glow: "rgba(212, 163, 115, 0.4)" },
-  day: { idle: "rgba(47, 62, 70, 0.5)", hover: "rgba(47, 62, 70, 1)", glow: "rgba(47, 62, 70, 0.3)" },
-  dusk: { idle: "rgba(229, 152, 155, 0.5)", hover: "rgba(229, 152, 155, 1)", glow: "rgba(229, 152, 155, 0.4)" },
-  night: { idle: "rgba(132, 169, 140, 0.5)", hover: "rgba(132, 169, 140, 1)", glow: "rgba(132, 169, 140, 0.4)" },
+  dawn: { idle: "rgba(212, 163, 115, 0.85)", hover: "rgba(212, 163, 115, 1)", glow: "rgba(212, 163, 115, 0.6)" },
+  day: { idle: "rgba(47, 62, 70, 0.85)", hover: "rgba(47, 62, 70, 1)", glow: "rgba(47, 62, 70, 0.5)" },
+  dusk: { idle: "rgba(229, 152, 155, 0.85)", hover: "rgba(229, 152, 155, 1)", glow: "rgba(229, 152, 155, 0.6)" },
+  night: { idle: "rgba(132, 169, 140, 0.85)", hover: "rgba(132, 169, 140, 1)", glow: "rgba(132, 169, 140, 0.6)" },
 };
 
 interface OracleRootTriggerProps {
@@ -71,9 +71,9 @@ export function OracleRootTrigger({ timeOfDayTheme, onOpen, isOpen }: OracleRoot
             onFocus={() => setIsHovered(true)}
             onBlur={() => setIsHovered(false)}
             aria-label="Open Oracle Root terminal"
-            className="w-12 h-12 flex items-center justify-center rounded-full outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent relative group"
+            className="w-12 h-12 flex items-center justify-center rounded-full outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent relative group backdrop-blur-md shadow-sm border border-white/10 dark:border-white/5"
             style={{ 
-              backgroundColor: isHovered ? "rgba(0,0,0,0.05)" : "transparent",
+              backgroundColor: isHovered ? "rgba(0,0,0,0.1)" : "rgba(0,0,0,0.03)",
               color: isHovered || isSparking ? colors.hover : colors.idle,
               filter: isHovered || isSparking ? `drop-shadow(0 0 8px ${colors.glow})` : "none",
             }}
@@ -102,7 +102,7 @@ export function OracleRootTrigger({ timeOfDayTheme, onOpen, isOpen }: OracleRoot
             </AnimatePresence>
 
             {/* Sigil SVG */}
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 relative z-20">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 relative z-20">
               <path d="M12 4v4" />
               <path d="M12 8c-3 2-5 5-6 10" />
               <path d="M12 8c3 2 5 5 6 10" />
