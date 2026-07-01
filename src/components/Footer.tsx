@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { Github, Twitter, Linkedin, Mail } from "lucide-react";
 
 // Faint grain/noise overlay component
 const NoiseOverlay = () => (
@@ -16,15 +17,79 @@ const NoiseOverlay = () => (
   </svg>
 );
 
+// Falling Leaves Animation Background
+const FallingLeaves = () => {
+  const [leaves, setLeaves] = useState<{ id: number; left: number; duration: number; delay: number }[]>([]);
+
+  useEffect(() => {
+    // Generate random leaves on client side to avoid hydration mismatch
+    const newLeaves = Array.from({ length: 12 }).map((_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      duration: Math.random() * 15 + 15, // 15s to 30s fall time
+      delay: Math.random() * -20, // Start some halfway down
+    }));
+    setLeaves(newLeaves);
+  }, []);
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-20">
+      {leaves.map((leaf) => (
+        <motion.div
+          key={leaf.id}
+          className="absolute top-0 text-[var(--amber)]"
+          style={{ left: `${leaf.left}%` }}
+          initial={{ y: "-10vh", rotate: 0 }}
+          animate={{
+            y: ["-10vh", "110vh"],
+            rotate: [0, 360],
+            x: [0, Math.random() * 100 - 50, 0] // sway left/right
+          }}
+          transition={{
+            duration: leaf.duration,
+            repeat: Infinity,
+            ease: "linear",
+            delay: leaf.delay,
+          }}
+        >
+          {/* Subtle Leaf SVG */}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="opacity-40 blur-[0.5px]">
+            <path d="M17.5,3c-3.1,0-6.1,1.5-8.5,4c-0.2-1-0.9-1.9-2-2.3L2,3l2,5.2c-0.3,1.1-0.2,2.3,0.3,3.3C7.5,14.6,12.2,16.5,16,19 l1.6-6c0-1.8-0.3-3.7-1-5.4C17,7.1,17.4,6.7,17.9,6.2C19.7,4.4,20,3,20,3S19,3,17.5,3z"/>
+          </svg>
+        </motion.div>
+      ))}
+    </div>
+  );
+};
+
 export default function Footer() {
   const pathname = usePathname();
+
+  const [localTime, setLocalTime] = useState("");
+  const [timePeriod, setTimePeriod] = useState("MORNING");
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setLocalTime(now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }));
+      const hour = now.getHours();
+      if (hour >= 5 && hour < 12) setTimePeriod("MORNING");
+      else if (hour >= 12 && hour < 17) setTimePeriod("AFTERNOON");
+      else if (hour >= 17 && hour < 20) setTimePeriod("EVENING");
+      else setTimePeriod("NIGHT");
+    };
+    
+    updateTime();
+    const interval = setInterval(updateTime, 60000); // update every minute
+    return () => clearInterval(interval);
+  }, []);
 
   // Route-based configuration
   const getFooterProps = () => {
     if (pathname === "/projects" || pathname === "/work") {
       return {
         locationTheme: "daylight" as const,
-        signatureLabel: "DAYLIGHT — FIELD",
+        locationLabel: "FIELD",
         quotePool: [
           "Building evolving systems.",
           "Experimental engineering at scale.",
@@ -35,7 +100,7 @@ export default function Footer() {
     if (pathname === "/research") {
       return {
         locationTheme: "dusk" as const,
-        signatureLabel: "DUSK — RIDGE",
+        locationLabel: "RIDGE",
         quotePool: [
           "Curiosity is the engine of progress.",
           "Reflecting on the architecture of thought.",
@@ -46,7 +111,7 @@ export default function Footer() {
     if (pathname === "/ai-lab") {
       return {
         locationTheme: "night" as const, 
-        signatureLabel: "NIGHT — CORE",
+        locationLabel: "CORE",
         quotePool: [
           "MODELS: 3 ACTIVE",
           "STATUS: EXPERIMENTING",
@@ -57,7 +122,7 @@ export default function Footer() {
     if (pathname === "/contact") {
       return {
         locationTheme: "night" as const,
-        signatureLabel: "NIGHT — HOLLOW",
+        locationLabel: "HOLLOW",
         quotePool: [
           "Open to ambitious ideas.",
           "Send a signal into the void.",
@@ -68,7 +133,7 @@ export default function Footer() {
     // Default (Home)
     return {
       locationTheme: "morning" as const,
-      signatureLabel: "MORNING — MEADOW",
+      locationLabel: "MEADOW",
       quotePool: [
         "Building systems that feel slightly impossible.",
         "Agentic loops and quiet interfaces.",
@@ -77,7 +142,7 @@ export default function Footer() {
     };
   };
 
-  const { locationTheme, signatureLabel, quotePool } = getFooterProps();
+  const { locationTheme, locationLabel, quotePool } = getFooterProps();
 
   const getThemeConfig = () => {
     switch (locationTheme) {
@@ -127,16 +192,12 @@ export default function Footer() {
   return (
     <footer className={cn("relative w-full overflow-hidden transition-colors duration-1000 ease-[var(--ease-organic)] mt-24", config.bg, config.text)}>
       <NoiseOverlay />
+      <FallingLeaves />
       
       {/* Subtle top hairline gradient */}
       <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-current opacity-10 to-transparent mix-blend-overlay" />
       
-      {/* Large Focal Element (Coordinate / Abstract mark) */}
-      <div className="absolute -bottom-16 -left-12 opacity-[0.03] pointer-events-none select-none z-0">
-        <span className="font-fraunces text-[22vw] leading-none whitespace-nowrap tracking-tighter">
-          40° 42' N
-        </span>
-      </div>
+      {/* Focal Element removed per request, replaced by FallingLeaves animation */}
 
       <motion.div 
         initial={{ opacity: 0, y: 15 }} 
@@ -155,8 +216,8 @@ export default function Footer() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--amber)] opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--amber)]"></span>
               </span>
-              <span className={cn("font-inter text-[10px] tracking-widest uppercase", config.muted)}>
-                {signatureLabel}
+              <span className={cn("font-inter text-[10px] tracking-widest uppercase flex items-center gap-2", config.muted)}>
+                {timePeriod} — {locationLabel} <span className="opacity-50">//</span> {localTime || "..."} LOCAL
               </span>
             </div>
             {/* Rotating Quote */}
@@ -176,11 +237,36 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Signature Name */}
-          <div className="mt-8">
+          {/* Signature Name & Socials */}
+          <div className="mt-8 flex flex-col gap-8">
             <h2 className="font-fraunces text-6xl md:text-8xl lg:text-9xl tracking-tighter leading-[0.85] font-light">
               Param<br/>Patel<span className="text-[var(--amber)]">.</span>
             </h2>
+            
+            {/* Social Media Row */}
+            <div className="flex items-center gap-6 mt-2">
+              {[
+                { name: "GitHub", icon: Github, href: "https://github.com/Param96" },
+                { name: "Twitter", icon: Twitter, href: "https://twitter.com" },
+                { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com/in/param96" },
+                { name: "Email", icon: Mail, href: "mailto:param@example.com" }
+              ].map((social) => (
+                <Link 
+                  key={social.name} 
+                  href={social.href}
+                  target="_blank"
+                  className={cn(
+                    "group relative transition-all duration-300 transform hover:-translate-y-1",
+                    config.muted,
+                    "hover:text-[var(--amber)]"
+                  )}
+                  aria-label={social.name}
+                >
+                  <social.icon strokeWidth={1.5} className="w-5 h-5" />
+                  <span className="absolute -bottom-2 left-1/2 w-0 h-[1px] bg-[var(--amber)] transition-all duration-300 group-hover:w-full group-hover:left-0" />
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -202,7 +288,7 @@ export default function Footer() {
                 "hover:text-[var(--amber)]"
               )}
             >
-              {/* Glyph (hidden on mobile, or just kept small) */}
+              {/* Glyph */}
               <span className={cn("font-inter text-xs opacity-40 group-hover:opacity-100 transition-opacity duration-300 group-hover:text-[var(--amber)]")}>
                 —
               </span>
