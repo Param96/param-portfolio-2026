@@ -18,9 +18,7 @@ export default async function CinematicResearchPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10 pt-24 pb-40">
-        {content ? <ResearchClientUI content={content} /> : (
-          <div className="text-center py-20 text-[var(--text-dim)]">Research configuration missing in Sanity.</div>
-        )}
+        {content && <ResearchClientUI content={content} />}
       </div>
     </div>
   );
