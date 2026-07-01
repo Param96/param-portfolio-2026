@@ -6,16 +6,27 @@ export async function GET() {
   try {
     const REPO_OWNER = 'Param96';
     
+    const headers: Record<string, string> = {
+      'Accept': 'application/vnd.github.v3+json',
+      'User-Agent': 'Param-Portfolio-App'
+    };
+
+    if (process.env.GITHUB_TOKEN) {
+      headers['Authorization'] = `Bearer ${process.env.GITHUB_TOKEN}`;
+    }
+
     const res = await fetch(`https://api.github.com/users/${REPO_OWNER}/repos?sort=updated&per_page=100`, {
-      headers: {
-        'Accept': 'application/vnd.github.v3+json',
-        'User-Agent': 'Param-Portfolio-App'
-      },
+      headers,
       next: { revalidate: 3600 }
     });
 
     if (!res.ok) {
-      throw new Error('Failed to fetch repositories');
+      console.warn(`GitHub Repos API failed with status: ${res.status}`);
+      // If we hit rate limits (403), return an empty array instead of throwing to prevent build failures
+      if (res.status === 403 || res.status === 404) {
+        return NextResponse.json({ success: true, data: [] });
+      }
+      throw new Error(`Failed to fetch repositories: ${res.statusText}`);
     }
 
     const data = await res.json();

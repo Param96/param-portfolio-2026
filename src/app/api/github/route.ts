@@ -8,26 +8,43 @@ export async function GET() {
     const REPO_OWNER = 'Param96';
     const REPO_NAME = 'param-portfolio-2026';
     
+    const headers: Record<string, string> = {
+      'Accept': 'application/vnd.github.v3+json',
+      'User-Agent': 'Param-Portfolio-App'
+    };
+
+    if (process.env.GITHUB_TOKEN) {
+      headers['Authorization'] = `Bearer ${process.env.GITHUB_TOKEN}`;
+    }
+
     // Fetch repository details
     const repoRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`, {
-      headers: {
-        'Accept': 'application/vnd.github.v3+json',
-        'User-Agent': 'Param-Portfolio-App'
-      },
+      headers,
       // Ensure Next.js caches this fetch call if we are not relying entirely on route segment config
       next: { revalidate: 60 }
     });
 
     // Fetch latest commits
     const commitsRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/commits?per_page=3`, {
-      headers: {
-        'Accept': 'application/vnd.github.v3+json',
-        'User-Agent': 'Param-Portfolio-App'
-      },
+      headers,
       next: { revalidate: 60 }
     });
 
     if (!repoRes.ok || !commitsRes.ok) {
+      console.warn(`GitHub API failed. Repo status: ${repoRes.status}, Commits status: ${commitsRes.status}`);
+      // If we hit rate limits, return a fallback payload so the build doesn't fail
+      if (repoRes.status === 403 || commitsRes.status === 403 || repoRes.status === 404) {
+        return NextResponse.json({ 
+          success: true, 
+          data: {
+            repo: `${REPO_OWNER}/${REPO_NAME}`,
+            stars: 0,
+            forks: 0,
+            last_updated: new Date().toISOString(),
+            latest_commits: []
+          } 
+        });
+      }
       throw new Error('Failed to fetch from GitHub API');
     }
 
