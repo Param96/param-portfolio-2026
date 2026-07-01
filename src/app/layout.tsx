@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Fraunces, Inter, Caveat } from "next/font/google";
 import "./globals.css";
 import PublicLayoutWrapper from "@/components/PublicLayoutWrapper";
 import LivingSystemProvider from "@/components/global/LivingSystemProvider";
@@ -18,6 +18,12 @@ const fraunces = Fraunces({
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+const caveat = Caveat({
+  subsets: ["latin"],
+  variable: "--font-caveat",
   display: "swap",
 });
 
@@ -78,7 +84,7 @@ export default async function RootLayout({
   const isEnabled = draft.isEnabled;
   return (
     <ClerkProvider>
-      <html lang="en" className={`${fraunces.variable} ${inter.variable}`} suppressHydrationWarning>
+      <html lang="en" className={`${fraunces.variable} ${inter.variable} ${caveat.variable}`} suppressHydrationWarning>
         <head>
           {/* Fonts loaded via next/font/google */}
         </head>

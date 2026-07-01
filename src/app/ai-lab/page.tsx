@@ -10,6 +10,9 @@ import AnimatedSection from "@/components/AnimatedSection";
 import GlowCard from "@/components/GlowCard";
 import TerminalBlock from "@/components/TerminalBlock";
 import { AILabHero } from "@/components/hero/meadow/ClientHeroes";
+import { sanityFetch } from "@/sanity/lib/live";
+import { LAB_NOTES_QUERY } from "@/sanity/lib/queries";
+import LabNotesBoard from "@/components/LabNotesBoard";
 
 export const metadata = {
   title: "AI Lab",
@@ -68,7 +71,9 @@ const labModules = [
   },
 ];
 
-export default function AILabPage() {
+export default async function AILabPage() {
+  const { data: notes } = await sanityFetch({ query: LAB_NOTES_QUERY });
+  
   return (
     <div className="min-h-screen transition-colors duration-1000 ease-in-out bg-[var(--bg-page)]">
       <AILabHero />
@@ -84,6 +89,14 @@ export default function AILabPage() {
               loop={true}
               className="max-w-3xl"
             />
+          </div>
+        </AnimatedSection>
+
+        {/* Corkboard Lab Notes */}
+        <AnimatedSection delay={150}>
+          <div className="mb-12">
+            <h3 className="text-xl font-bold text-[var(--text-primary)] mb-6">Lab Notes</h3>
+            <LabNotesBoard notes={notes as any[]} />
           </div>
         </AnimatedSection>
 

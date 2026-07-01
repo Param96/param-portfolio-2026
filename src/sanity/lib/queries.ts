@@ -1,5 +1,18 @@
 import { groq } from 'next-sanity';
 
+// Lab Notes (AI Lab Corkboard)
+export const LAB_NOTES_QUERY = groq`
+  *[_type == "labNote"] | order(publishedAt desc) {
+    _id,
+    title,
+    body,
+    color,
+    pinStyle,
+    tag,
+    publishedAt
+  }
+`;
+
 // Blogs
 export const ALL_BLOGS_QUERY = groq`
   *[_type == "blog"] | order(publishedAt desc) {

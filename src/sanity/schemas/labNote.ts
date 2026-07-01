@@ -2,99 +2,85 @@ import { defineType, defineField } from 'sanity';
 
 export default defineType({
   name: 'labNote',
-  title: 'Lab Note',
+  title: 'Lab Note (Sticky)',
   type: 'document',
   fields: [
     defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
+      description: 'Optional short title for the note.',
+    }),
+    defineField({
+      name: 'body',
+      title: 'Body Text',
+      type: 'text',
+      description: 'The content of the sticky note. Keep it short!',
+      validation: (Rule) => Rule.required().max(280).warning('Sticky notes should be short form (~280 characters max).'),
+    }),
+    defineField({
+      name: 'color',
+      title: 'Note Color',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Parchment (Cream)', value: 'parchment' },
+          { title: 'Moss (Green)', value: 'moss' },
+          { title: 'Clay (Orange)', value: 'clay' },
+          { title: 'Dusk (Lavender)', value: 'dusk' },
+        ],
+      },
+      initialValue: 'parchment',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: { source: 'title', maxLength: 96 },
+      name: 'pinStyle',
+      title: 'Pinning Style',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Pin (dot)', value: 'pin' },
+          { title: 'Tape (strip)', value: 'tape' },
+          { title: 'Thread (string)', value: 'thread' },
+        ],
+      },
+      initialValue: 'pin',
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'tag',
+      title: 'Tag (Badge)',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Experiment', value: 'experiment' },
+          { title: 'Idea', value: 'idea' },
+          { title: 'Shipped', value: 'shipped' },
+          { title: 'Reading', value: 'reading' },
+        ],
+      },
+      description: 'Optional corner label for the note.',
     }),
     defineField({
       name: 'publishedAt',
       title: 'Published at',
       type: 'datetime',
       initialValue: () => new Date().toISOString(),
-    }),
-    defineField({
-      name: 'experimentStatus',
-      title: 'Experiment Status',
-      type: 'string',
-      options: {
-        list: ['Currently Testing', 'Paused', 'Completed', 'Failed', 'Iterating'],
-      },
-      initialValue: 'Currently Testing',
-    }),
-    defineField({
-      name: 'mood',
-      title: 'Atmospheric Mood',
-      type: 'string',
-      options: {
-        list: ['Exploring', 'Debugging', 'Breakthrough', 'Reflection', 'Late Night Build'],
-      },
-      initialValue: 'Exploring',
-    }),
-    defineField({
-      name: 'tags',
-      title: 'Tags',
-      type: 'array',
-      of: [{ type: 'string' }],
-      options: { layout: 'tags' },
-    }),
-    defineField({
-      name: 'linkedProject',
-      title: 'Linked Project',
-      type: 'reference',
-      to: [{ type: 'project' }],
-      description: 'Which project is this experiment related to?',
-    }),
-    defineField({
-      name: 'excerpt',
-      title: 'Excerpt / Preview',
-      type: 'text',
-      description: 'Short summary for the lab notes feed.',
-    }),
-    defineField({
-      name: 'content',
-      title: 'Content / Code Snippets',
-      type: 'array',
-      of: [
-        { type: 'block' },
-        { type: 'image' },
-        { type: 'code' },
-        {
-          type: 'object',
-          name: 'callout',
-          title: 'Callout Box',
-          fields: [
-            {
-              name: 'type',
-              title: 'Type',
-              type: 'string',
-              options: { list: ['tip', 'warning', 'note', 'info'] }
-            },
-            { name: 'text', title: 'Text', type: 'text' }
-          ]
-        }
-      ],
-    }),
-    defineField({
-      name: 'seo',
-      title: 'SEO Override',
-      type: 'object',
-      fields: [
-        { name: 'metaTitle', title: 'Meta Title', type: 'string' },
-        { name: 'metaDescription', title: 'Meta Description', type: 'text' },
-        { name: 'ogImage', title: 'Open Graph Image', type: 'image' },
-      ],
+      validation: (Rule) => Rule.required(),
     }),
   ],
+  preview: {
+    select: {
+      title: 'title',
+      body: 'body',
+      color: 'color',
+      date: 'publishedAt',
+    },
+    prepare({ title, body, color, date }) {
+      return {
+        title: title || (body ? `${body.substring(0, 30)}...` : 'Untitled Note'),
+        subtitle: `${color} | ${new Date(date).toLocaleDateString()}`,
+      };
+    },
+  },
 });

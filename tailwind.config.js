@@ -5,7 +5,13 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        inter: ['var(--font-inter)'],
+        fraunces: ['var(--font-fraunces)'],
+        caveat: ['var(--font-caveat)'],
+      },
+    },
   },
   plugins: [],
 }
