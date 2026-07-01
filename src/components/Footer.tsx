@@ -5,60 +5,54 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { Github, Twitter, Linkedin, Mail } from "lucide-react";
+import { Github, Instagram, Linkedin, Mail } from "lucide-react";
+import { DynamicFooterVignette } from "./ui/FooterVignettes";
 
-// Faint grain/noise overlay component
-const NoiseOverlay = () => (
-  <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.04] mix-blend-overlay z-0" xmlns="http://www.w3.org/2000/svg">
-    <filter id="noiseFilter">
-      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
-    </filter>
-    <rect width="100%" height="100%" filter="url(#noiseFilter)" />
-  </svg>
-);
-
-// Falling Leaves Animation Background
+// Highly Optimized Falling Leaves Animation Background (Pure CSS, Hardware Accelerated)
 const FallingLeaves = () => {
-  const [leaves, setLeaves] = useState<{ id: number; left: number; duration: number; delay: number }[]>([]);
+  const [leaves, setLeaves] = useState<{ id: number; left: number; duration: number; delay: number; sway: number }[]>([]);
 
   useEffect(() => {
-    // Generate random leaves on client side to avoid hydration mismatch
-    const newLeaves = Array.from({ length: 12 }).map((_, i) => ({
+    // Generate fewer leaves (8 instead of 12) to reduce DOM nodes
+    const newLeaves = Array.from({ length: 8 }).map((_, i) => ({
       id: i,
       left: Math.random() * 100,
       duration: Math.random() * 15 + 15, // 15s to 30s fall time
-      delay: Math.random() * -20, // Start some halfway down
+      delay: Math.random() * -25, // Start staggered
+      sway: Math.random() * 60 - 30, // -30px to 30px sway
     }));
     setLeaves(newLeaves);
   }, []);
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-20">
-      {leaves.map((leaf) => (
-        <motion.div
-          key={leaf.id}
-          className="absolute top-0 text-[var(--amber)]"
-          style={{ left: `${leaf.left}%` }}
-          initial={{ y: "-10vh", rotate: 0 }}
-          animate={{
-            y: ["-10vh", "110vh"],
-            rotate: [0, 360],
-            x: [0, Math.random() * 100 - 50, 0] // sway left/right
-          }}
-          transition={{
-            duration: leaf.duration,
-            repeat: Infinity,
-            ease: "linear",
-            delay: leaf.delay,
-          }}
-        >
-          {/* Subtle Leaf SVG */}
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="opacity-40 blur-[0.5px]">
-            <path d="M17.5,3c-3.1,0-6.1,1.5-8.5,4c-0.2-1-0.9-1.9-2-2.3L2,3l2,5.2c-0.3,1.1-0.2,2.3,0.3,3.3C7.5,14.6,12.2,16.5,16,19 l1.6-6c0-1.8-0.3-3.7-1-5.4C17,7.1,17.4,6.7,17.9,6.2C19.7,4.4,20,3,20,3S19,3,17.5,3z"/>
-          </svg>
-        </motion.div>
-      ))}
-    </div>
+    <>
+      <style>{`
+        @keyframes optimizedFall {
+          0% { transform: translate3d(0, -10vh, 0) rotate(0deg); }
+          50% { transform: translate3d(var(--sway), 50vh, 0) rotate(180deg); }
+          100% { transform: translate3d(0, 110vh, 0) rotate(360deg); }
+        }
+      `}</style>
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-20">
+        {leaves.map((leaf) => (
+          <div
+            key={leaf.id}
+            className="absolute top-0 text-[var(--amber)]"
+            style={{ 
+              left: `${leaf.left}%`,
+              '--sway': `${leaf.sway}px`,
+              animation: `optimizedFall ${leaf.duration}s linear ${leaf.delay}s infinite`,
+              willChange: 'transform'
+            } as React.CSSProperties}
+          >
+            {/* Subtle Leaf SVG */}
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="opacity-40 blur-[0.5px]">
+              <path d="M17.5,3c-3.1,0-6.1,1.5-8.5,4c-0.2-1-0.9-1.9-2-2.3L2,3l2,5.2c-0.3,1.1-0.2,2.3,0.3,3.3C7.5,14.6,12.2,16.5,16,19 l1.6-6c0-1.8-0.3-3.7-1-5.4C17,7.1,17.4,6.7,17.9,6.2C19.7,4.4,20,3,20,3S19,3,17.5,3z"/>
+            </svg>
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 
@@ -144,34 +138,34 @@ export default function Footer() {
 
   const { locationTheme, locationLabel, quotePool } = getFooterProps();
 
+  // Dynamic color base dependent on local time
   const getThemeConfig = () => {
-    switch (locationTheme) {
-      case "morning":
-        return {
-          bg: "bg-[var(--cream)]",
-          text: "text-[var(--text-main)]",
-          muted: "text-[var(--moss)]",
-        };
-      case "daylight":
+    switch (timePeriod) {
+      case "AFTERNOON":
         return {
           bg: "bg-[var(--bark)]",
           text: "text-[var(--cream)]",
           muted: "text-white/40",
         };
-      case "dusk":
+      case "EVENING":
         return {
-          bg: "bg-gradient-to-b from-[var(--cream)] to-[var(--graphite)]",
-          text: "text-[var(--text-main)]",
-          muted: "text-black/40",
+          bg: "bg-[var(--graphite)]",
+          text: "text-[var(--cream)]",
+          muted: "text-white/40",
         };
-      case "night":
+      case "NIGHT":
         return {
           bg: "bg-[var(--void)]",
           text: "text-[var(--silver)]",
           muted: "text-white/40",
         };
+      case "MORNING":
       default:
-        return { bg: "bg-[var(--cream)]", text: "text-[var(--text-main)]", muted: "text-[var(--moss)]" };
+        return {
+          bg: "bg-[var(--cream)]",
+          text: "text-[var(--text-main)]",
+          muted: "text-[var(--moss)]",
+        };
     }
   };
 
@@ -190,21 +184,17 @@ export default function Footer() {
   }, [quotePool]);
 
   return (
-    <footer className={cn("relative w-full overflow-hidden transition-colors duration-1000 ease-[var(--ease-organic)] mt-24", config.bg, config.text)}>
-      <NoiseOverlay />
+    <footer className={cn("relative w-full overflow-hidden transition-colors duration-1000 ease-[var(--ease-organic)] mt-12 md:mt-16", config.bg, config.text)}>
       <FallingLeaves />
-      
       {/* Subtle top hairline gradient */}
       <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-current opacity-10 to-transparent mix-blend-overlay" />
-      
-      {/* Focal Element removed per request, replaced by FallingLeaves animation */}
 
       <motion.div 
         initial={{ opacity: 0, y: 15 }} 
         whileInView={{ opacity: 1, y: 0 }} 
         viewport={{ once: true, margin: "-50px" }} 
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="max-w-7xl mx-auto px-6 md:px-12 pt-32 pb-24 md:pb-32 relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-16 md:gap-8"
+        className="max-w-7xl mx-auto px-6 md:px-12 pt-20 pb-16 md:pb-20 relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-12 md:gap-8"
       >
         
         {/* Left Side: Signature & Live Status */}
@@ -238,8 +228,8 @@ export default function Footer() {
           </div>
 
           {/* Signature Name & Socials */}
-          <div className="mt-8 flex flex-col gap-8">
-            <h2 className="font-fraunces text-6xl md:text-8xl lg:text-9xl tracking-tighter leading-[0.85] font-light">
+          <div className="mt-6 flex flex-col gap-6">
+            <h2 className="font-fraunces text-5xl md:text-7xl lg:text-8xl tracking-tighter leading-[0.85] font-light">
               Param<br/>Patel<span className="text-[var(--amber)]">.</span>
             </h2>
             
@@ -247,7 +237,7 @@ export default function Footer() {
             <div className="flex items-center gap-6 mt-2">
               {[
                 { name: "GitHub", icon: Github, href: "https://github.com/Param96" },
-                { name: "Twitter", icon: Twitter, href: "https://twitter.com" },
+                { name: "Instagram", icon: Instagram, href: "https://www.instagram.com/param_230/" },
                 { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com/in/param96" },
                 { name: "Email", icon: Mail, href: "mailto:param@example.com" }
               ].map((social) => (
@@ -270,6 +260,11 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Center UI Feature: Dynamic Vignette */}
+        <div className="hidden md:flex flex-1 justify-center items-center h-full pb-8">
+          <DynamicFooterVignette pathname={pathname} />
+        </div>
+
         {/* Right Side: Stacked Nav Links */}
         <div className="flex flex-col items-start md:items-end gap-5 mt-8 md:mt-0 relative z-20">
           {[
@@ -277,6 +272,7 @@ export default function Footer() {
             { name: "Research", href: "/research" },
             { name: "Projects", href: "/projects" },
             { name: "AI Lab", href: "/ai-lab" },
+            { name: "Blog", href: "/blog" },
             { name: "Contact", href: "/contact" }
           ].map((link) => (
             <Link 
@@ -302,7 +298,7 @@ export default function Footer() {
           ))}
           
           {/* Spacer for floating trigger buttons so they don't overlap links on small screens */}
-          <div className="h-24 w-full md:hidden" />
+          <div className="h-16 w-full md:hidden" />
         </div>
 
       </motion.div>
