@@ -117,7 +117,7 @@ export default function ResumeHero() {
                     Founder & Systems Engineer
                   </span>
                 </div>
-                <h1 className="text-6xl md:text-8xl lg:text-[9rem] font-light tracking-tighter leading-[0.9] mb-8 text-[#2b1b17]">
+                <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light tracking-tighter leading-[0.9] mb-8 text-[#2b1b17]">
                   Param <span className="font-serif italic text-[var(--amber)]">Patel</span>
                 </h1>
                 <p className="text-lg md:text-xl text-[#4a2c26] leading-relaxed font-light max-w-2xl backdrop-blur-sm bg-white/10 p-6 rounded-2xl border border-white/20 shadow-[var(--shadow-soft)]">

@@ -105,7 +105,7 @@ export default function LabNotesHero() {
       
       <div className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-center px-6 md:px-24">
         <div className="max-w-2xl pointer-events-auto mt-32">
-          <h1 className="text-6xl md:text-8xl font-inter font-bold mb-6 text-[#2b1b17] drop-shadow-sm">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-inter font-bold mb-6 text-[#2b1b17] drop-shadow-sm">
             The Field Journal
           </h1>
           <p className="text-xl md:text-2xl text-[#4a2c26] leading-relaxed font-light">

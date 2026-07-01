@@ -163,17 +163,6 @@ export default async function AILabPage() {
             </div>
           </GlowCard>
         </AnimatedSection>
-
-        <AnimatedSection delay={700}>
-          <div className="mt-16 text-center">
-            <Link
-              href="/"
-              className="text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
-            >
-              ← Back to Home
-            </Link>
-          </div>
-        </AnimatedSection>
       </div>
     </div>
   );

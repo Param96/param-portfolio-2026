@@ -85,7 +85,7 @@ export default function ResearchHero() {
       {/* HTML Content Overlay (Below 3D scene z-index, but pointer events handled) */}
       <div className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-center px-6 md:px-24">
         <div className="max-w-2xl pointer-events-auto">
-          <h1 className="text-6xl md:text-8xl font-inter font-bold mb-6 text-white drop-shadow-md">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-inter font-bold mb-6 text-white drop-shadow-md">
             The Ancient Library
           </h1>
           <p className="text-xl md:text-2xl text-white/90 leading-relaxed font-light drop-shadow-md">

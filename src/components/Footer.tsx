@@ -80,6 +80,17 @@ export default function Footer() {
               </Link>
             ))}
           </div>
+
+          {pathname !== "/" && (
+            <div className="mt-16 text-center">
+              <Link
+                href="/"
+                className="text-sm font-inter text-[var(--moss)] hover:text-[var(--cream)] transition-colors duration-500 flex items-center justify-center gap-2"
+              >
+                <span className="text-[var(--amber)]">←</span> Back to Home
+              </Link>
+            </div>
+          )}
         </motion.div>
       </div>
     </footer>
