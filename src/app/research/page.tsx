@@ -38,7 +38,7 @@ export default async function CinematicResearchPage() {
         <ResearchHero />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 pt-24 pb-40">
+      <div className="max-w-7xl mx-auto px-6 relative z-10 pt-24 pb-40 mt-[100vh]">
         {content && <ResearchClientUI content={content} />}
       </div>
     </div>
