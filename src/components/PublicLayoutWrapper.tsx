@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-import LotusBloomNav from "./ui/LotusBloomNav";
 import Footer from "./Footer";
 import CustomCursor from "./CustomCursor";
 import { motion, AnimatePresence } from "framer-motion";
@@ -41,7 +40,6 @@ export default function PublicLayoutWrapper({ children }: { children: React.Reac
           animate={{ opacity: 1 }}
           transition={{ duration: 1, ease: "easeInOut" }}
         >
-          <LotusBloomNav />
           
           {/* Global Fixed Nameplate */}
           <Link href="/" className="fixed top-6 left-6 md:top-8 md:left-8 z-[100] group flex flex-col pointer-events-auto mix-blend-difference text-white">
