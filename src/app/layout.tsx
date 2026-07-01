@@ -3,7 +3,7 @@ import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import PublicLayoutWrapper from "@/components/PublicLayoutWrapper";
 import LivingSystemProvider from "@/components/global/LivingSystemProvider";
-import GodModeTerminal from "@/components/ui/GodModeTerminal";
+import OracleRootTerminal from "@/components/ui/OracleRootTerminal";
 import LivingSystemStatus from "@/components/ui/LivingSystemStatus";
 import SynestheticAudio from "@/components/global/SynestheticAudio";
 
@@ -84,7 +84,7 @@ export default async function RootLayout({
         <body className="min-h-screen relative font-inter" suppressHydrationWarning>
           <PostHogProvider>
             <LivingSystemProvider />
-            <GodModeTerminal />
+            <OracleRootTerminal />
             <LivingSystemStatus />
             <PublicLayoutWrapper>{children}</PublicLayoutWrapper>
             {isEnabled && (
