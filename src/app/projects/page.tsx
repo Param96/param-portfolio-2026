@@ -2,6 +2,7 @@ import EvolvingSystemsList from "@/components/EvolvingSystemsList";
 import { sanityFetch } from "@/sanity/lib/live";
 import { ALL_PROJECTS_QUERY } from "@/sanity/lib/queries";
 import { ProjectsHero } from "@/components/hero/meadow/ClientHeroes";
+import GithubRepoGrid from "@/components/GithubRepoGrid";
 
 export const revalidate = 60;
 
@@ -16,6 +17,9 @@ export default async function ProjectsPage() {
 
       {/* Dynamic Cinematic Projects from Sanity */}
       <EvolvingSystemsList projects={projects} />
+
+      {/* Live Open Source Repositories from GitHub */}
+      <GithubRepoGrid />
     </div>
   );
 }
