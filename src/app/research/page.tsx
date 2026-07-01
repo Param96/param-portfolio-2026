@@ -1,9 +1,7 @@
 import { sanityFetch } from "@/sanity/lib/live";
 import { RESEARCH_PAGE_QUERY } from "@/sanity/lib/queries";
 import ResearchClientUI from "./ResearchClientUI";
-import dynamic from "next/dynamic";
-
-const ResearchHero = dynamic(() => import("@/components/hero/meadow/ResearchHero"), { ssr: false });
+import { ResearchHero } from "@/components/hero/meadow/ClientHeroes";
 
 export const revalidate = 60;
 

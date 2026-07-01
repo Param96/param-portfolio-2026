@@ -9,7 +9,6 @@ export default function ResearchClientUI({ content }: { content: any }) {
   const [activeResearch, setActiveResearch] = useState<string | null>(null);
 
   return (
-  return (
     <>
       <div className="mb-24 mt-20">
       <motion.div
