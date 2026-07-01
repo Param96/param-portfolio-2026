@@ -107,7 +107,7 @@ export default function SynestheticAudio() {
   return (
     <button
       onClick={() => setEnabled(!enabled)}
-      className="fixed bottom-6 right-6 z-40 w-10 h-10 rounded-full border border-white/10 bg-black/50 backdrop-blur-md flex items-center justify-center hover:bg-white/10 transition-colors group"
+      className="fixed bottom-24 right-8 md:bottom-32 md:right-14 z-40 w-10 h-10 rounded-full border border-white/10 bg-black/50 backdrop-blur-md flex items-center justify-center hover:bg-white/10 transition-colors group shadow-lg"
       aria-label="Toggle Synesthetic Audio"
     >
       {enabled ? (
