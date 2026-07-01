@@ -70,10 +70,10 @@ export default function LabNotesPreview() {
 
         <div className="mt-20 text-center">
           <Link
-            href="/lab-notes"
+            href="/ai-lab"
             className="inline-flex items-center gap-4 text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-main)] hover:text-[var(--amber)] transition-colors"
           >
-            Open The Notebook <ArrowRight className="w-4 h-4" />
+            Enter The AI Lab <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
