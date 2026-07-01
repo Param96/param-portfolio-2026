@@ -4,6 +4,7 @@ import "./globals.css";
 import PublicLayoutWrapper from "@/components/PublicLayoutWrapper";
 import LivingSystemProvider from "@/components/global/LivingSystemProvider";
 import OracleRootTerminal from "@/components/ui/OracleRootTerminal";
+import ConnectedOracleRootTrigger from "@/components/ui/OracleRootTrigger";
 import LivingSystemStatus from "@/components/ui/LivingSystemStatus";
 import SynestheticAudio from "@/components/global/SynestheticAudio";
 
@@ -85,6 +86,7 @@ export default async function RootLayout({
           <PostHogProvider>
             <LivingSystemProvider />
             <OracleRootTerminal />
+            <ConnectedOracleRootTrigger />
             <LivingSystemStatus />
             <PublicLayoutWrapper>{children}</PublicLayoutWrapper>
             {isEnabled && (
