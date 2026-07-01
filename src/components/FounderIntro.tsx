@@ -6,6 +6,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useTexture, Float, Environment, MeshTransmissionMaterial, Ring } from "@react-three/drei";
 import * as THREE from "three";
 import Image from "next/image";
+import { useLivingSystemStore } from "@/lib/store";
 
 // ═══════════════════════════════════════════════════════════════
 // COMPACT CINEMATIC FOUNDER INTRO SECTION
@@ -15,6 +16,7 @@ import Image from "next/image";
 
 export default function FounderIntro() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { toggleTerminal } = useLivingSystemStore();
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -92,10 +94,14 @@ export default function FounderIntro() {
               <div className="w-8 h-[1px] bg-[var(--amber)]" />
               <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-[var(--moss)] font-inter flex items-center gap-2 group cursor-crosshair">
                 About The Builder
-                <span className="text-[14px] opacity-30 group-hover:opacity-100 transition-opacity duration-1000 select-none flex items-center">
+                <span 
+                  onClick={() => toggleTerminal()}
+                  className="text-[14px] opacity-30 hover:opacity-100 transition-opacity duration-1000 select-none flex items-center cursor-pointer hover:scale-110 active:scale-95"
+                  title="Initialize Neural Link"
+                >
                   🍎 
                   <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-1000 ml-2 text-[8px] md:text-[10px] uppercase tracking-[0.2em] text-[var(--moss-dim)] whitespace-nowrap">
-                    ~ press ` to change theme
+                    ~ neural link
                   </span>
                 </span>
               </span>

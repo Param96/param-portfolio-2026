@@ -3,12 +3,21 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Network, Database, BrainCircuit, Layers, Workflow, CheckCircle, LayoutGrid, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
+import dynamic from "next/dynamic";
+
+const ResearchHero = dynamic(() => import("@/components/hero/meadow/ResearchHero"), { ssr: false });
 
 export default function ResearchClientUI({ content }: { content: any }) {
   const [activeResearch, setActiveResearch] = useState<string | null>(null);
 
   return (
-    <section className="mb-40">
+    <>
+      {/* 3D Hero Section */}
+      <div className="absolute inset-x-0 top-0 h-screen -mt-24 pointer-events-none -z-10">
+        <ResearchHero />
+      </div>
+
+      <div className="mb-24 mt-20">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -203,6 +212,7 @@ export default function ResearchClientUI({ content }: { content: any }) {
           </div>
         </div>
       </motion.div>
-    </section>
+      </div>
+    </>
   );
 }
