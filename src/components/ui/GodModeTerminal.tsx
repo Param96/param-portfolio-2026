@@ -23,13 +23,18 @@ export default function GodModeTerminal() {
     }
   }, [terminalOpen]);
 
-  const handleCommand = (cmd: string) => {
+  const handleCommand = async (cmd: string) => {
     const trimmed = cmd.trim().toLowerCase();
-    const newHistory = [...history, `> ${cmd}`];
+    
+    if (trimmed !== "clear") {
+      setHistory(prev => [...prev, `> ${cmd}`]);
+    }
+    
+    setInput("");
 
     switch (trimmed) {
       case "help":
-        newHistory.push(
+        setHistory(prev => [...prev, 
           "Available commands:",
           "  clear        - Clear terminal output",
           "  exit         - Close terminal",
@@ -37,12 +42,13 @@ export default function GodModeTerminal() {
           "  theme day    - Override theme to day",
           "  theme dusk   - Override theme to dusk",
           "  theme night  - Override theme to midnight",
+          "  github       - Fetch live repository telemetry",
+          "  telemetry    - Fetch live repository telemetry",
           "  reboot       - Reload the system"
-        );
+        ]);
         break;
       case "clear":
         setHistory([]);
-        setInput("");
         return;
       case "exit":
       case "quit":
@@ -50,34 +56,56 @@ export default function GodModeTerminal() {
         break;
       case "theme dawn":
         setTimeOfDayTheme("dawn");
-        newHistory.push("System theme overridden: DAWN");
+        setHistory(prev => [...prev, "System theme overridden: DAWN"]);
         break;
       case "theme day":
         setTimeOfDayTheme("day");
-        newHistory.push("System theme overridden: DAY");
+        setHistory(prev => [...prev, "System theme overridden: DAY"]);
         break;
       case "theme dusk":
         setTimeOfDayTheme("dusk");
-        newHistory.push("System theme overridden: DUSK");
+        setHistory(prev => [...prev, "System theme overridden: DUSK"]);
         break;
       case "theme night":
       case "theme midnight":
         setTimeOfDayTheme("night");
-        newHistory.push("System theme overridden: NIGHT");
+        setHistory(prev => [...prev, "System theme overridden: NIGHT"]);
+        break;
+      case "github":
+      case "telemetry":
+        setHistory(prev => [...prev, "Establishing secure connection to GitHub API..."]);
+        try {
+          const res = await fetch("/api/github");
+          const json = await res.json();
+          if (!res.ok) throw new Error(json.error || "Connection failed");
+          
+          const d = json.data;
+          setHistory(prev => [
+            ...prev,
+            "--------------------------------------",
+            `REPOSITORY:   ${d.repo}`,
+            `STARS:        ${d.stars} ★`,
+            `FORKS:        ${d.forks}`,
+            `LAST UPDATED: ${new Date(d.last_updated).toLocaleString()}`,
+            "--------------------------------------",
+            "LATEST COMMITS:",
+            ...d.latest_commits.map((c: any) => `[${c.sha}] ${c.message} (${c.author})`),
+            "--------------------------------------"
+          ]);
+        } catch (err) {
+          setHistory(prev => [...prev, "[ERROR]: Failed to retrieve telemetry."]);
+        }
         break;
       case "reboot":
-        newHistory.push("Rebooting...");
+        setHistory(prev => [...prev, "Rebooting..."]);
         setTimeout(() => window.location.reload(), 1000);
         break;
       case "":
         break;
       default:
-        newHistory.push(`Command not found: ${trimmed}`);
+        setHistory(prev => [...prev, `Command not found: ${trimmed}`]);
         break;
     }
-
-    setHistory(newHistory);
-    setInput("");
   };
 
   return (
