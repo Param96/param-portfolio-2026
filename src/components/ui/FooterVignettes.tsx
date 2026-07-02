@@ -563,9 +563,7 @@ export const DynamicFooterVignette = ({ pathname }: { pathname: string }) => {
 
   return (
     <div 
-      className="flex flex-col items-center justify-end h-full w-80 opacity-60 hover:opacity-100 transition-opacity duration-700 pb-2 cursor-default"
-      // Enforce the one consistent blush/peach accent tone for all vignettes
-      style={{ "--vignette-accent": "#FFB09C" } as React.CSSProperties}
+      className="flex flex-col items-center justify-end h-full w-[400px] opacity-60 hover:opacity-100 transition-opacity duration-700 pb-2 cursor-default"
     >
       <Vignette />
     </div>
