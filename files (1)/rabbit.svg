@@ -1,0 +1,16 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- ears -->
+  <ellipse cx="41" cy="12" rx="3.2" ry="13" transform="rotate(-16 41 12)"/>
+  <ellipse cx="51" cy="13" rx="3.2" ry="13" transform="rotate(14 51 13)"/>
+  <!-- tail -->
+  <circle cx="15" cy="44" r="5.5"/>
+  <!-- body -->
+  <ellipse cx="31" cy="43" rx="17" ry="13"/>
+  <!-- head -->
+  <circle cx="47" cy="27" r="9"/>
+  <!-- face -->
+  <circle cx="51" cy="25" r="1.3" fill="currentColor" stroke="none"/>
+  <circle cx="43" cy="30" r="1.3" fill="#E8A798" stroke="none"/>
+  <!-- front legs -->
+  <path d="M28,54 L27,60 M38,54 L39,60"/>
+</svg>

@@ -1,0 +1,19 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- slim body -->
+  <path d="M20,36 C19,28 24,20 33,18 C40,16.5 46,20 48,26 C49.5,30 48,34 44,36 C38,39 28,40 22,39 C21,38.5 20.5,37 20,36 Z"/>
+  <!-- small head crest tuft -->
+  <path d="M34,18 L33,11"/>
+  <!-- beak -->
+  <path d="M47,25 L54,23 L47,29 Z" fill="currentColor" stroke="none"/>
+  <!-- eye -->
+  <circle cx="42" cy="24" r="1.4" fill="currentColor" stroke="none"/>
+  <!-- long fanned tail, three thin strokes, kept within canvas -->
+  <path d="M21,35 C14,32 8,29 4,24"/>
+  <path d="M21,37 C13,36 6,34 2,31"/>
+  <path d="M22,39 C15,40 8,40 3,38"/>
+  <!-- wing line -->
+  <path d="M29,26 C34,25 39,27 42,31"/>
+  <!-- legs -->
+  <path d="M32,39 L31,46 M31,46 L28,47 M31,46 L34,48"/>
+  <path d="M39,39 L40,46 M40,46 L37,48 M40,46 L43,47"/>
+</svg>

@@ -1,0 +1,18 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- bushy tail with pale tip -->
+  <path d="M14,46 C4,44 0,34 6,26 C9,22 15,22 17,27"/>
+  <circle cx="6" cy="27" r="3" fill="#F4EFE6" stroke="currentColor" stroke-width="1.6"/>
+  <!-- body -->
+  <ellipse cx="27" cy="42" rx="14" ry="13"/>
+  <!-- head -->
+  <circle cx="43" cy="24" r="8.5"/>
+  <!-- pointed ears -->
+  <path d="M38,17 L35,7 L43,15 Z" fill="currentColor" stroke="none"/>
+  <path d="M47,15 L52,6 L50,16 Z" fill="currentColor" stroke="none"/>
+  <!-- snout -->
+  <path d="M35,27 C29,27 24,26 20,24"/>
+  <circle cx="20.5" cy="24.2" r="1.2" fill="currentColor" stroke="none"/>
+  <circle cx="46" cy="22" r="1.2" fill="currentColor" stroke="none"/>
+  <!-- legs -->
+  <path d="M20,53 L18,60 M34,53 L36,60"/>
+</svg>

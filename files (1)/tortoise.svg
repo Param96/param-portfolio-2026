@@ -1,0 +1,16 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- shell dome -->
+  <path d="M9,46 A23,18 0 0 1 55,46 Z"/>
+  <!-- shell pattern -->
+  <path d="M32,28 L32,46"/>
+  <path d="M20,31 C24,36 24,42 20,46"/>
+  <path d="M44,31 C40,36 40,42 44,46"/>
+  <path d="M13,42 L51,42"/>
+  <!-- head -->
+  <circle cx="4" cy="41" r="5.5"/>
+  <circle cx="2.5" cy="40" r="1" fill="currentColor" stroke="none"/>
+  <!-- legs -->
+  <path d="M18,47 L16,54 M28,48 L27,55 M38,48 L40,55 M48,47 L51,53"/>
+  <!-- tail -->
+  <path d="M55,45 C58,46 59,47 60,49"/>
+</svg>

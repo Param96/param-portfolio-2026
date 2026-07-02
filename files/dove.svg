@@ -1,0 +1,19 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- soft round body -->
+  <path d="M16,36 C14,26 20,16 29,14 C37,12.5 45,17 47,25 C48.5,32 44,40 35,43 C27,45.5 18,44 16,36 Z"/>
+  <!-- small tucked head bump -->
+  <path d="M40,17 C43,15 46,15.5 47,18.5"/>
+  <!-- gentle wing curve -->
+  <path d="M20,28 C26,25 33,26 38,32 C33,33 27,34 22,33"/>
+  <!-- tiny beak -->
+  <path d="M46,20 L51,19 L46,23 Z" fill="currentColor" stroke="none"/>
+  <!-- eye -->
+  <circle cx="41" cy="20" r="1.4" fill="currentColor" stroke="none"/>
+  <!-- small fan tail -->
+  <path d="M17,34 C11,32 6,31 1,32"/>
+  <path d="M17,37 C11,37 6,38 1,40"/>
+  <path d="M18,40 C13,42 8,44 4,47"/>
+  <!-- legs -->
+  <path d="M28,43 L27,50 M27,50 L23,51 M27,50 L30,52"/>
+  <path d="M35,42 L37,49 M37,49 L34,51 M37,49 L40,50"/>
+</svg>
