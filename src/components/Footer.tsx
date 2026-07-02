@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { Github, Instagram, Linkedin, Mail } from "lucide-react";
 import { DynamicFooterVignette } from "./ui/FooterVignettes";
@@ -14,8 +14,8 @@ const FallingLeaves = () => {
   const [leaves, setLeaves] = useState<{ id: number; left: number; duration: number; delay: number; sway: number }[]>([]);
 
   useEffect(() => {
-    // Generate fewer leaves (8 instead of 12) to reduce DOM nodes
-    const newLeaves = Array.from({ length: 8 }).map((_, i) => ({
+    // Generate more leaves to fill the full width of the footer
+    const newLeaves = Array.from({ length: 24 }).map((_, i) => ({
       id: i,
       left: Math.random() * 100,
       duration: Math.random() * 15 + 15, // 15s to 30s fall time
@@ -57,6 +57,294 @@ const FallingLeaves = () => {
   );
 };
 
+// Living Meadow Ambient System (Wind, Motes, Grass, Time-of-Day Cameos, Node Pulses)
+const AmbientMeadowSystem = ({ theme }: { theme: string }) => {
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const motes = useMemo(() => Array.from({ length: 15 }).map((_, i) => ({
+    id: `mote-${i}`,
+    left: Math.random() * 100,
+    bottom: Math.random() * 100,
+    size: Math.random() * 1.5 + 0.5,
+    duration: Math.random() * 20 + 20, // 20-40s
+    delay: Math.random() * -40,
+  })), []);
+
+  const nodes = useMemo(() => [
+    { left: 15, bottom: 35, delay: 0 },
+    { left: 85, bottom: 55, delay: 1.5 },
+  ], []);
+
+  const grassTufts = useMemo(() => Array.from({ length: 12 }).map((_, i) => ({
+    left: Math.random() * 100,
+    delay: Math.random() * -5,
+  })), []);
+
+  if (!mounted) return <div className="absolute inset-0 pointer-events-none opacity-0" />;
+
+  return (
+    <>
+      <style>{`
+        @keyframes moteRise {
+          0% { transform: translateY(10vh) translateX(0); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+        }
+        @keyframes pulseNode {
+          0%, 100% { opacity: 0.1; transform: scale(0.8); }
+          50% { opacity: 0.8; transform: scale(1.2); }
+        }
+        @keyframes swayGrass {
+          0%, 100% { transform: rotate(0deg); }
+          50% { transform: rotate(4deg); }
+        }
+        @keyframes cameoWander {
+          0% { transform: translate(-10vw, 10vh); opacity: 0; }
+          10% { opacity: 0.6; }
+          90% { opacity: 0.6; }
+          100% { transform: translate(110vw, -10vh); opacity: 0; }
+        }
+        @keyframes cameoWanderBird {
+          0% { transform: translate(110vw, 15vh) scaleX(-1); opacity: 0; }
+          10% { opacity: 0.4; }
+          90% { opacity: 0.4; }
+          100% { transform: translate(-10vw, 5vh) scaleX(-1); opacity: 0; }
+        }
+        .motion-safe-ambient {
+          will-change: transform, opacity;
+        }
+        @media (prefers-reduced-motion) {
+          .motion-safe-ambient { animation: none !important; transform: none !important; }
+        }
+      `}</style>
+      
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden text-[var(--footer-ink)] opacity-50">
+        
+        {/* 2. POLLEN / DUST MOTES */}
+        {motes.map((mote) => (
+          <div
+            key={mote.id}
+            className="absolute rounded-full bg-current motion-safe-ambient opacity-0"
+            style={{
+              left: `${mote.left}%`,
+              bottom: `${mote.bottom}%`,
+              width: `${mote.size}px`,
+              height: `${mote.size}px`,
+              animation: `moteRise ${mote.duration}s linear ${mote.delay}s infinite`,
+            }}
+          />
+        ))}
+
+        {/* 5. NODE-PULSE FIREFLIES */}
+        {nodes.map((node, i) => (
+          <div
+            key={`node-${i}`}
+            className="absolute w-1.5 h-1.5 rounded-full bg-[var(--footer-accent)] motion-safe-ambient"
+            style={{
+              left: `${node.left}%`,
+              bottom: `${node.bottom}%`,
+              boxShadow: '0 0 8px 2px var(--footer-accent)',
+              animation: `pulseNode 3.5s ease-in-out ${node.delay}s infinite`,
+            }}
+          />
+        ))}
+
+        {/* 4. ONE TIME-OF-DAY CREATURE CAMEO */}
+        <div className="absolute inset-0">
+          {(theme === 'day') && (
+            <div className="absolute top-1/3 left-0 motion-safe-ambient opacity-0" style={{ animation: 'cameoWander 45s linear infinite' }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+                <g className="animate-butterfly-drift-1" style={{ transformOrigin: "12px 12px" }}>
+                  <path d="M 12 12 Q 8 6 4 10 Q 8 14 12 12 Z" opacity="0.6" />
+                  <path d="M 12 12 Q 16 6 20 10 Q 16 14 12 12 Z" opacity="0.6" />
+                </g>
+              </svg>
+            </div>
+          )}
+          {(theme === 'dawn' || theme === 'dusk') && (
+            <div className="absolute top-1/4 right-0 motion-safe-ambient opacity-0" style={{ animation: 'cameoWanderBird 35s linear infinite' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M 2 12 Q 6 6 12 12 Q 18 6 22 12" opacity="0.5" />
+              </svg>
+            </div>
+          )}
+          {(theme === 'night') && (
+            <div className="absolute top-1/2 left-0 motion-safe-ambient opacity-0" style={{ animation: 'cameoWander 50s ease-in-out infinite' }}>
+              <div className="w-1.5 h-1.5 rounded-full bg-[var(--footer-accent)] blur-[0.5px] animate-pulse" />
+            </div>
+          )}
+        </div>
+
+        {/* 3. GROUND PLANE */}
+        <div className="absolute bottom-0 inset-x-0 h-32 opacity-30">
+          {/* Continuous ground contour line */}
+          <svg className="absolute bottom-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 1000 100" fill="none" stroke="currentColor" strokeWidth="0.5">
+            <path d="M 0 80 Q 250 90 500 70 T 1000 85" strokeDasharray="4 6" opacity="0.5" />
+          </svg>
+          
+          {/* Sparse grass tufts */}
+          {grassTufts.map((tuft, i) => (
+            <div
+              key={`grass-${i}`}
+              className="absolute motion-safe-ambient origin-bottom"
+              style={{
+                left: `${tuft.left}%`,
+                bottom: `${20 + (i % 5)}%`,
+                animation: `swayGrass ${4 + (i % 3)}s ease-in-out ${tuft.delay}s infinite`,
+              }}
+            >
+              <svg width="8" height="12" viewBox="0 0 8 12" fill="none" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round">
+                <path d="M 4 12 Q 2 6 0 2 M 4 12 Q 4 6 4 0 M 4 12 Q 6 6 8 4" opacity="0.4" />
+              </svg>
+            </div>
+          ))}
+        </div>
+        
+      </div>
+    </>
+  );
+};
+
+// SVG Wooden Signpost Navigation
+const SignpostNav = ({ config }: { config: { text: string } }) => {
+  const links = [
+    { name: "HOME", href: "/", dir: "left", y: 20 },
+    { name: "RESEARCH", href: "/research", dir: "right", y: 56 },
+    { name: "PROJECTS", href: "/projects", dir: "left", y: 92 },
+    { name: "AI LAB", href: "/ai-lab", dir: "right", y: 128 },
+    { name: "BLOG", href: "/blog", dir: "left", y: 164 },
+    { name: "CONTACT", href: "/contact", dir: "right", y: 200 }
+  ];
+
+  return (
+    <div className="relative w-40 h-[280px]">
+      <svg className={cn("w-full h-full overflow-visible transition-colors duration-1000", config.text)} viewBox="0 0 160 280" fill="none" stroke="currentColor">
+        
+        {/* Background Decorative Cluster (Trees, Flowers, Butterflies) - Strictly non-interactive */}
+        <g className="pointer-events-none text-[var(--footer-ink)]" stroke="currentColor" fill="none" strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round">
+          {/* Small Tree Left */}
+          <path d="M 20 280 Q 25 200 10 160 M 23 230 Q 30 190 40 170 M 22 210 Q 5 190 0 180" opacity="0.25" />
+          <circle cx="10" cy="160" r="1.5" fill="currentColor" stroke="none" opacity="0.2" />
+          <circle cx="40" cy="170" r="1" fill="currentColor" stroke="none" opacity="0.2" />
+          <circle cx="0" cy="180" r="0.8" fill="currentColor" stroke="none" opacity="0.15" />
+          
+          {/* Small Tree Right */}
+          <path d="M 130 280 Q 125 230 145 190 M 128 250 Q 120 220 110 200 M 126 230 Q 140 210 150 200" opacity="0.35" />
+          <circle cx="145" cy="190" r="1.5" fill="currentColor" stroke="none" opacity="0.3" />
+          <circle cx="110" cy="200" r="1.2" fill="currentColor" stroke="none" opacity="0.25" />
+          
+          {/* Faint distant tree right */}
+          <path d="M 155 276 Q 150 240 160 220" strokeWidth="0.5" opacity="0.15" />
+          <circle cx="160" cy="220" r="0.8" fill="currentColor" stroke="none" opacity="0.1" />
+          
+          {/* Ground Flowers (dots) */}
+          <circle cx="30" cy="275" r="0.8" fill="var(--footer-accent)" stroke="none" opacity="0.7" />
+          <circle cx="12" cy="278" r="0.6" fill="currentColor" stroke="none" opacity="0.4" />
+          <circle cx="120" cy="277" r="1" fill="currentColor" stroke="none" opacity="0.3" />
+          <circle cx="140" cy="274" r="0.8" fill="var(--footer-accent)" stroke="none" opacity="0.6" />
+          <circle cx="160" cy="278" r="0.5" fill="currentColor" stroke="none" opacity="0.2" />
+          <circle cx="-10" cy="279" r="0.8" fill="var(--footer-accent)" stroke="none" opacity="0.5" />
+
+          {/* Butterflies */}
+          <g className="motion-safe:animate-butterfly-drift-1" style={{ transformOrigin: "20px 40px" }}>
+            {/* Butterfly 1 - Top Left */}
+            <path d="M 18 38 Q 15 35 12 37 Q 15 40 18 38 Z" strokeWidth="0.4" opacity="0.6" />
+            <path d="M 18 38 Q 20 34 23 35 Q 20 39 18 38 Z" strokeWidth="0.4" opacity="0.6" />
+          </g>
+          
+          <g className="motion-safe:animate-butterfly-drift-2" style={{ transformOrigin: "140px 100px" }}>
+            {/* Butterfly 2 - Mid Right */}
+            <path d="M 138 98 Q 135 95 132 97 Q 135 100 138 98 Z" strokeWidth="0.3" opacity="0.4" />
+            <path d="M 138 98 Q 140 94 143 95 Q 140 99 138 98 Z" strokeWidth="0.3" opacity="0.4" />
+          </g>
+          
+          <g className="motion-safe:animate-butterfly-drift-3" style={{ transformOrigin: "40px 120px" }}>
+            {/* Butterfly 3 - Mid Left Faint */}
+            <path d="M 38 118 Q 36 116 34 117 Q 36 119 38 118 Z" strokeWidth="0.2" opacity="0.3" />
+            <path d="M 38 118 Q 39 115 41 116 Q 39 119 38 118 Z" strokeWidth="0.2" opacity="0.3" />
+          </g>
+        </g>
+
+        {/* Grass at base */}
+        <path d="M 70 280 L 68 275 M 75 280 L 77 273 M 85 280 L 83 273 M 90 280 L 92 276" strokeWidth="1" strokeLinecap="round" />
+        <circle cx="65" cy="278" r="1.5" fill="var(--footer-accent)" stroke="none" opacity="0.6" />
+        <circle cx="95" cy="279" r="1" fill="var(--footer-accent)" stroke="none" opacity="0.6" />
+        
+        {/* Main Post */}
+        <path d="M 77 10 L 77 280 M 83 10 L 83 280" strokeWidth="2" strokeLinecap="round" />
+        <path d="M 77 10 L 83 10" strokeWidth="2" strokeLinecap="round" />
+        <path d="M 75 280 L 85 280" strokeWidth="1.5" strokeLinecap="round" />
+        
+        {/* Wood grain on post */}
+        <path d="M 79 30 L 79 70 M 81 90 L 81 140 M 80 180 L 80 230 M 79 250 L 79 270" strokeWidth="0.5" opacity="0.4" />
+
+        {links.map((link, i) => {
+          const isLeft = link.dir === "left";
+          const cy = link.y + 12; // center Y
+          
+          // Slight alternating rotation for old wooden feel
+          const rotation = isLeft ? -1.5 + (i % 2) : 1.5 - (i % 2);
+          const cx = isLeft ? 85 : 75;
+
+          const pathD = isLeft 
+            ? `M 85 ${link.y} L 25 ${link.y} L 10 ${cy} L 25 ${link.y + 24} L 85 ${link.y + 24} Z`
+            : `M 75 ${link.y} L 135 ${link.y} L 150 ${cy} L 135 ${link.y + 24} L 75 ${link.y + 24} Z`;
+
+          const textX = isLeft ? 47.5 : 112.5;
+
+          return (
+            <Link href={link.href} key={link.name}>
+              <g 
+                className="group cursor-pointer" 
+                style={{ transform: `rotate(${rotation}deg)`, transformOrigin: `${cx}px ${cy}px` }}
+              >
+                {/* Board */}
+                <path 
+                  d={pathD} 
+                  style={{ fill: 'var(--footer-bg)' }}
+                  strokeWidth="1.5" 
+                  strokeLinejoin="round"
+                  className="transition-colors duration-300 group-hover:fill-[var(--footer-accent)]" 
+                />
+                
+                {/* Nails */}
+                <circle cx={isLeft ? 80 : 80} cy={link.y + 6} r="0.8" fill="currentColor" stroke="none" />
+                <circle cx={isLeft ? 80 : 80} cy={link.y + 18} r="0.8" fill="currentColor" stroke="none" />
+                
+                {/* Wood grain on board */}
+                <path 
+                  d={isLeft ? `M 75 ${link.y + 6} L 40 ${link.y + 6} M 60 ${link.y + 18} L 30 ${link.y + 18}` : `M 85 ${link.y + 6} L 120 ${link.y + 6} M 100 ${link.y + 18} L 130 ${link.y + 18}`} 
+                  strokeWidth="0.5" 
+                  opacity="0.3" 
+                  strokeLinecap="round"
+                />
+                
+                {/* Text */}
+                <text 
+                  x={textX} 
+                  y={cy} 
+                  textAnchor="middle" 
+                  dominantBaseline="central" 
+                  fill="currentColor" 
+                  stroke="none" 
+                  className="font-inter text-[8.5px] font-bold tracking-[0.2em] transition-colors duration-300 group-hover:text-white"
+                >
+                  {link.name}
+                </text>
+              </g>
+            </Link>
+          );
+        })}
+      </svg>
+    </div>
+  );
+};
+
 export default function Footer() {
   const pathname = usePathname();
   const { timeOfDayTheme } = useLivingSystemStore();
@@ -75,12 +363,10 @@ export default function Footer() {
     return () => clearInterval(interval);
   }, []);
 
-  // Route-based configuration
+  // Route-based configuration for quotes
   const getFooterProps = () => {
     if (pathname === "/projects" || pathname === "/work") {
       return {
-        locationTheme: "daylight" as const,
-        locationLabel: "FIELD",
         quotePool: [
           "Building evolving systems.",
           "Experimental engineering at scale.",
@@ -90,8 +376,6 @@ export default function Footer() {
     }
     if (pathname === "/research") {
       return {
-        locationTheme: "dusk" as const,
-        locationLabel: "RIDGE",
         quotePool: [
           "Curiosity is the engine of progress.",
           "Reflecting on the architecture of thought.",
@@ -101,8 +385,6 @@ export default function Footer() {
     }
     if (pathname === "/ai-lab") {
       return {
-        locationTheme: "night" as const, 
-        locationLabel: "CORE",
         quotePool: [
           "MODELS: 3 ACTIVE",
           "STATUS: EXPERIMENTING",
@@ -112,8 +394,6 @@ export default function Footer() {
     }
     if (pathname === "/contact") {
       return {
-        locationTheme: "night" as const,
-        locationLabel: "HOLLOW",
         quotePool: [
           "Open to ambitious ideas.",
           "Send a signal into the void.",
@@ -123,8 +403,6 @@ export default function Footer() {
     }
     // Default (Home)
     return {
-      locationTheme: "morning" as const,
-      locationLabel: "MEADOW",
       quotePool: [
         "Building systems that feel slightly impossible.",
         "Agentic loops and quiet interfaces.",
@@ -133,7 +411,14 @@ export default function Footer() {
     };
   };
 
-  const { locationTheme, locationLabel, quotePool } = getFooterProps();
+  const { quotePool } = getFooterProps();
+
+  // Time-based configuration for location
+  let locationLabel = "MEADOWS";
+  if (timeOfDayTheme === "dawn") locationLabel = "HORIZON";
+  else if (timeOfDayTheme === "day") locationLabel = "MEADOWS";
+  else if (timeOfDayTheme === "dusk") locationLabel = "MOUNTAINS";
+  else if (timeOfDayTheme === "night") locationLabel = "STAR";
 
   // Dynamic color base dependent on global time theme
   const getThemeConfig = () => {
@@ -161,6 +446,7 @@ export default function Footer() {
   return (
     <footer className={cn("relative w-full overflow-hidden transition-colors duration-1000 ease-[var(--ease-organic)] mt-12 md:mt-16", config.bg, config.text)}>
       <FallingLeaves />
+      <AmbientMeadowSystem theme={timeOfDayTheme} />
       {/* Subtle top hairline gradient */}
       <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-current opacity-10 to-transparent mix-blend-overlay" />
 
@@ -173,7 +459,67 @@ export default function Footer() {
       >
         
         {/* Left Side: Signature & Live Status */}
-        <div className="flex flex-col items-start gap-12 w-full md:w-auto">
+        <div className="flex flex-col items-start gap-12 w-full md:w-auto relative z-10">
+          
+          {/* Ambient Background Element: Distant Tower */}
+          <div className="absolute -z-10 -top-12 -left-32 md:-left-40 opacity-15 pointer-events-none text-[var(--footer-ink)] transition-colors duration-1000">
+            <svg 
+              className="w-32 h-64 md:w-40 md:h-80" 
+              viewBox="0 0 120 200" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="0.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              {/* Base Rocks */}
+              <path d="M 10 190 Q 20 180 30 185 Q 35 170 42 185 M 110 190 Q 100 175 90 182 Q 85 165 78 175" strokeWidth="0.5" opacity="0.6" />
+              <path d="M 20 180 Q 25 170 30 175 M 100 175 Q 95 160 88 170" strokeWidth="0.4" opacity="0.5" />
+              
+              {/* Door Arch */}
+              <path d="M 42 190 L 42 165 A 18 18 0 0 1 78 165 L 78 190" strokeWidth="1" />
+              {/* Door Outer Stone Arch */}
+              <path d="M 38 190 L 38 165 A 22 22 0 0 1 82 165 L 82 190" strokeWidth="0.5" />
+              
+              {/* Inner door details (planks) */}
+              <path d="M 48 190 L 48 162 M 54 190 L 54 158 M 60 190 L 60 156 M 66 190 L 66 158 M 72 190 L 72 162" strokeWidth="0.4" opacity="0.5" />
+              {/* Door hinges/band */}
+              <path d="M 42 175 L 78 175 M 42 185 L 78 185" strokeWidth="0.5" />
+              
+              {/* Main Tower Body */}
+              <path d="M 32 185 L 32 60 M 88 185 L 88 60" />
+              
+              {/* Horizontal dividing bands (curved for cylindrical perspective) */}
+              <path d="M 32 105 Q 60 110 88 105 M 32 110 Q 60 115 88 110" strokeWidth="0.5" opacity="0.7" />
+              <path d="M 32 155 Q 60 160 88 155 M 32 160 Q 60 165 88 160" strokeWidth="0.5" opacity="0.7" />
+
+              {/* Arched Window */}
+              <path d="M 48 90 L 48 78 A 12 12 0 0 1 72 78 L 72 90 Z" />
+              {/* Window sill */}
+              <path d="M 45 90 L 75 90 L 75 93 L 45 93 Z" strokeWidth="0.5" />
+              
+              {/* Corbels under parapet */}
+              <path d="M 28 60 L 92 60" strokeWidth="1" />
+              <path d="M 32 60 L 32 65 M 42 60 L 42 65 M 52 60 L 52 65 M 62 60 L 62 65 M 72 60 L 72 65 M 82 60 L 82 65 M 88 60 L 88 65" strokeWidth="0.6" />
+              <path d="M 28 65 L 92 65" strokeWidth="0.6" />
+
+              {/* Parapet Crenellations (Top) */}
+              <path d="M 28 60 L 28 40 L 42 40 L 42 50 L 50 50 L 50 40 L 70 40 L 70 50 L 78 50 L 78 40 L 92 40 L 92 60" />
+              
+              {/* Inner parapet line to give rim depth */}
+              <path d="M 28 42 L 40 42 L 40 52 L 52 52 L 52 42 L 68 42 L 68 52 L 80 52 L 80 42 L 92 42" strokeWidth="0.3" opacity="0.5" />
+
+              {/* Subtle Brick Textures */}
+              <path d="M 38 125 L 45 125 M 60 125 L 75 125 M 32 135 L 40 135 M 55 135 L 65 135 M 75 135 L 88 135" strokeWidth="0.3" opacity="0.4" />
+              <path d="M 38 120 L 38 125 M 45 125 L 45 135 M 60 120 L 60 125 M 65 135 L 65 140" strokeWidth="0.3" opacity="0.4" />
+
+              {/* Dead vines climbing up rocks on the right */}
+              <path d="M 85 180 Q 95 160 90 145 T 95 130" strokeWidth="0.4" opacity="0.6" />
+              <path d="M 90 145 Q 100 135 98 125" strokeWidth="0.3" opacity="0.6" />
+              <path d="M 82 170 Q 90 155 85 140" strokeWidth="0.2" opacity="0.5" />
+            </svg>
+          </div>
+
           {/* Live Status Module */}
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-3">
@@ -240,37 +586,9 @@ export default function Footer() {
           <DynamicFooterVignette pathname={pathname} />
         </div>
 
-        {/* Right Side: Stacked Nav Links */}
-        <div className="flex flex-col items-start md:items-end gap-5 mt-8 md:mt-0 relative z-20">
-          {[
-            { name: "Home", href: "/" },
-            { name: "Research", href: "/research" },
-            { name: "Projects", href: "/projects" },
-            { name: "AI Lab", href: "/ai-lab" },
-            { name: "Blog", href: "/blog" },
-            { name: "Contact", href: "/contact" }
-          ].map((link) => (
-            <Link 
-              key={link.name}
-              href={link.href} 
-              className={cn(
-                "group flex items-center gap-3 md:gap-4 transition-all duration-300 transform hover:-translate-y-[2px]", 
-                config.text,
-                "hover:text-[var(--amber)]"
-              )}
-            >
-              {/* Glyph */}
-              <span className={cn("font-inter text-xs opacity-40 group-hover:opacity-100 transition-opacity duration-300 group-hover:text-[var(--amber)]")}>
-                —
-              </span>
-              
-              {/* Text with center-underline */}
-              <div className="relative font-inter text-sm md:text-base uppercase tracking-widest">
-                {link.name}
-                <span className="absolute -bottom-1 left-1/2 w-0 h-[1px] bg-[var(--amber)] transition-all duration-300 group-hover:w-full group-hover:left-0" />
-              </div>
-            </Link>
-          ))}
+        {/* Right Side: Signpost Navigation */}
+        <div className="flex flex-col items-start md:items-end mt-12 md:mt-0 relative z-20">
+          <SignpostNav config={config} />
           
           {/* Spacer for floating trigger buttons so they don't overlap links on small screens */}
           <div className="h-16 w-full md:hidden" />

@@ -266,4 +266,26 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+@keyframes butterfly-drift-1 {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-3px) rotate(2deg); }
 }
+@keyframes butterfly-drift-2 {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(-3deg); }
+}
+@keyframes butterfly-drift-3 {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-2px) rotate(1deg); }
+}
+
+.animate-butterfly-drift-1 {
+  animation: butterfly-drift-1 4s ease-in-out infinite;
+}
+.animate-butterfly-drift-2 {
+  animation: butterfly-drift-2 5.5s ease-in-out infinite;
+}
+.animate-butterfly-drift-3 {
+  animation: butterfly-drift-3 3.5s ease-in-out infinite;
+}}
