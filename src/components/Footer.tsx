@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Github, Instagram, Linkedin, Mail } from "lucide-react";
 import { DynamicFooterVignette } from "./ui/FooterVignettes";
+import { useLivingSystemStore } from "@/lib/store";
 
 // Highly Optimized Falling Leaves Animation Background (Pure CSS, Hardware Accelerated)
 const FallingLeaves = () => {
@@ -58,19 +59,15 @@ const FallingLeaves = () => {
 
 export default function Footer() {
   const pathname = usePathname();
+  const { timeOfDayTheme } = useLivingSystemStore();
 
   const [localTime, setLocalTime] = useState("");
-  const [timePeriod, setTimePeriod] = useState("MORNING");
+  const timePeriodLabel = timeOfDayTheme.toUpperCase();
 
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
       setLocalTime(now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }));
-      const hour = now.getHours();
-      if (hour >= 5 && hour < 12) setTimePeriod("MORNING");
-      else if (hour >= 12 && hour < 17) setTimePeriod("AFTERNOON");
-      else if (hour >= 17 && hour < 20) setTimePeriod("EVENING");
-      else setTimePeriod("NIGHT");
     };
     
     updateTime();
@@ -138,35 +135,13 @@ export default function Footer() {
 
   const { locationTheme, locationLabel, quotePool } = getFooterProps();
 
-  // Dynamic color base dependent on local time
+  // Dynamic color base dependent on global time theme
   const getThemeConfig = () => {
-    switch (timePeriod) {
-      case "AFTERNOON":
-        return {
-          bg: "bg-[var(--bark)]",
-          text: "text-[var(--cream)]",
-          muted: "text-white/40",
-        };
-      case "EVENING":
-        return {
-          bg: "bg-[var(--graphite)]",
-          text: "text-[var(--cream)]",
-          muted: "text-white/40",
-        };
-      case "NIGHT":
-        return {
-          bg: "bg-[var(--void)]",
-          text: "text-[var(--silver)]",
-          muted: "text-white/40",
-        };
-      case "MORNING":
-      default:
-        return {
-          bg: "bg-[var(--cream)]",
-          text: "text-[var(--text-main)]",
-          muted: "text-[var(--moss)]",
-        };
-    }
+    return {
+      bg: "bg-[var(--footer-bg)]",
+      text: "text-[var(--footer-text)]",
+      muted: "text-[var(--footer-ink)] opacity-70",
+    };
   };
 
   const config = getThemeConfig();
@@ -207,7 +182,7 @@ export default function Footer() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--amber)]"></span>
               </span>
               <span className={cn("font-inter text-[10px] tracking-widest uppercase flex items-center gap-2", config.muted)}>
-                {timePeriod} — {locationLabel} <span className="opacity-50">//</span> {localTime || "..."} LOCAL
+                {timePeriodLabel} — {locationLabel} <span className="opacity-50">//</span> {localTime || "..."} LOCAL
               </span>
             </div>
             {/* Rotating Quote */}

@@ -91,13 +91,13 @@ const Dialogue = ({ figureText, birdText }: { figureText: string, birdText: stri
     <>
       <motion.g initial="hidden" animate="visible" variants={figureVariants}>
         <foreignObject x="85" y="18" width="75" height="35" className="overflow-visible pointer-events-none">
-          <div xmlns="http://www.w3.org/1999/xhtml" style={{ width: '300px', height: '140px', transform: 'scale(0.25)', transformOrigin: 'top left' }} className="flex justify-center items-end pb-2">
-            <div className="relative bg-background text-current rounded-md border border-current px-3 py-2 max-w-[280px] shadow-sm">
+          <div style={{ width: '300px', height: '140px', transform: 'scale(0.25)', transformOrigin: 'top left' }} className="flex justify-center items-end pb-2">
+            <div className="relative rounded-md border px-3 py-2 max-w-[280px] shadow-sm transition-colors duration-500" style={{ backgroundColor: 'var(--footer-bubble-fill)', borderColor: 'var(--footer-ink)', color: 'var(--footer-text)' }}>
               <p className="font-inter uppercase font-semibold tracking-widest text-center m-0 leading-tight" style={{ fontSize: '11px' }}>
                 {figureText}
               </p>
               {/* Tail pointing down towards figure, shifted left since bubble is right-biased */}
-              <div className="absolute bg-background border-b border-r border-current w-2.5 h-2.5" style={{ bottom: '-5px', left: '25%', transform: 'translateX(-50%) rotate(45deg)' }} />
+              <div className="absolute border-b border-r w-2.5 h-2.5 transition-colors duration-500" style={{ backgroundColor: 'var(--footer-bubble-fill)', borderColor: 'var(--footer-ink)', bottom: '-5px', left: '25%', transform: 'translateX(-50%) rotate(45deg)' }} />
             </div>
           </div>
         </foreignObject>
@@ -105,13 +105,13 @@ const Dialogue = ({ figureText, birdText }: { figureText: string, birdText: stri
 
       <motion.g initial="hidden" animate="visible" variants={birdVariants}>
         <foreignObject x="105" y="-25" width="75" height="35" className="overflow-visible pointer-events-none">
-          <div xmlns="http://www.w3.org/1999/xhtml" style={{ width: '300px', height: '140px', transform: 'scale(0.25)', transformOrigin: 'top left' }} className="flex justify-center items-end pb-2">
-            <div className="relative bg-background text-current rounded-md border border-current px-3 py-2 max-w-[280px] shadow-sm">
+          <div style={{ width: '300px', height: '140px', transform: 'scale(0.25)', transformOrigin: 'top left' }} className="flex justify-center items-end pb-2">
+            <div className="relative rounded-md border px-3 py-2 max-w-[280px] shadow-sm transition-colors duration-500" style={{ backgroundColor: 'var(--footer-bubble-fill)', borderColor: 'var(--footer-ink)', color: 'var(--footer-text)' }}>
               <p className="font-inter uppercase font-semibold tracking-widest text-center m-0 leading-tight" style={{ fontSize: '11px' }}>
                 {birdText}
               </p>
               {/* Tail pointing down towards bird */}
-              <div className="absolute bg-background border-b border-r border-current w-2.5 h-2.5" style={{ bottom: '-5px', left: '50%', transform: 'translateX(-50%) rotate(45deg)' }} />
+              <div className="absolute border-b border-r w-2.5 h-2.5 transition-colors duration-500" style={{ backgroundColor: 'var(--footer-bubble-fill)', borderColor: 'var(--footer-ink)', bottom: '-5px', left: '50%', transform: 'translateX(-50%) rotate(45deg)' }} />
             </div>
           </div>
         </foreignObject>
@@ -132,11 +132,11 @@ const Bird = ({ children }: { children: React.ReactNode }) => (
  * Styled with single-stroke outlines, packed canopy, and shared blush/peach accents.
  */
 const SharedEnvironment = ({ children }: { children: React.ReactNode }) => (
-  <svg className="w-full h-auto text-current" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ overflow: 'visible' }}>
+  <svg className="w-full h-auto transition-colors duration-500" style={{ overflow: 'visible', color: 'var(--footer-ink)' }} viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <radialGradient id="lampGlow" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stopColor="var(--vignette-accent)" stopOpacity="0.20" />
-        <stop offset="100%" stopColor="var(--vignette-accent)" stopOpacity="0" />
+        <stop offset="0%" stopColor="var(--footer-accent)" style={{ stopOpacity: 'var(--footer-glow-opacity)' }} />
+        <stop offset="100%" stopColor="var(--footer-accent)" style={{ stopOpacity: '0' }} />
       </radialGradient>
     </defs>
 
@@ -162,7 +162,7 @@ const SharedEnvironment = ({ children }: { children: React.ReactNode }) => (
     </g>
 
     {/* Ground Petals */}
-    <g fill="var(--vignette-accent)" opacity="0.8">
+    <g fill="var(--footer-accent)" opacity="0.8">
       <circle cx="48" cy="89" r="1.5" />
       <circle cx="52" cy="89.5" r="1" />
       <circle cx="62" cy="88.5" r="1.2" />
@@ -174,12 +174,12 @@ const SharedEnvironment = ({ children }: { children: React.ReactNode }) => (
     <path d="M150 90 L150 25 L135 25 L135 30" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
     <path d="M130 30 L140 30 L138 35 L132 35 Z" fill="currentColor" opacity="0.8" />
     <circle cx="135" cy="42" r="18" fill="url(#lampGlow)" />
-    <circle cx="135" cy="38" r="3" fill="var(--vignette-accent)" opacity="0.9" />
-    <circle cx="132" cy="88" r="1" fill="var(--vignette-accent)" opacity="0.6" />
-    <circle cx="140" cy="87" r="1.5" fill="var(--vignette-accent)" opacity="0.4" />
+    <circle cx="135" cy="38" r="3" fill="var(--footer-accent)" opacity="0.9" />
+    <circle cx="132" cy="88" r="1" fill="var(--footer-accent)" opacity="0.6" />
+    <circle cx="140" cy="87" r="1.5" fill="var(--footer-accent)" opacity="0.4" />
 
     {/* Soft Canopy Background Wash */}
-    <g fill="var(--vignette-accent)">
+    <g fill="var(--footer-leaf)">
       <circle cx="55" cy="35" r="32" opacity="0.15" />
       <circle cx="35" cy="35" r="22" opacity="0.15" />
       <circle cx="75" cy="35" r="22" opacity="0.15" />
@@ -189,8 +189,8 @@ const SharedEnvironment = ({ children }: { children: React.ReactNode }) => (
 
     {/* Pointillist Canopy Clusters (Behind branches) */}
     <g fill="none" strokeLinecap="round">
-      <path d={BLOSSOMS.pathDLarge} stroke="var(--vignette-accent)" strokeWidth="2.5" opacity="0.5" />
-      <path d={BLOSSOMS.pathDSmall} stroke="var(--vignette-accent)" strokeWidth="1.2" opacity="0.7" />
+      <path d={BLOSSOMS.pathDLarge} stroke="var(--footer-leaf)" strokeWidth="2.5" opacity="0.5" />
+      <path d={BLOSSOMS.pathDSmall} stroke="var(--footer-leaf)" strokeWidth="1.2" opacity="0.7" />
     </g>
 
     {/* Tree Trunk & Branches */}
@@ -209,18 +209,18 @@ const SharedEnvironment = ({ children }: { children: React.ReactNode }) => (
 
     {/* Pointillist Canopy Clusters (In front of branches) */}
     <g fill="none" strokeLinecap="round">
-      <path d={BLOSSOMS.pathDHighlight} stroke="var(--vignette-accent)" strokeWidth="1.8" opacity="0.9" />
+      <path d={BLOSSOMS.pathDHighlight} stroke="var(--footer-leaf)" strokeWidth="1.8" opacity="0.9" />
       <path d={BLOSSOMS.pathDDark} stroke="currentColor" strokeWidth="1" opacity="0.25" />
     </g>
 
     {/* Standard Falling Blossoms (5-6 dots drifting) */}
     <g>
-      <motion.circle cx="42" cy="45" r="1.5" fill="var(--vignette-accent)" animate={{ y: [0, 45], x: [0, -10] }} transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }} />
-      <motion.circle cx="75" cy="38" r="2" fill="var(--vignette-accent)" animate={{ y: [0, 52], x: [0, 15] }} transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 1 }} />
-      <motion.circle cx="35" cy="50" r="1" fill="var(--vignette-accent)" animate={{ y: [0, 40], x: [0, -5] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2.5 }} />
-      <motion.circle cx="65" cy="48" r="1" fill="var(--vignette-accent)" animate={{ y: [0, 42], x: [0, 8] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1.5 }} />
-      <motion.circle cx="55" cy="35" r="1.2" fill="var(--vignette-accent)" animate={{ y: [0, 55], x: [0, -12] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 3 }} />
-      <motion.circle cx="50" cy="25" r="1" fill="var(--vignette-accent)" animate={{ y: [0, 60], x: [0, -8] }} transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }} />
+      <motion.circle cx="42" cy="45" r="1.5" fill="var(--footer-accent)" animate={{ y: [0, 45], x: [0, -10] }} transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }} />
+      <motion.circle cx="75" cy="38" r="2" fill="var(--footer-accent)" animate={{ y: [0, 52], x: [0, 15] }} transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 1 }} />
+      <motion.circle cx="35" cy="50" r="1" fill="var(--footer-accent)" animate={{ y: [0, 40], x: [0, -5] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2.5 }} />
+      <motion.circle cx="65" cy="48" r="1" fill="var(--footer-accent)" animate={{ y: [0, 42], x: [0, 8] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1.5 }} />
+      <motion.circle cx="55" cy="35" r="1.2" fill="var(--footer-accent)" animate={{ y: [0, 55], x: [0, -12] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 3 }} />
+      <motion.circle cx="50" cy="25" r="1" fill="var(--footer-accent)" animate={{ y: [0, 60], x: [0, -8] }} transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }} />
     </g>
 
     {/* Bench Base */}
@@ -253,7 +253,7 @@ const HomeVignette = () => (
       <ellipse cx="31" cy="43" rx="17" ry="13"/>
       <circle cx="47" cy="27" r="9"/>
       <circle cx="51" cy="25" r="1.3" fill="currentColor" stroke="none"/>
-      <circle cx="43" cy="30" r="1.3" fill="var(--vignette-accent)" stroke="none"/>
+      <circle cx="43" cy="30" r="1.3" fill="var(--footer-accent)" stroke="none"/>
       <path d="M28,54 L27,60 M38,54 L39,60"/>
     </svg>
 
@@ -265,7 +265,7 @@ const HomeVignette = () => (
       <path d="M22,26 C28,24 34,26 38,32"/>
       <path d="M25,46 L23,54 M23,54 L19,55 M23,54 L27,55"/>
       <path d="M34,46 L36,54 M36,54 L32,55 M36,54 L40,55"/>
-      <circle cx="27" cy="34" r="3.5" fill="var(--vignette-accent)" stroke="none" opacity="0.85"/>
+      <circle cx="27" cy="34" r="3.5" fill="var(--footer-accent)" stroke="none" opacity="0.85"/>
     </Bird>
 
     <Dialogue 
@@ -338,8 +338,8 @@ const ProjectVignette = () => (
     <path d="M 75 90 L 80 75 L 85 90 Z M 77 82 L 83 82" stroke="currentColor" strokeWidth="0.5" fill="none" />
     {/* Sapling escaping top */}
     <motion.path d="M 80 90 Q 82 70 80 65" stroke="currentColor" strokeWidth="1" fill="none" animate={{ d: ["M 80 90 Q 82 70 80 65", "M 80 90 Q 78 70 80 65", "M 80 90 Q 82 70 80 65"] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }} />
-    <circle cx="79" cy="64" r="0.8" fill="var(--vignette-accent)" />
-    <circle cx="82" cy="67" r="0.5" fill="var(--vignette-accent)" />
+    <circle cx="79" cy="64" r="0.8" fill="var(--footer-accent)" />
+    <circle cx="82" cy="67" r="0.5" fill="var(--footer-accent)" />
 
     {/* Squirrel */}
     <svg x="72" y="70" width="20" height="20" viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -390,10 +390,10 @@ const BlogVignette = () => (
     <path d="M 102 73 L 102 75" stroke="currentColor" strokeWidth="0.25" />
     
     {/* Fallen petals under bench */}
-    <circle cx="100" cy="88" r="0.8" fill="var(--vignette-accent)" />
-    <circle cx="105" cy="89" r="0.5" fill="var(--vignette-accent)" />
-    <circle cx="112" cy="88.5" r="1" fill="var(--vignette-accent)" />
-    <circle cx="95" cy="89.5" r="0.5" fill="var(--vignette-accent)" />
+    <circle cx="100" cy="88" r="0.8" fill="var(--footer-accent)" />
+    <circle cx="105" cy="89" r="0.5" fill="var(--footer-accent)" />
+    <circle cx="112" cy="88.5" r="1" fill="var(--footer-accent)" />
+    <circle cx="95" cy="89.5" r="0.5" fill="var(--footer-accent)" />
     
     {/* Ink bottle on ground */}
     <path d="M 118 90 L 118 86 C 118 84, 122 84, 122 86 L 122 90 Z M 119 84 L 121 84" stroke="currentColor" strokeWidth="0.5" fill="none" />
@@ -442,7 +442,7 @@ const AILabVignette = () => (
     
     {/* Firefly Motif */}
     <motion.g animate={{ y: [0, -1, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}>
-      <circle cx="112" cy="55" r="1" fill="var(--vignette-accent)" />
+      <circle cx="112" cy="55" r="1" fill="var(--footer-accent)" />
       <path d="M 112 55 Q 114 52 116 53 M 112 55 Q 114 57 115 56" stroke="currentColor" strokeWidth="0.5" fill="none" />
       {/* Soft Glow */}
       <circle cx="112" cy="55" r="6" fill="url(#lampGlow)" opacity="0.8" />
@@ -497,22 +497,22 @@ const ContactVignette = () => (
     <path d="M 158 60 Q 163 65 168 58 T 178 60" stroke="currentColor" strokeWidth="0.5" fill="none" />
     
     {/* Pink Flowers on Posts */}
-    <circle cx="154.5" cy="80" r="1" fill="var(--vignette-accent)" />
-    <circle cx="156" cy="70" r="0.8" fill="var(--vignette-accent)" />
-    <circle cx="174.5" cy="78" r="1.2" fill="var(--vignette-accent)" />
+    <circle cx="154.5" cy="80" r="1" fill="var(--footer-accent)" />
+    <circle cx="156" cy="70" r="0.8" fill="var(--footer-accent)" />
+    <circle cx="174.5" cy="78" r="1.2" fill="var(--footer-accent)" />
     
     {/* Dashed Path */}
     <path d="M 165 90 L 180 100" stroke="currentColor" strokeWidth="0.5" strokeDasharray="1 2" fill="none" />
     
     {/* Ground Flowers near path */}
-    <circle cx="162" cy="94" r="0.8" fill="var(--vignette-accent)" />
-    <circle cx="178" cy="95" r="1" fill="var(--vignette-accent)" />
+    <circle cx="162" cy="94" r="0.8" fill="var(--footer-accent)" />
+    <circle cx="178" cy="95" r="1" fill="var(--footer-accent)" />
     
     {/* Gate Fireflies */}
-    <motion.circle cx="165" cy="55" r="1" fill="var(--vignette-accent)" animate={{ opacity: [0.2, 1, 0.2] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} />
+    <motion.circle cx="165" cy="55" r="1" fill="var(--footer-accent)" animate={{ opacity: [0.2, 1, 0.2] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} />
     <circle cx="165" cy="55" r="4" fill="url(#lampGlow)" opacity="0.6" />
     
-    <motion.circle cx="172" cy="70" r="0.8" fill="var(--vignette-accent)" animate={{ opacity: [1, 0.1, 1] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }} />
+    <motion.circle cx="172" cy="70" r="0.8" fill="var(--footer-accent)" animate={{ opacity: [1, 0.1, 1] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }} />
     <circle cx="172" cy="70" r="3" fill="url(#lampGlow)" opacity="0.5" />
 
     {/* Dog */}
@@ -524,7 +524,7 @@ const ContactVignette = () => (
       <path d="M35,28 C29,28 24,27 20,25"/>
       <circle cx="20.5" cy="25.2" r="1.3" fill="currentColor" stroke="none"/>
       <circle cx="47" cy="22" r="1.3" fill="currentColor" stroke="none"/>
-      <path d="M32,32 C33,35 33,37 32,39" stroke="var(--vignette-accent)"/>
+      <path d="M32,32 C33,35 33,37 32,39" stroke="var(--footer-accent)"/>
       <path d="M20,53 L18,60 M34,53 L36,60"/>
     </svg>
 

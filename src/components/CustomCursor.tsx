@@ -53,11 +53,11 @@ export default function CustomCursor() {
   if (!isVisible) return null;
 
   // Unchanged spring config for consistent trailing physics
-  const springConfig = { type: "spring", stiffness: 150, damping: 15, mass: 0.5 };
-  const tweenConfig = { type: "tween", ease: "backOut", duration: 0.15 };
+  const springConfig = { type: "spring", stiffness: 150, damping: 15, mass: 0.5 } as const;
+  const tweenConfig = { type: "tween", ease: "backOut", duration: 0.15 } as const;
   
   // Transition settings for smooth cross-fades
-  const fadeTransition = { duration: 0.2, ease: "easeInOut" };
+  const fadeTransition = { duration: 0.2, ease: "easeInOut" } as const;
 
   // Glow logic (Yellowish-orange)
   const glowColor = variant === "interactive" ? "#FF9500" : "#FFC840";

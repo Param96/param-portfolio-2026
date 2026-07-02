@@ -88,9 +88,35 @@
   --text-main: var(--ink);
   --text-dim: var(--ink-soft);
   --border-line: var(--stone);
+
+  /* Footer Illustration Theme (Day Default) */
+  --footer-bg: #F4EFE6;
+  --footer-ink: #3A3A38;
+  --footer-leaf: #F0B8AC;
+  --footer-accent: #E8A798;
+  --footer-text: #3A3A38;
+  --footer-bubble-fill: #F4EFE6;
+  --footer-glow-opacity: 0.18;
 }
 
-[data-theme="day"],
+[data-theme="day"] {
+  --bg-page: var(--cream);
+  --bg-surface: var(--cream-deep);
+  --bg-nature-section: #dce3d5;
+  --text-main: var(--ink);
+  --text-dim: var(--ink-soft);
+  --border-line: var(--stone);
+
+  /* Footer Illustration Theme */
+  --footer-bg: #F4EFE6;
+  --footer-ink: #3A3A38;
+  --footer-leaf: #F0B8AC;
+  --footer-accent: #E8A798;
+  --footer-text: #3A3A38;
+  --footer-bubble-fill: #F4EFE6;
+  --footer-glow-opacity: 0.18;
+}
+
 [data-theme="dawn"] {
   --bg-page: var(--cream);
   --bg-surface: var(--cream-deep);
@@ -98,6 +124,15 @@
   --text-main: var(--ink);
   --text-dim: var(--ink-soft);
   --border-line: var(--stone);
+
+  /* Footer Illustration Theme */
+  --footer-bg: #F5F0EC;
+  --footer-ink: #4A4750;
+  --footer-leaf: #E8C9D6;
+  --footer-accent: #E3AFAE;
+  --footer-text: #5C5762;
+  --footer-bubble-fill: #F5F0EC;
+  --footer-glow-opacity: 0.15;
 }
 
 [data-theme="dusk"] {
@@ -112,6 +147,15 @@
   /* Espresso text for sharp contrast */
   --text-dim: #5c4333;
   --border-line: rgba(41, 29, 21, 0.15);
+
+  /* Footer Illustration Theme */
+  --footer-bg: #EDE0D3;
+  --footer-ink: #4A3B33;
+  --footer-leaf: #E39B6E;
+  --footer-accent: #D98B5F;
+  --footer-text: #4A3B33;
+  --footer-bubble-fill: #EDE0D3;
+  --footer-glow-opacity: 0.22;
 }
 
 [data-theme="night"] {
@@ -127,6 +171,15 @@
   --text-dim: #9caab3;
   /* Cool, readable gray-blue */
   --border-line: rgba(250, 247, 240, 0.12);
+
+  /* Footer Illustration Theme */
+  --footer-bg: #1A1815;
+  --footer-ink: #E8E4DC;
+  --footer-leaf: #B98FA8;
+  --footer-accent: #E0A76B;
+  --footer-text: #E8E4DC;
+  --footer-bubble-fill: #1A1815;
+  --footer-glow-opacity: 0.28;
 }
 
 /* --- Base --- */
