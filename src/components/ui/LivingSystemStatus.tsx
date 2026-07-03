@@ -53,7 +53,7 @@ export default function LivingSystemStatus() {
 
   return (
     <div className="fixed top-6 right-6 md:top-8 md:right-8 z-40 hidden md:flex flex-col items-end gap-3 font-inter text-[10px] uppercase tracking-widest">
-      <div className="bg-[var(--bg-surface)]/80 backdrop-blur-md border border-[var(--border-line)] shadow-sm p-5 rounded-2xl flex flex-col gap-4 transition-colors duration-1000 ease-in-out">
+      <div className="bg-bg-page border border-text-body/30 p-5 rounded-3xl flex flex-col gap-4 transition-colors duration-1000 ease-in-out">
         {/* Presence Module */}
         <div className="flex items-center gap-4 flex-row-reverse">
           <div className="flex flex-col items-start">

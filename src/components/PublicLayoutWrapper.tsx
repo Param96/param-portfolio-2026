@@ -44,11 +44,11 @@ export default function PublicLayoutWrapper({ children }: { children: React.Reac
           <LotusBloomNav />
           
           {/* Global Fixed Nameplate */}
-          <Link href="/" className="fixed top-6 left-6 md:top-8 md:left-8 z-[100] group flex flex-col pointer-events-auto mix-blend-difference text-white">
-            <span className="font-fraunces text-lg md:text-xl font-medium tracking-tight group-hover:text-[var(--amber)] transition-colors duration-500">
+          <Link href="/" className="fixed top-6 left-6 md:top-8 md:left-8 z-[100] group flex flex-col pointer-events-auto">
+            <span className="font-fraunces text-lg md:text-xl font-medium tracking-tight text-text-main group-hover:text-[var(--amber)] transition-colors duration-500">
               Param Patel
             </span>
-            <span className="font-inter text-[8px] md:text-[10px] uppercase tracking-widest mt-1 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+            <span className="font-inter text-[8px] md:text-[10px] uppercase tracking-widest mt-1 text-text-dim transition-colors duration-500">
               AI Engineer & Builder
             </span>
           </Link>

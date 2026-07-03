@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function ResumePage() {
   return (
-    <main className="w-full h-full bg-[#ffb380]">
+    <main className="w-full h-full relative" style={{ backgroundColor: 'var(--bg-main)' }}>
       <ResumeHero />
     </main>
   );

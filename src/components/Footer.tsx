@@ -227,20 +227,31 @@ const SignpostNav = ({ config }: { config: { text: string } }) => {
         
         {/* Background Decorative Cluster (Trees, Flowers, Butterflies) - Strictly non-interactive */}
         <g className="pointer-events-none text-[var(--footer-ink)]" stroke="currentColor" fill="none" strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round">
-          {/* Small Tree Left */}
-          <path d="M 20 280 Q 25 200 10 160 M 23 230 Q 30 190 40 170 M 22 210 Q 5 190 0 180" opacity="0.25" />
-          <circle cx="10" cy="160" r="1.5" fill="currentColor" stroke="none" opacity="0.2" />
-          <circle cx="40" cy="170" r="1" fill="currentColor" stroke="none" opacity="0.2" />
-          <circle cx="0" cy="180" r="0.8" fill="currentColor" stroke="none" opacity="0.15" />
+          {/* Tree Left (Shifted further left and filled with leaves) */}
+          <g opacity="0.6">
+            <path d="M -10 280 Q -5 210 -20 170 M -7 240 Q 0 200 10 180 M -8 220 Q -25 200 -30 190" opacity="0.4" />
+            <circle cx="-20" cy="170" r="15" fill="currentColor" stroke="none" opacity="0.15" />
+            <circle cx="-10" cy="160" r="20" fill="currentColor" stroke="none" opacity="0.1" />
+            <circle cx="10" cy="180" r="12" fill="currentColor" stroke="none" opacity="0.15" />
+            <circle cx="5" cy="170" r="18" fill="currentColor" stroke="none" opacity="0.1" />
+            <circle cx="-30" cy="190" r="10" fill="currentColor" stroke="none" opacity="0.15" />
+            <circle cx="-20" cy="185" r="14" fill="currentColor" stroke="none" opacity="0.1" />
+          </g>
           
-          {/* Small Tree Right */}
-          <path d="M 130 280 Q 125 230 145 190 M 128 250 Q 120 220 110 200 M 126 230 Q 140 210 150 200" opacity="0.35" />
-          <circle cx="145" cy="190" r="1.5" fill="currentColor" stroke="none" opacity="0.3" />
-          <circle cx="110" cy="200" r="1.2" fill="currentColor" stroke="none" opacity="0.25" />
+          {/* Tree Right (Shifted further right and filled with leaves) */}
+          <g opacity="0.8">
+            <path d="M 170 280 Q 165 230 185 190 M 168 250 Q 160 220 150 200 M 166 230 Q 180 210 190 200" opacity="0.4" />
+            <circle cx="185" cy="190" r="18" fill="currentColor" stroke="none" opacity="0.15" />
+            <circle cx="175" cy="180" r="22" fill="currentColor" stroke="none" opacity="0.1" />
+            <circle cx="150" cy="200" r="14" fill="currentColor" stroke="none" opacity="0.15" />
+            <circle cx="160" cy="195" r="16" fill="currentColor" stroke="none" opacity="0.1" />
+            <circle cx="190" cy="200" r="12" fill="currentColor" stroke="none" opacity="0.15" />
+            <circle cx="180" cy="195" r="15" fill="currentColor" stroke="none" opacity="0.1" />
+          </g>
           
-          {/* Faint distant tree right */}
-          <path d="M 155 276 Q 150 240 160 220" strokeWidth="0.5" opacity="0.15" />
-          <circle cx="160" cy="220" r="0.8" fill="currentColor" stroke="none" opacity="0.1" />
+          {/* Faint distant tree further right */}
+          <path d="M 195 276 Q 190 240 200 220" strokeWidth="0.5" opacity="0.15" />
+          <circle cx="200" cy="220" r="8" fill="currentColor" stroke="none" opacity="0.1" />
           
           {/* Ground Flowers (dots) */}
           <circle cx="30" cy="275" r="0.8" fill="var(--footer-accent)" stroke="none" opacity="0.7" />
@@ -462,9 +473,9 @@ export default function Footer() {
         <div className="flex flex-col items-start gap-12 w-full md:w-auto relative z-10">
           
           {/* Ambient Background Element: Distant Tower */}
-          <div className="absolute -z-10 -top-12 -left-32 md:-left-40 opacity-15 pointer-events-none text-[var(--footer-ink)] transition-colors duration-1000">
+          <div className="absolute -z-10 -top-12 -left-36 md:-left-44 lg:-left-48 opacity-40 pointer-events-none text-[var(--footer-ink)] transition-colors duration-1000">
             <svg 
-              className="w-32 h-64 md:w-40 md:h-80" 
+              className="w-40 h-[20rem] md:w-48 md:h-[24rem] lg:w-56 lg:h-[28rem]" 
               viewBox="0 0 120 200" 
               fill="none" 
               stroke="currentColor" 
@@ -472,51 +483,93 @@ export default function Footer() {
               strokeLinecap="round"
               strokeLinejoin="round"
             >
-              {/* Base Rocks */}
-              <path d="M 10 190 Q 20 180 30 185 Q 35 170 42 185 M 110 190 Q 100 175 90 182 Q 85 165 78 175" strokeWidth="0.5" opacity="0.6" />
-              <path d="M 20 180 Q 25 170 30 175 M 100 175 Q 95 160 88 170" strokeWidth="0.4" opacity="0.5" />
+              <defs>
+                {/* Subtle brick pattern for texture */}
+                <pattern id="brickPatternSm" x="0" y="0" width="20" height="10" patternUnits="userSpaceOnUse">
+                  <path d="M 0 5 L 20 5 M 10 5 L 10 10 M 0 0 L 0 5" stroke="currentColor" strokeWidth="0.2" opacity="0.4" fill="none" />
+                </pattern>
+              </defs>
+
+              {/* Solid Background Fill for the Tower */}
+              <path d="M 26 190 L 26 60 L 22 60 L 22 40 L 98 40 L 98 60 L 94 60 L 94 190 Z" fill="var(--footer-bg)" stroke="none" />
               
-              {/* Door Arch */}
-              <path d="M 42 190 L 42 165 A 18 18 0 0 1 78 165 L 78 190" strokeWidth="1" />
-              {/* Door Outer Stone Arch */}
-              <path d="M 38 190 L 38 165 A 22 22 0 0 1 82 165 L 82 190" strokeWidth="0.5" />
-              
-              {/* Inner door details (planks) */}
-              <path d="M 48 190 L 48 162 M 54 190 L 54 158 M 60 190 L 60 156 M 66 190 L 66 158 M 72 190 L 72 162" strokeWidth="0.4" opacity="0.5" />
-              {/* Door hinges/band */}
-              <path d="M 42 175 L 78 175 M 42 185 L 78 185" strokeWidth="0.5" />
+              {/* Darker shading overlay */}
+              <path d="M 26 190 L 26 60 L 94 60 L 94 190 Z" fill="currentColor" opacity="0.08" stroke="none" />
+              <path d="M 26 190 L 26 60 L 94 60 L 94 190 Z" fill="url(#brickPatternSm)" stroke="none" />
+
+              {/* Base Rocks & Ground */}
+              <path d="M 5 190 Q 15 180 26 185 Q 30 170 38 185 M 115 190 Q 105 175 94 182 Q 90 165 82 175" strokeWidth="0.5" opacity="0.8" />
+              <path d="M 15 180 Q 20 170 26 175 M 105 175 Q 100 160 94 170" strokeWidth="0.4" opacity="0.5" />
               
               {/* Main Tower Body */}
-              <path d="M 32 185 L 32 60 M 88 185 L 88 60" />
+              <path d="M 26 185 L 26 60 M 94 185 L 94 60" strokeWidth="1" />
               
-              {/* Horizontal dividing bands (curved for cylindrical perspective) */}
-              <path d="M 32 105 Q 60 110 88 105 M 32 110 Q 60 115 88 110" strokeWidth="0.5" opacity="0.7" />
-              <path d="M 32 155 Q 60 160 88 155 M 32 160 Q 60 165 88 160" strokeWidth="0.5" opacity="0.7" />
+              {/* Moss details */}
+              <g fill="var(--moss)" stroke="none" opacity="0.7">
+                <path d="M 26 185 Q 29 160 32 185 Z" />
+                <path d="M 94 185 Q 91 160 88 185 Z" />
+                <path d="M 26 120 Q 32 130 26 140 Z" />
+                <path d="M 94 100 Q 88 110 94 120 Z" />
+                <circle cx="28" cy="135" r="3" />
+                <circle cx="92" cy="115" r="4" />
+                <circle cx="22" cy="180" r="5" />
+                <circle cx="98" cy="178" r="6" />
+              </g>
+
+              {/* Door Arch */}
+              <path d="M 42 190 L 42 165 A 18 18 0 0 1 78 165 L 78 190" strokeWidth="1.2" />
+              {/* Door Outer Stone Arch */}
+              <path d="M 38 190 L 38 165 A 22 22 0 0 1 82 165 L 82 190" strokeWidth="0.6" fill="currentColor" fillOpacity="0.05" />
+              
+              {/* Inner door details (planks) */}
+              <path d="M 48 190 L 48 162 M 54 190 L 54 158 M 60 190 L 60 156 M 66 190 L 66 158 M 72 190 L 72 162" strokeWidth="0.4" opacity="0.6" />
+              {/* Door hinges/band */}
+              <path d="M 42 175 L 78 175 M 42 185 L 78 185" strokeWidth="0.6" />
+              
+              {/* Horizontal dividing bands */}
+              <path d="M 26 105 Q 60 112 94 105 M 26 110 Q 60 117 94 110" strokeWidth="0.6" fill="currentColor" fillOpacity="0.1" />
+              <path d="M 26 155 Q 60 162 94 155 M 26 160 Q 60 167 94 160" strokeWidth="0.6" fill="currentColor" fillOpacity="0.1" />
 
               {/* Arched Window */}
-              <path d="M 48 90 L 48 78 A 12 12 0 0 1 72 78 L 72 90 Z" />
-              {/* Window sill */}
-              <path d="M 45 90 L 75 90 L 75 93 L 45 93 Z" strokeWidth="0.5" />
+              <path d="M 48 90 L 48 78 A 12 12 0 0 1 72 78 L 72 90 Z" fill="currentColor" fillOpacity="0.1" />
+              
+              {/* Ghost in the window at night */}
+              <AnimatePresence>
+                {timeOfDayTheme === 'night' && (
+                  <motion.g
+                    initial={{ opacity: 0, y: 2 }}
+                    animate={{ opacity: 0.85, y: [2, -2, 2] }}
+                    exit={{ opacity: 0, y: 2 }}
+                    transition={{ 
+                      opacity: { duration: 2 }, 
+                      y: { duration: 4, repeat: Infinity, ease: "easeInOut" } 
+                    }}
+                  >
+                    {/* Ghost Body */}
+                    <path d="M 54 90 C 54 75 66 75 66 90 Q 63 87 60 90 Q 57 87 54 90 Z" fill="var(--footer-text)" />
+                    {/* Ghost Eyes */}
+                    <circle cx="58" cy="82" r="1.2" fill="var(--footer-bg)" />
+                    <circle cx="62" cy="82" r="1.2" fill="var(--footer-bg)" />
+                  </motion.g>
+                )}
+              </AnimatePresence>
+
+              {/* Window Sill */}
+              <path d="M 45 90 L 75 90 L 75 93 L 45 93 Z" strokeWidth="0.6" />
               
               {/* Corbels under parapet */}
-              <path d="M 28 60 L 92 60" strokeWidth="1" />
-              <path d="M 32 60 L 32 65 M 42 60 L 42 65 M 52 60 L 52 65 M 62 60 L 62 65 M 72 60 L 72 65 M 82 60 L 82 65 M 88 60 L 88 65" strokeWidth="0.6" />
-              <path d="M 28 65 L 92 65" strokeWidth="0.6" />
+              <path d="M 22 60 L 98 60" strokeWidth="1.2" />
+              <path d="M 22 60 L 22 65 M 34 60 L 34 65 M 46 60 L 46 65 M 59 60 L 59 65 M 72 60 L 72 65 M 85 60 L 85 65 M 98 60 L 98 65" strokeWidth="0.8" />
+              <path d="M 22 65 L 98 65" strokeWidth="0.8" />
 
               {/* Parapet Crenellations (Top) */}
-              <path d="M 28 60 L 28 40 L 42 40 L 42 50 L 50 50 L 50 40 L 70 40 L 70 50 L 78 50 L 78 40 L 92 40 L 92 60" />
+              <path d="M 22 60 L 22 40 L 34 40 L 34 50 L 46 50 L 46 40 L 59 40 L 59 50 L 72 50 L 72 40 L 85 40 L 85 50 L 98 50 L 98 40 L 98 60 Z" fill="var(--footer-bg)" strokeWidth="0.8" />
+              <path d="M 22 42 L 31 42 L 31 52 L 48 52 L 48 42 L 56 42 L 56 52 L 74 52 L 74 42 L 82 42 L 82 52 L 98 52" strokeWidth="0.4" opacity="0.6" />
               
-              {/* Inner parapet line to give rim depth */}
-              <path d="M 28 42 L 40 42 L 40 52 L 52 52 L 52 42 L 68 42 L 68 52 L 80 52 L 80 42 L 92 42" strokeWidth="0.3" opacity="0.5" />
-
-              {/* Subtle Brick Textures */}
-              <path d="M 38 125 L 45 125 M 60 125 L 75 125 M 32 135 L 40 135 M 55 135 L 65 135 M 75 135 L 88 135" strokeWidth="0.3" opacity="0.4" />
-              <path d="M 38 120 L 38 125 M 45 125 L 45 135 M 60 120 L 60 125 M 65 135 L 65 140" strokeWidth="0.3" opacity="0.4" />
-
               {/* Dead vines climbing up rocks on the right */}
-              <path d="M 85 180 Q 95 160 90 145 T 95 130" strokeWidth="0.4" opacity="0.6" />
-              <path d="M 90 145 Q 100 135 98 125" strokeWidth="0.3" opacity="0.6" />
-              <path d="M 82 170 Q 90 155 85 140" strokeWidth="0.2" opacity="0.5" />
+              <path d="M 90 180 Q 100 160 95 145 T 100 130" strokeWidth="0.5" opacity="0.7" />
+              <path d="M 95 145 Q 105 135 103 125" strokeWidth="0.4" opacity="0.7" />
+              
             </svg>
           </div>
 
@@ -549,8 +602,8 @@ export default function Footer() {
           </div>
 
           {/* Signature Name & Socials */}
-          <div className="mt-6 flex flex-col gap-6">
-            <h2 className="font-fraunces text-5xl md:text-7xl lg:text-8xl tracking-tighter leading-[0.85] font-light">
+          <div className="mt-6 flex flex-col gap-6 relative">
+            <h2 className="relative z-10 font-fraunces text-5xl md:text-7xl lg:text-8xl tracking-tighter leading-[0.85] font-light">
               Param<br/>Patel<span className="text-[var(--amber)]">.</span>
             </h2>
             
