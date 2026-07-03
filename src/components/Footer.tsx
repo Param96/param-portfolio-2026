@@ -218,48 +218,49 @@ const SignpostNav = ({ config }: { config: { text: string } }) => {
     { name: "PROJECTS", href: "/projects", dir: "left", y: 92 },
     { name: "AI LAB", href: "/ai-lab", dir: "right", y: 128 },
     { name: "BLOG", href: "/blog", dir: "left", y: 164 },
-    { name: "CONTACT", href: "/contact", dir: "right", y: 200 }
+    { name: "CONTACT", href: "/contact", dir: "right", y: 200 },
+    { name: "RESUME", href: "/resume", dir: "left", y: 236 }
   ];
 
   return (
-    <div className="relative w-40 h-[280px]">
-      <svg className={cn("w-full h-full overflow-visible transition-colors duration-1000", config.text)} viewBox="0 0 160 280" fill="none" stroke="currentColor">
+    <div className="relative w-40 h-[320px]">
+      <svg className={cn("w-full h-full overflow-visible transition-colors duration-1000", config.text)} viewBox="0 0 160 320" fill="none" stroke="currentColor">
         
         {/* Background Decorative Cluster (Trees, Flowers, Butterflies) - Strictly non-interactive */}
         <g className="pointer-events-none text-[var(--footer-ink)]" stroke="currentColor" fill="none" strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round">
           {/* Tree Left (Shifted further left and filled with leaves) */}
           <g opacity="0.6">
-            <path d="M -10 280 Q -5 210 -20 170 M -7 240 Q 0 200 10 180 M -8 220 Q -25 200 -30 190" opacity="0.4" />
-            <circle cx="-20" cy="170" r="15" fill="currentColor" stroke="none" opacity="0.15" />
-            <circle cx="-10" cy="160" r="20" fill="currentColor" stroke="none" opacity="0.1" />
-            <circle cx="10" cy="180" r="12" fill="currentColor" stroke="none" opacity="0.15" />
-            <circle cx="5" cy="170" r="18" fill="currentColor" stroke="none" opacity="0.1" />
-            <circle cx="-30" cy="190" r="10" fill="currentColor" stroke="none" opacity="0.15" />
-            <circle cx="-20" cy="185" r="14" fill="currentColor" stroke="none" opacity="0.1" />
+            <path d="M -10 320 Q -5 250 -20 210 M -7 280 Q 0 240 10 220 M -8 260 Q -25 240 -30 230" opacity="0.4" />
+            <circle cx="-20" cy="210" r="15" fill="currentColor" stroke="none" opacity="0.15" />
+            <circle cx="-10" cy="200" r="20" fill="currentColor" stroke="none" opacity="0.1" />
+            <circle cx="10" cy="220" r="12" fill="currentColor" stroke="none" opacity="0.15" />
+            <circle cx="5" cy="210" r="18" fill="currentColor" stroke="none" opacity="0.1" />
+            <circle cx="-30" cy="230" r="10" fill="currentColor" stroke="none" opacity="0.15" />
+            <circle cx="-20" cy="225" r="14" fill="currentColor" stroke="none" opacity="0.1" />
           </g>
           
           {/* Tree Right (Shifted further right and filled with leaves) */}
           <g opacity="0.8">
-            <path d="M 170 280 Q 165 230 185 190 M 168 250 Q 160 220 150 200 M 166 230 Q 180 210 190 200" opacity="0.4" />
-            <circle cx="185" cy="190" r="18" fill="currentColor" stroke="none" opacity="0.15" />
-            <circle cx="175" cy="180" r="22" fill="currentColor" stroke="none" opacity="0.1" />
-            <circle cx="150" cy="200" r="14" fill="currentColor" stroke="none" opacity="0.15" />
-            <circle cx="160" cy="195" r="16" fill="currentColor" stroke="none" opacity="0.1" />
-            <circle cx="190" cy="200" r="12" fill="currentColor" stroke="none" opacity="0.15" />
-            <circle cx="180" cy="195" r="15" fill="currentColor" stroke="none" opacity="0.1" />
+            <path d="M 170 320 Q 165 270 185 230 M 168 290 Q 160 260 150 240 M 166 270 Q 180 250 190 240" opacity="0.4" />
+            <circle cx="185" cy="230" r="18" fill="currentColor" stroke="none" opacity="0.15" />
+            <circle cx="175" cy="220" r="22" fill="currentColor" stroke="none" opacity="0.1" />
+            <circle cx="150" cy="240" r="14" fill="currentColor" stroke="none" opacity="0.15" />
+            <circle cx="160" cy="235" r="16" fill="currentColor" stroke="none" opacity="0.1" />
+            <circle cx="190" cy="240" r="12" fill="currentColor" stroke="none" opacity="0.15" />
+            <circle cx="180" cy="235" r="15" fill="currentColor" stroke="none" opacity="0.1" />
           </g>
           
           {/* Faint distant tree further right */}
-          <path d="M 195 276 Q 190 240 200 220" strokeWidth="0.5" opacity="0.15" />
-          <circle cx="200" cy="220" r="8" fill="currentColor" stroke="none" opacity="0.1" />
+          <path d="M 195 316 Q 190 280 200 260" strokeWidth="0.5" opacity="0.15" />
+          <circle cx="200" cy="260" r="8" fill="currentColor" stroke="none" opacity="0.1" />
           
           {/* Ground Flowers (dots) */}
-          <circle cx="30" cy="275" r="0.8" fill="var(--footer-accent)" stroke="none" opacity="0.7" />
-          <circle cx="12" cy="278" r="0.6" fill="currentColor" stroke="none" opacity="0.4" />
-          <circle cx="120" cy="277" r="1" fill="currentColor" stroke="none" opacity="0.3" />
-          <circle cx="140" cy="274" r="0.8" fill="var(--footer-accent)" stroke="none" opacity="0.6" />
-          <circle cx="160" cy="278" r="0.5" fill="currentColor" stroke="none" opacity="0.2" />
-          <circle cx="-10" cy="279" r="0.8" fill="var(--footer-accent)" stroke="none" opacity="0.5" />
+          <circle cx="30" cy="315" r="0.8" fill="var(--footer-accent)" stroke="none" opacity="0.7" />
+          <circle cx="12" cy="318" r="0.6" fill="currentColor" stroke="none" opacity="0.4" />
+          <circle cx="120" cy="317" r="1" fill="currentColor" stroke="none" opacity="0.3" />
+          <circle cx="140" cy="314" r="0.8" fill="var(--footer-accent)" stroke="none" opacity="0.6" />
+          <circle cx="160" cy="318" r="0.5" fill="currentColor" stroke="none" opacity="0.2" />
+          <circle cx="-10" cy="319" r="0.8" fill="var(--footer-accent)" stroke="none" opacity="0.5" />
 
           {/* Butterflies */}
           <g className="motion-safe:animate-butterfly-drift-1" style={{ transformOrigin: "20px 40px" }}>
@@ -282,17 +283,17 @@ const SignpostNav = ({ config }: { config: { text: string } }) => {
         </g>
 
         {/* Grass at base */}
-        <path d="M 70 280 L 68 275 M 75 280 L 77 273 M 85 280 L 83 273 M 90 280 L 92 276" strokeWidth="1" strokeLinecap="round" />
-        <circle cx="65" cy="278" r="1.5" fill="var(--footer-accent)" stroke="none" opacity="0.6" />
-        <circle cx="95" cy="279" r="1" fill="var(--footer-accent)" stroke="none" opacity="0.6" />
+        <path d="M 70 320 L 68 315 M 75 320 L 77 313 M 85 320 L 83 313 M 90 320 L 92 316" strokeWidth="1" strokeLinecap="round" />
+        <circle cx="65" cy="318" r="1.5" fill="var(--footer-accent)" stroke="none" opacity="0.6" />
+        <circle cx="95" cy="319" r="1" fill="var(--footer-accent)" stroke="none" opacity="0.6" />
         
         {/* Main Post */}
-        <path d="M 77 10 L 77 280 M 83 10 L 83 280" strokeWidth="2" strokeLinecap="round" />
+        <path d="M 77 10 L 77 320 M 83 10 L 83 320" strokeWidth="2" strokeLinecap="round" />
         <path d="M 77 10 L 83 10" strokeWidth="2" strokeLinecap="round" />
-        <path d="M 75 280 L 85 280" strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M 75 320 L 85 320" strokeWidth="1.5" strokeLinecap="round" />
         
         {/* Wood grain on post */}
-        <path d="M 79 30 L 79 70 M 81 90 L 81 140 M 80 180 L 80 230 M 79 250 L 79 270" strokeWidth="0.5" opacity="0.4" />
+        <path d="M 79 30 L 79 70 M 81 90 L 81 140 M 80 180 L 80 230 M 79 250 L 79 310" strokeWidth="0.5" opacity="0.4" />
 
         {links.map((link, i) => {
           const isLeft = link.dir === "left";
