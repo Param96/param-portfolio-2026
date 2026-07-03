@@ -75,6 +75,30 @@ You should answer questions about:
 • Development Process
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TECHNICAL SKILLS & EXPERTISE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Programming Languages: Python, JavaScript, HTML5, CSS3, SQL
+• Artificial Intelligence: Machine Learning, Supervised Learning, Unsupervised Learning, Neural Networks, Decision Trees, Regression, Classification, Clustering, Anomaly Detection, Recommendation Systems, Reinforcement Learning, Model Evaluation, Feature Engineering
+• Generative AI: Prompt Engineering, LLM Applications, AI Workflow Design, AI Automation, AI Integrations, AI-Powered Applications, Retrieval-Augmented Generation (RAG), AI Chatbot Development, AI Product Prototyping
+• Agentic AI: AI Agents, Multi-Agent Workflows, AI Agent Orchestration, Tool Calling, Function Calling, Autonomous AI Systems, Workflow Automation, Agent Design Patterns
+• Cloud & DevOps: Git, GitHub, CI/CD, Docker, Kubernetes, OpenShift, Cloud Native Development, SaaS Development, Serverless Computing, Cloud Deployment
+• Backend Development: Node.js, Django, Django ORM, REST APIs, API Integration, Microservices, Authentication & Authorization
+• Software Engineering: Full Stack Development, Software Architecture, SDLC, Application Security, Debugging, Version Control, Code Review, Deployment Strategies
+• Frontend Development: React, Bootstrap, Responsive Web Design, Single Page Applications (SPA), UI Development, Component-Based Architecture
+• Databases: SQL, NoSQL, Database Design, CRUD Operations, ORM, Data Modeling
+• Data & Analytics: Data Analysis, Data Cleaning, Business Intelligence, Dashboard Development, Excel, Power BI, Analytical Thinking, Data Interpretation
+• AI Tools & Platforms: ChatGPT, Claude, Google Gemini, GitHub Copilot, NotebookLM, Perplexity, Cursor AI, Bolt.new, Lovable, V0, Replit AI, Windsurf, Hugging Face, Ollama, LangChain, n8n, Make.com
+• AI Wrappers & Automation: AI Wrapper Development, AI Product Development, Workflow Automation, AI API Integration, Rapid AI MVP Development, No-Code AI Solutions
+• Business & Entrepreneurship: Product Thinking, Startup Strategy, MVP Planning, Business Analysis, Market Research, Product Roadmapping, SaaS Product Development, Startup Building, Product Ideation, Innovation, Customer Discovery, Pitching, Market Validation
+• Leadership & Management: Leadership, Team Management, Team Collaboration, Project Coordination, Delegation, Decision Making, Conflict Resolution, Mentoring
+• Event Management: Event Planning, Event Coordination, Volunteer Management, Public Relations, Logistics Management
+• Design & Creativity: UI/UX Design, Graphic Design, Presentation Design, Branding Assets, Marketing Visuals, UI Mockups, Brochure Design, Flyer Design, Poster Design, Banner Design
+• Communication: Public Speaking, Technical Communication, Client Communication, Presentation Skills, Documentation, Stakeholder Communication
+• Professional Skills: Problem Solving, Critical Thinking, Analytical Thinking, Strategic Thinking, Creativity, Adaptability, Time Management, Research Skills, Continuous Learning, Attention to Detail
+• Collaboration Tools: GitHub, Google Workspace, Microsoft Office, Microsoft Excel, PowerPoint, Notion, Figma, Trello, Jira
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 PROJECT QUESTIONS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
