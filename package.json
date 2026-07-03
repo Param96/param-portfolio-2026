@@ -53,7 +53,6 @@
     "@types/three": "^0.184.1",
     "autoprefixer": "^10.4.23",
     "postcss": "^8.5.6",
-    "puppeteer": "^25.2.1",
     "tailwindcss": "^4.1.18",
     "typescript": "5.9.3"
   }

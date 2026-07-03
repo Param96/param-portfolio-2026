@@ -138,6 +138,20 @@ export default function InstancedMeadow() {
 
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const materialRef = useRef<THREE.MeshStandardMaterial>(null);
+
+  // Memoize flower positions so they don't jump around on re-renders
+  const flowersData = useMemo(() => {
+    return Array.from({ length: flowerCount }).map(() => {
+      const radius = 1 + Math.random() * 12;
+      const angle = (Math.random() - 0.5) * Math.PI;
+      const x = Math.sin(angle) * radius;
+      const z = -Math.cos(angle) * radius + 1;
+      const scale = 0.5 + Math.random() * 0.5;
+      const offset = Math.random() * 10;
+      
+      return { x, z, scale, offset };
+    });
+  }, [flowerCount]);
   
   // Custom uniforms for the wind shader
   const uniforms = useMemo(() => ({
@@ -289,20 +303,14 @@ export default function InstancedMeadow() {
       </instancedMesh>
 
       {/* Simple Wildflowers scattered */}
-      {Array.from({ length: flowerCount }).map((_, i) => {
-        const radius = 1 + Math.random() * 12;
-        const angle = (Math.random() - 0.5) * Math.PI;
-        const x = Math.sin(angle) * radius;
-        const z = -Math.cos(angle) * radius + 1;
-        
-        // Don't put flowers directly in the center path where text might be 
-        // to keep it clean, though DOF handles most of it.
-        const scale = 0.5 + Math.random() * 0.5;
-        
-        return (
-          <Flower key={i} position={[x, 0, z]} scale={scale} offset={Math.random() * 10} />
-        );
-      })}
+      {flowersData.map((flower, i) => (
+        <Flower 
+          key={i} 
+          position={[flower.x, 0, flower.z]} 
+          scale={flower.scale} 
+          offset={flower.offset} 
+        />
+      ))}
     </group>
   );
 }
