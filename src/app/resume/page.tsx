@@ -1,5 +1,4 @@
 import ResumeHero from "@/components/hero/meadow/ResumeHero";
-import ResumeSkills from "./ResumeSkills";
 
 export const metadata = {
   title: "Resume | Param Patel",
@@ -38,17 +37,6 @@ export default function ResumePage() {
           </div>
         </section>
 
-        {/* The Living Tech Tree / Ecosystem */}
-        <section className="space-y-12 pb-12 border-b border-[var(--text-primary)]/10">
-          <div className="space-y-2">
-            <h3 className="text-2xl font-bold uppercase tracking-widest text-[var(--accent-secondary)]">The Tech Ecosystem</h3>
-            <p className="text-[var(--text-secondary)]">A comprehensive matrix of my capabilities, from Agentic AI to Core Infrastructure.</p>
-          </div>
-
-          <div className="py-8 relative z-10">
-            <ResumeSkills />
-          </div>
-        </section>
 
         {/* The Director's Cut Timeline */}
         <section className="space-y-12">

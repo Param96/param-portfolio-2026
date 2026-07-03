@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import LotusBloomNav from "./ui/LotusBloomNav";
 import Footer from "./Footer";
 import CustomCursor from "./CustomCursor";
+import DownloadResumeCTA from "./DownloadResumeCTA";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
@@ -63,6 +64,7 @@ export default function PublicLayoutWrapper({ children }: { children: React.Reac
             </Link>
           )}
           <main className="relative z-10 transition-all duration-700">{children}</main>
+          <DownloadResumeCTA />
           <Footer />
         </motion.div>
       </AnimatePresence>
