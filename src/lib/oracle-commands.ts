@@ -16,6 +16,7 @@ export interface ExecutionContext {
   toggleTerminal: () => void;
   setTimeOfDayTheme: (theme: any) => void;
   triggerReboot: () => void;
+  history: OutputLine[];
 }
 
 export interface OutputLine {
@@ -125,7 +126,7 @@ export const ORACLE_COMMANDS: CommandDefinition[] = [
     aliases: ["ask", "query"],
     description: "Ask the AI Clone",
     icon: MessageSquare,
-    execute: async (args, { setHistory }) => {
+    execute: async (args, { setHistory, history }) => {
       if (!args.trim()) {
         setHistory(prev => [...prev, { id: generateId(), text: "Usage: ask [your question]", type: "error", animate: "typewriter" }]);
         return;
@@ -135,20 +136,53 @@ export const ORACLE_COMMANDS: CommandDefinition[] = [
       setHistory(prev => [...prev, { id: loadingId, text: "listening to the roots...", type: "ambient", animate: "fade" }]);
       
       try {
+        const previousMessages = history
+          .filter(line => line.type === 'user' || line.type === 'ai')
+          .map(line => ({
+            role: line.type === 'ai' ? 'model' : 'user',
+            text: line.text
+          }));
+
         const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: args }),
+          body: JSON.stringify({ 
+            message: args,
+            history: previousMessages
+          }),
         });
-        const json = await res.json();
         
-        if (!res.ok) throw new Error(json.error || "Neural link severed");
+        if (!res.ok) {
+          const json = await res.json().catch(() => ({}));
+          throw new Error(json.error || "Neural link severed");
+        }
         
-        // Remove loading state and add response
+        if (!res.body) throw new Error("No response body");
+
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let fullText = '';
+        
+        // Remove loading state and add initial empty ai response
+        const responseId = generateId();
         setHistory(prev => {
           const filtered = prev.filter(line => line.id !== loadingId);
-          return [...filtered, { id: generateId(), text: json.text, type: "ai", animate: "typewriter" }];
+          return [...filtered, { id: responseId, text: '', type: "ai", animate: "none" }]; 
         });
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          fullText += decoder.decode(value, { stream: true });
+          
+          setHistory(prev => 
+            prev.map(line => 
+              line.id === responseId 
+                ? { ...line, text: fullText } 
+                : line
+            )
+          );
+        }
       } catch (err: any) {
         setHistory(prev => {
           const filtered = prev.filter(line => line.id !== loadingId);

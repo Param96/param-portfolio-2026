@@ -197,7 +197,8 @@ export default function OracleRootTerminal() {
       triggerReboot: () => {
         setIsRebooting(true);
         setTimeout(() => window.location.reload(), 1500);
-      }
+      },
+      history
     };
 
     await command.execute(args, context);

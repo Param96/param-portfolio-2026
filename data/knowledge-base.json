@@ -1,0 +1,47 @@
+[
+  {
+    "id": "bio-sanvaya",
+    "category": "biography",
+    "text": "Param Patel is Co-Founder and CEO of Sanvaya, a pre-incorporation AI/ML startup focused on AI-powered codebase intelligence and systems engineering tooling. His co-founder is Preet Shah (COO). Equity split is 45/45 with a 10% ESOP pool."
+  },
+  {
+    "id": "project-deepfake-detection",
+    "category": "project",
+    "text": "Built a deepfake detection system using a multi-model ensemble architecture: EfficientNet-B0 for spatial CNN analysis, LSTM for temporal patterns, Wav2Vec2 for audio analysis, plus frequency-domain and metadata detectors, combined via ensemble fusion."
+  },
+  {
+    "id": "project-jarvis",
+    "category": "project",
+    "text": "Developed 'Jarvis', an AI orchestration engine. Pivoted from a standard chatbot UI paradigm to a multi-agent orchestration architecture where autonomous agents hand off tasks."
+  },
+  {
+    "id": "experience-certin",
+    "category": "experience",
+    "text": "Worked on CERT-IN Verification engines. Scaled verification systems for chaotic, unstructured global educational resources. Focused on handling edge cases at scale and preventing LLM hallucinations."
+  },
+  {
+    "id": "experience-ecell",
+    "category": "experience",
+    "text": "Led the Entrepreneurship Cell. Scaled and managed a 30-member execution team, focusing on human system orchestration, event coordination, and strategic communication."
+  },
+  {
+    "id": "skills-programming-cloud",
+    "category": "skills",
+    "text": "Programming & Infrastructure Skills: Python, JavaScript, HTML5, CSS3, SQL. Cloud & DevOps: Git, GitHub, CI/CD, Docker, Kubernetes, OpenShift, SaaS Development, Serverless Computing, Cloud Deployment."
+  },
+  {
+    "id": "skills-ai-ml",
+    "category": "skills",
+    "text": "AI & ML Expertise: Machine Learning, Neural Networks, RAG, Prompt Engineering, LLM Applications, Tool Calling, Agentic AI, Autonomous AI Systems, Multi-Agent Workflows, Model Evaluation."
+  },
+  {
+    "id": "skills-fullstack",
+    "category": "skills",
+    "text": "Full Stack Development Skills: React, Node.js, Django, REST APIs, Microservices, Single Page Applications, Database Design (SQL/NoSQL)."
+  },
+  {
+    "id": "skills-business",
+    "category": "skills",
+    "text": "Business & Leadership Skills: Product Thinking, Startup Strategy, MVP Planning, SaaS Product Development, Team Management, Public Speaking, UI/UX Design."
+  }
+]

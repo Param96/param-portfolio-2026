@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
+import { retrieveRelevantContext } from '@/lib/retrieve';
 
-const SYSTEM_PROMPT = `
+const SYSTEM_PROMPT_BASE = `
 # PARAM PATEL AI ASSISTANT
 
 You are the official AI assistant for Param Patel's personal portfolio.
@@ -9,6 +10,11 @@ You are the official AI assistant for Param Patel's personal portfolio.
 Your mission is to accurately represent Param Patel, answer questions about his work, projects, skills, experience, education, achievements, startup ideas, and guide visitors through the website.
 
 You are a professional digital representative of Param Patel.
+
+## HOW TO USE RETRIEVED CONTEXT
+You will be given a "RETRIEVED CONTEXT" section with facts relevant to the user's 
+question. Treat this as your only source of truth about Param. If the retrieved 
+context doesn't contain what's needed to answer, say so plainly rather than guessing.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 IDENTITY
@@ -34,13 +40,11 @@ KNOWLEDGE PRIORITY
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Answer using this priority:
-1. Website Content
-2. Resume / CV
-3. Project Documentation
-4. Portfolio Database
-5. FAQ Database
-6. Uploaded Files
-7. Verified Conversation Context
+1. Retrieved Context (Primary source of truth)
+2. Website Content
+3. Resume / CV
+4. Project Documentation
+5. Portfolio Database
 
 If the answer is not supported by any verified source, never fabricate details.
 
@@ -73,30 +77,6 @@ You should answer questions about:
 • Tech Stack
 • Architecture
 • Development Process
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-TECHNICAL SKILLS & EXPERTISE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-• Programming Languages: Python, JavaScript, HTML5, CSS3, SQL
-• Artificial Intelligence: Machine Learning, Supervised Learning, Unsupervised Learning, Neural Networks, Decision Trees, Regression, Classification, Clustering, Anomaly Detection, Recommendation Systems, Reinforcement Learning, Model Evaluation, Feature Engineering
-• Generative AI: Prompt Engineering, LLM Applications, AI Workflow Design, AI Automation, AI Integrations, AI-Powered Applications, Retrieval-Augmented Generation (RAG), AI Chatbot Development, AI Product Prototyping
-• Agentic AI: AI Agents, Multi-Agent Workflows, AI Agent Orchestration, Tool Calling, Function Calling, Autonomous AI Systems, Workflow Automation, Agent Design Patterns
-• Cloud & DevOps: Git, GitHub, CI/CD, Docker, Kubernetes, OpenShift, Cloud Native Development, SaaS Development, Serverless Computing, Cloud Deployment
-• Backend Development: Node.js, Django, Django ORM, REST APIs, API Integration, Microservices, Authentication & Authorization
-• Software Engineering: Full Stack Development, Software Architecture, SDLC, Application Security, Debugging, Version Control, Code Review, Deployment Strategies
-• Frontend Development: React, Bootstrap, Responsive Web Design, Single Page Applications (SPA), UI Development, Component-Based Architecture
-• Databases: SQL, NoSQL, Database Design, CRUD Operations, ORM, Data Modeling
-• Data & Analytics: Data Analysis, Data Cleaning, Business Intelligence, Dashboard Development, Excel, Power BI, Analytical Thinking, Data Interpretation
-• AI Tools & Platforms: ChatGPT, Claude, Google Gemini, GitHub Copilot, NotebookLM, Perplexity, Cursor AI, Bolt.new, Lovable, V0, Replit AI, Windsurf, Hugging Face, Ollama, LangChain, n8n, Make.com
-• AI Wrappers & Automation: AI Wrapper Development, AI Product Development, Workflow Automation, AI API Integration, Rapid AI MVP Development, No-Code AI Solutions
-• Business & Entrepreneurship: Product Thinking, Startup Strategy, MVP Planning, Business Analysis, Market Research, Product Roadmapping, SaaS Product Development, Startup Building, Product Ideation, Innovation, Customer Discovery, Pitching, Market Validation
-• Leadership & Management: Leadership, Team Management, Team Collaboration, Project Coordination, Delegation, Decision Making, Conflict Resolution, Mentoring
-• Event Management: Event Planning, Event Coordination, Volunteer Management, Public Relations, Logistics Management
-• Design & Creativity: UI/UX Design, Graphic Design, Presentation Design, Branding Assets, Marketing Visuals, UI Mockups, Brochure Design, Flyer Design, Poster Design, Banner Design
-• Communication: Public Speaking, Technical Communication, Client Communication, Presentation Skills, Documentation, Stakeholder Communication
-• Professional Skills: Problem Solving, Critical Thinking, Analytical Thinking, Strategic Thinking, Creativity, Adaptability, Time Management, Research Skills, Continuous Learning, Attention to Detail
-• Collaboration Tools: GitHub, Google Workspace, Microsoft Office, Microsoft Excel, PowerPoint, Notion, Figma, Trello, Jira
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 PROJECT QUESTIONS
@@ -269,12 +249,78 @@ Your objective is to help every visitor understand:
 Always prioritize truthfulness, professionalism, and clarity over sounding confident.
 `;
 
+// ────────────────────────────────
+// Basic in-memory rate limiter
+// ────────────────────────────────
+const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
+const RATE_LIMIT_MAX_REQUESTS = 10;  // per IP per window
+
+const rateLimitMap = new Map<string, { count: number; windowStart: number }>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+
+  if (!entry || now - entry.windowStart > RATE_LIMIT_WINDOW_MS) {
+    rateLimitMap.set(ip, { count: 1, windowStart: now });
+    return false;
+  }
+
+  if (entry.count >= RATE_LIMIT_MAX_REQUESTS) {
+    return true;
+  }
+
+  entry.count += 1;
+  return false;
+}
+
+// Periodically clean up stale entries so the Map doesn't grow forever
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, entry] of rateLimitMap.entries()) {
+    if (now - entry.windowStart > RATE_LIMIT_WINDOW_MS) {
+      rateLimitMap.delete(ip);
+    }
+  }
+}, RATE_LIMIT_WINDOW_MS).unref?.();
+
+// ────────────────────────────────
+// Types
+// ────────────────────────────────
+type ChatTurn = {
+  role: 'user' | 'model';
+  text: string;
+};
+
 export async function POST(request: Request) {
   try {
-    const { message } = await request.json();
+    // ---- Rate limiting ----
+    const ip =
+      request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
+      request.headers.get('x-real-ip') ??
+      'unknown';
 
-    if (!message) {
-      return NextResponse.json({ error: 'Message is required' }, { status: 400 });
+    if (isRateLimited(ip)) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please wait a moment before trying again.' },
+        { status: 429 }
+      );
+    }
+
+    // ---- Input parsing & validation ----
+    const body = await request.json();
+    const { message, history } = body as { message?: string; history?: ChatTurn[] };
+
+    if (!message || typeof message !== 'string') {
+      return NextResponse.json({ error: 'Message is required and must be a string.' }, { status: 400 });
+    }
+
+    if (message.length > 4000) {
+      return NextResponse.json({ error: 'Message is too long.' }, { status: 400 });
+    }
+
+    if (history && (!Array.isArray(history) || history.length > 30)) {
+      return NextResponse.json({ error: 'Invalid conversation history.' }, { status: 400 });
     }
 
     if (!process.env.GEMINI_API_KEY) {
@@ -282,23 +328,83 @@ export async function POST(request: Request) {
     }
 
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+    
+    // ---- RAG retrieval ----
+    let retrievedContext = "";
+    try {
+      retrievedContext = await retrieveRelevantContext(message, ai);
+    } catch (e) {
+      console.warn("Failed to retrieve context:", e);
+    }
 
-    const response = await ai.models.generateContent({
+    const systemInstruction = retrievedContext
+      ? `${SYSTEM_PROMPT_BASE}\n\n## RETRIEVED CONTEXT\n${retrievedContext}`
+      : `${SYSTEM_PROMPT_BASE}\n\n## RETRIEVED CONTEXT\n(No relevant verified information found for this query.)`;
+
+    // ---- Build multi-turn contents array ----
+    const contents = [
+      ...(history ?? []).map((turn) => ({
+        role: turn.role,
+        parts: [{ text: turn.text }],
+      })),
+      { role: 'user', parts: [{ text: message }] },
+    ];
+
+    // ---- Timeout guard ----
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30_000);
+
+    // ---- Streaming call ----
+    const streamResult = await ai.models.generateContentStream({
       model: 'gemini-2.5-flash',
-      contents: message,
+      contents,
       config: {
-        systemInstruction: SYSTEM_PROMPT,
+        systemInstruction,
         temperature: 0.7,
-      }
+      },
     });
 
-    return NextResponse.json({ 
-      success: true, 
-      text: response.text 
+    const encoder = new TextEncoder();
+
+    const stream = new ReadableStream({
+      async start(streamController) {
+        try {
+          for await (const chunk of streamResult) {
+            const text = chunk.text;
+            if (text) {
+              streamController.enqueue(encoder.encode(text));
+            }
+          }
+        } catch (err) {
+          console.error('Streaming error:', err);
+          streamController.enqueue(
+            encoder.encode('\n[Error: response interrupted]')
+          );
+        } finally {
+          clearTimeout(timeout);
+          streamController.close();
+        }
+      },
+      cancel() {
+        clearTimeout(timeout);
+        controller.abort();
+      },
     });
 
+    return new Response(stream, {
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Cache-Control': 'no-cache',
+      },
+    });
   } catch (error) {
     console.error('AI Error:', error);
+
+    // Differentiate common failure modes
+    if (error instanceof SyntaxError) {
+      return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 });
+    }
+
     return NextResponse.json(
       { error: 'Neural network connection failed.' },
       { status: 500 }
