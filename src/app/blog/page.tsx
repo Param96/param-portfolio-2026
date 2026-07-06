@@ -1,7 +1,25 @@
+import { Metadata } from "next";
 import BlogList from "@/components/BlogList";
 import { sanityFetch } from "@/sanity/lib/live";
 import { ALL_BLOGS_QUERY } from "@/sanity/lib/queries";
 import { BlogHero } from "@/components/hero/meadow/ClientHeroes";
+
+export const metadata: Metadata = {
+  title: "Blog",
+  description: "Read my latest articles and thoughts on AI, engineering, startups, and experimental systems.",
+  alternates: {
+    canonical: '/blog',
+  },
+  openGraph: {
+    title: "Blog | Param Patel",
+    description: "Read my latest articles and thoughts on AI, engineering, startups, and experimental systems.",
+    url: "/blog",
+  },
+  twitter: {
+    title: "Blog | Param Patel",
+    description: "Read my latest articles and thoughts on AI, engineering, startups, and experimental systems.",
+  }
+};
 
 export const revalidate = 60; // revalidate every minute
 

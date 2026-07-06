@@ -8,8 +8,41 @@ import BlogProgressBar from "@/components/BlogProgressBar";
 import ReadershipTracker from "@/components/analytics/ReadershipTracker";
 import BlogArticleActions from "@/components/blog/BlogArticleActions";
 import { getPostHogClient } from "@/lib/posthog-server";
+import { Metadata } from "next";
 
 export const revalidate = 60;
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const { data } = await sanityFetch({ 
+    query: BLOG_BY_SLUG_QUERY, 
+    params: { slug: resolvedParams.slug } 
+  });
+  const article = data as any;
+
+  if (!article) return { title: 'Not Found' };
+
+  return {
+    title: article.title,
+    description: article.summary || `Read ${article.title}`,
+    alternates: {
+      canonical: `/blog/${resolvedParams.slug}`,
+    },
+    openGraph: {
+      title: `${article.title} | Param Patel`,
+      description: article.summary || `Read ${article.title}`,
+      url: `/blog/${resolvedParams.slug}`,
+      type: "article",
+      publishedTime: article.publishedAt,
+      authors: ["Param Patel"],
+      // fallback to layout's og-image if article doesn't have one
+    },
+    twitter: {
+      title: `${article.title} | Param Patel`,
+      description: article.summary || `Read ${article.title}`,
+    }
+  };
+}
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
@@ -45,8 +78,26 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     ? new Date(article.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
     : "Draft";
 
+  const blogJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": article.title,
+    "description": article.summary || article.title,
+    "datePublished": article.publishedAt,
+    "dateModified": article._updatedAt || article.publishedAt,
+    "author": {
+      "@type": "Person",
+      "name": "Param Patel",
+      "url": "https://parampatel.in"
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#F6F1E3] pt-32 pb-40 selection:bg-[#D4A373] selection:text-[#111]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogJsonLd) }}
+      />
       <BlogProgressBar />
       <ReadershipTracker articleId={article._id} articleType="blog" />
 

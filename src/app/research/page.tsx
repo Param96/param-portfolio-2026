@@ -1,7 +1,25 @@
+import { Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/live";
 import { RESEARCH_PAGE_QUERY } from "@/sanity/lib/queries";
 import ResearchClientUI from "./ResearchClientUI";
 import { ResearchHero } from "@/components/hero/meadow/ClientHeroes";
+
+export const metadata: Metadata = {
+  title: "Research",
+  description: "Explore my research on AI verification systems, agentic workflows, and structured intelligence.",
+  alternates: {
+    canonical: '/research',
+  },
+  openGraph: {
+    title: "Research | Param Patel",
+    description: "Explore my research on AI verification systems, agentic workflows, and structured intelligence.",
+    url: "/research",
+  },
+  twitter: {
+    title: "Research | Param Patel",
+    description: "Explore my research on AI verification systems, agentic workflows, and structured intelligence.",
+  }
+};
 
 export const revalidate = 60;
 

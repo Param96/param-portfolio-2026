@@ -28,12 +28,13 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://parampatel.in'),
   title: {
-    default: "Param Patel — AI Engineer, Full Stack Developer & Founder",
+    default: "Param Patel — AI/ML Engineer, Full Stack Engineer, Builder & Aspiring Researcher",
     template: "%s | Param Patel",
   },
   description:
-    "Building Agentic AI Systems, Intelligent Products & Scalable Software. AI/ML Engineer, Full Stack Developer, Research-Oriented Builder, and Founder.",
+    "Building Agentic AI Systems, Intelligent Products & Scalable Software. AI/ML Engineer, Full Stack Engineer, Builder, and Aspiring Researcher.",
   keywords: [
     "Param Patel",
     "AI Engineer",
@@ -52,21 +53,33 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    title: "Param Patel — AI Engineer, Full Stack Developer & Founder",
+    url: "/",
+    title: "Param Patel — AI/ML Engineer, Full Stack Engineer, Builder & Aspiring Researcher",
     description:
       "Building Agentic AI Systems, Intelligent Products & Scalable Software.",
-    siteName: "Param Patel Portfolio",
+    siteName: "Param Patel",
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: "Param Patel - AI/ML Engineer, Full Stack Engineer, Builder & Aspiring Researcher" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Param Patel — AI Engineer & Founder",
+    title: "Param Patel — AI/ML Engineer, Full Stack Engineer, Builder & Aspiring Researcher",
     description:
       "Building Agentic AI Systems, Intelligent Products & Scalable Software.",
+    images: ['/og-image.png'],
   },
   robots: {
     index: true,
     follow: true,
   },
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
+  },
+  manifest: '/site.webmanifest',
 };
 
 import { ClerkProvider } from "@clerk/nextjs";
@@ -90,6 +103,24 @@ export default async function RootLayout({
         </head>
         <body className="min-h-screen relative font-inter" suppressHydrationWarning>
           <PostHogProvider>
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "Person",
+                  name: "Param Patel",
+                  url: "https://parampatel.in",
+                  jobTitle: "AI/ML Engineer, Full Stack Engineer, Builder & Aspiring Researcher",
+                  sameAs: [
+                    "https://github.com/Param96",
+                    "https://www.linkedin.com/in/paramp06/",
+                    "https://www.instagram.com/param_230/"
+                  ],
+                  knowsAbout: ["Machine Learning", "Full Stack Development", "AI/ML Engineering", "Agentic AI Systems"]
+                })
+              }}
+            />
             <LivingSystemProvider />
             <OracleRootTerminal />
             <ConnectedOracleRootTrigger />

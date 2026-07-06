@@ -6,8 +6,38 @@ import Link from "next/link";
 import { ArrowLeft, Cpu, Workflow, ShieldCheck, Database } from "lucide-react";
 import ReadershipTracker from "@/components/analytics/ReadershipTracker";
 import { getPostHogClient } from "@/lib/posthog-server";
+import { Metadata } from "next";
 
 export const revalidate = 60;
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const { data: rawData } = await sanityFetch({ 
+    query: RESEARCH_BY_SLUG_QUERY, 
+    params: { slug: resolvedParams.slug } 
+  });
+  const research = rawData as any;
+
+  if (!research) return { title: 'Not Found' };
+
+  return {
+    title: research.title,
+    description: research.description || `Research on ${research.title}`,
+    alternates: {
+      canonical: `/research/${resolvedParams.slug}`,
+    },
+    openGraph: {
+      title: `${research.title} | Param Patel`,
+      description: research.description || `Research on ${research.title}`,
+      url: `/research/${resolvedParams.slug}`,
+      type: "article",
+    },
+    twitter: {
+      title: `${research.title} | Param Patel`,
+      description: research.description || `Research on ${research.title}`,
+    }
+  };
+}
 
 export default async function ResearchDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
@@ -34,8 +64,24 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
     },
   });
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": research.title,
+    "description": research.description || research.title,
+    "author": {
+      "@type": "Person",
+      "name": "Param Patel",
+      "url": "https://parampatel.in"
+    }
+  };
+
   return (
     <div className="relative min-h-screen bg-[#E9EDC9] text-[#2F3E46] pt-32 pb-40 overflow-hidden selection:bg-[#D4A373] selection:text-[#FEFAE0]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <ReadershipTracker articleId={research._id} articleType="research" />
       {/* Global Atmosphere */}
       <div className="fixed inset-0 z-0 pointer-events-none">

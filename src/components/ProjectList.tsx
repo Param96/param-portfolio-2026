@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import posthog from "posthog-js";
+import Image from "next/image";
 
 export default function ProjectList({ projects }: { projects: any[] }) {
   if (!projects || projects.length === 0) {
@@ -30,7 +31,7 @@ export default function ProjectList({ projects }: { projects: any[] }) {
             <div className={`relative h-[500px] w-full ${project.atmosphere || 'bg-[#FAEDCD]'} overflow-hidden flex items-center justify-center border border-[#354F52]/5 shadow-2xl ${isEven ? 'order-2 lg:order-1' : 'order-1 lg:order-2'}`}>
               <div className={`absolute inset-0 bg-gradient-to-tr ${isEven ? 'from-[#84A98C]/10' : 'from-[#D4A373]/10'} to-transparent`} />
               {project.coverImageUrl ? (
-                <img src={project.coverImageUrl} alt={project.title} className="w-full h-full object-cover mix-blend-multiply" />
+                <Image fill src={project.coverImageUrl} alt={project.title || "Project preview"} className="object-cover mix-blend-multiply" />
               ) : (
                 <span className="font-inter text-[#52796F]/50 tracking-widest text-sm uppercase">ARCH_{i+1}_{project.title.replace(/\s+/g, '_')}</span>
               )}

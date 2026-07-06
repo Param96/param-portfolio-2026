@@ -1,8 +1,26 @@
+import { Metadata } from "next";
 import EvolvingSystemsList from "@/components/EvolvingSystemsList";
 import { sanityFetch } from "@/sanity/lib/live";
 import { ALL_PROJECTS_QUERY } from "@/sanity/lib/queries";
 import { ProjectsHero } from "@/components/hero/meadow/ClientHeroes";
 import GithubRepoGrid from "@/components/GithubRepoGrid";
+
+export const metadata: Metadata = {
+  title: "Projects",
+  description: "A collection of AI systems, scalable infrastructure, and intelligent products I've built.",
+  alternates: {
+    canonical: '/projects',
+  },
+  openGraph: {
+    title: "Projects | Param Patel",
+    description: "A collection of AI systems, scalable infrastructure, and intelligent products I've built.",
+    url: "/projects",
+  },
+  twitter: {
+    title: "Projects | Param Patel",
+    description: "A collection of AI systems, scalable infrastructure, and intelligent products I've built.",
+  }
+};
 
 export const revalidate = 60;
 

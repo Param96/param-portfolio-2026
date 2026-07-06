@@ -14,10 +14,24 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { LAB_NOTES_QUERY } from "@/sanity/lib/queries";
 import LabNotesBoard from "@/components/LabNotesBoard";
 
-export const metadata = {
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
   title: "AI Lab",
   description:
     "Param Patel's AI Lab — interactive terminal, engineering experiments, benchmark visualizations, and AI demos.",
+  alternates: {
+    canonical: '/ai-lab',
+  },
+  openGraph: {
+    title: "AI Lab | Param Patel",
+    description: "Param Patel's AI Lab — interactive terminal, engineering experiments, benchmark visualizations, and AI demos.",
+    url: "/ai-lab",
+  },
+  twitter: {
+    title: "AI Lab | Param Patel",
+    description: "Param Patel's AI Lab — interactive terminal, engineering experiments, benchmark visualizations, and AI demos.",
+  }
 };
 
 const terminalLines = [

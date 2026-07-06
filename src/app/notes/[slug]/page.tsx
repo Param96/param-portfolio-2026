@@ -6,8 +6,38 @@ import Link from "next/link";
 import { ArrowLeft, FlaskConical, GitCommit, Settings, TerminalSquare } from "lucide-react";
 import ReadershipTracker from "@/components/analytics/ReadershipTracker";
 import { getPostHogClient } from "@/lib/posthog-server";
+import { Metadata } from "next";
 
 export const revalidate = 60;
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const { data: rawData } = await sanityFetch({ 
+    query: LAB_NOTE_BY_SLUG_QUERY, 
+    params: { slug: resolvedParams.slug } 
+  });
+  const note = rawData as any;
+
+  if (!note) return { title: 'Not Found' };
+
+  return {
+    title: note.title,
+    description: `Lab note: ${note.title}`,
+    alternates: {
+      canonical: `/notes/${resolvedParams.slug}`,
+    },
+    openGraph: {
+      title: `${note.title} | Param Patel`,
+      description: `Lab note: ${note.title}`,
+      url: `/notes/${resolvedParams.slug}`,
+      type: "article",
+    },
+    twitter: {
+      title: `${note.title} | Param Patel`,
+      description: `Lab note: ${note.title}`,
+    }
+  };
+}
 
 export default async function LabNoteDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
@@ -38,8 +68,25 @@ export default async function LabNoteDetailPage({ params }: { params: Promise<{ 
     ? new Date(note.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
     : "Draft";
 
+  const noteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": note.title,
+    "description": note.title,
+    "datePublished": note.publishedAt,
+    "author": {
+      "@type": "Person",
+      "name": "Param Patel",
+      "url": "https://parampatel.in"
+    }
+  };
+
   return (
     <div className="relative min-h-screen bg-[#FAEDCD] text-[#2F3E46] pt-32 pb-40 selection:bg-[#D4A373] selection:text-[#FEFAE0]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(noteJsonLd) }}
+      />
       <ReadershipTracker articleId={note._id} articleType="lab-note" />
       {/* Background visual */}
       <div className="fixed inset-0 pointer-events-none z-0">

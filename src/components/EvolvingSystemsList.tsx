@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import posthog from "posthog-js";
+import Image from "next/image";
 import { Github, Cpu, Network, Database, LayoutGrid, Layers, Server, Globe, Rocket, ShieldCheck, ChevronDown, ChevronUp } from "lucide-react";
 
 export default function EvolvingSystemsList({ projects }: { projects: any[] }) {
@@ -198,7 +199,7 @@ export default function EvolvingSystemsList({ projects }: { projects: any[] }) {
                       <div className={`absolute inset-0 bg-gradient-to-tr from-[#84A98C]/5 to-[#D4A373]/5 transition-opacity duration-1000 ${isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-100'}`} />
                       
                       {project.coverImageUrl ? (
-                        <img src={project.coverImageUrl} alt={project.title} className={`w-full h-full object-cover rounded-xl border border-[var(--text-main)]/10 transition-all duration-1000 ${isActive ? 'opacity-100 scale-105' : 'opacity-80 group-hover:opacity-100 group-hover:scale-105'}`} />
+                        <Image fill src={project.coverImageUrl} alt={project.title || "Project preview"} className={`object-cover rounded-xl border border-[var(--text-main)]/10 transition-all duration-1000 ${isActive ? 'opacity-100 scale-105' : 'opacity-80 group-hover:opacity-100 group-hover:scale-105'}`} />
                       ) : (
                         <div className="w-full h-full border border-[var(--text-main)]/10 rounded-xl relative overflow-hidden bg-[var(--bg-page)] flex flex-col justify-between p-6">
                            <div className="absolute top-0 right-0 w-32 h-32 bg-[#D4A373]/10 blur-[50px] rounded-full" />
