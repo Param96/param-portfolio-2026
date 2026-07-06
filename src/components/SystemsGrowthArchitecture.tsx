@@ -172,7 +172,7 @@ function KnowledgeNode({
           {/* Hanging Fruit */}
           <motion.div 
             animate={{ rotate: [-3, 3, -3] }} 
-            transition={{ repeat: Infinity, duration: 4 + Math.random(), ease: "easeInOut" }}
+            transition={{ repeat: Infinity, duration: 4 + ((branch.cx + branch.cy) % 10) / 10, ease: "easeInOut" }}
             style={{ transformOrigin: 'top center' }}
             className="relative flex flex-col items-center cursor-pointer group"
           >
@@ -699,12 +699,12 @@ export default function SystemsGrowthArchitecture() {
           <g className={`transition-opacity duration-1000 ${['dawn', 'day'].includes(timeOfDayTheme) ? 'opacity-100' : 'opacity-0'}`}>
              <g className="motion-safe-ambient" style={{ animation: 'flutterWander 45s linear infinite' }}>
                 <g transform="scale(0.6)">
-                  {/* Upper Wings - Yellow */}
-                  <path d="M 0 0 Q -10 -15 -20 -5 Q -25 5 -15 15 Q -5 20 0 5 Z" fill="#facc15" opacity="0.8" />
-                  <path d="M 0 0 Q 10 -15 20 -5 Q 25 5 15 15 Q 5 20 0 5 Z" fill="#facc15" opacity="0.8" />
-                  {/* Lower Wings - Lime */}
-                  <path d="M -5 10 Q -15 25 -5 30 Q 5 25 0 15 Z" fill="#a3e635" opacity="0.7" />
-                  <path d="M 5 10 Q 15 25 5 30 Q -5 25 0 15 Z" fill="#a3e635" opacity="0.7" />
+                  {/* Upper Wings - Dark Pink */}
+                  <path d="M 0 0 Q -10 -15 -20 -5 Q -25 5 -15 15 Q -5 20 0 5 Z" fill="#c47a82" opacity="0.8" />
+                  <path d="M 0 0 Q 10 -15 20 -5 Q 25 5 15 15 Q 5 20 0 5 Z" fill="#c47a82" opacity="0.8" />
+                  {/* Lower Wings - Darker Pink */}
+                  <path d="M -5 10 Q -15 25 -5 30 Q 5 25 0 15 Z" fill="#a86169" opacity="0.7" />
+                  <path d="M 5 10 Q 15 25 5 30 Q -5 25 0 15 Z" fill="#a86169" opacity="0.7" />
                   
                   <path d="M 0 -5 L 0 15" stroke="var(--footer-ink)" strokeWidth="1.5" strokeLinecap="round" />
                   <path d="M 0 -5 Q -5 -15 -8 -10 M 0 -5 Q 5 -15 8 -10" stroke="var(--footer-ink)" strokeWidth="0.8" fill="none" />
@@ -714,12 +714,12 @@ export default function SystemsGrowthArchitecture() {
              </g>
              <g className="motion-safe-ambient" style={{ animation: 'flutterWander2 55s linear infinite', animationDelay: '-15s' }}>
                 <g transform="scale(0.4)">
-                  {/* Upper Wings - Yellow */}
-                  <path d="M 0 0 Q -10 -15 -20 -5 Q -25 5 -15 15 Q -5 20 0 5 Z" fill="#facc15" opacity="0.8" />
-                  <path d="M 0 0 Q 10 -15 20 -5 Q 25 5 15 15 Q 5 20 0 5 Z" fill="#facc15" opacity="0.8" />
-                  {/* Lower Wings - Lime */}
-                  <path d="M -5 10 Q -15 25 -5 30 Q 5 25 0 15 Z" fill="#a3e635" opacity="0.7" />
-                  <path d="M 5 10 Q 15 25 5 30 Q -5 25 0 15 Z" fill="#a3e635" opacity="0.7" />
+                  {/* Upper Wings - Dark Pink */}
+                  <path d="M 0 0 Q -10 -15 -20 -5 Q -25 5 -15 15 Q -5 20 0 5 Z" fill="#c47a82" opacity="0.8" />
+                  <path d="M 0 0 Q 10 -15 20 -5 Q 25 5 15 15 Q 5 20 0 5 Z" fill="#c47a82" opacity="0.8" />
+                  {/* Lower Wings - Darker Pink */}
+                  <path d="M -5 10 Q -15 25 -5 30 Q 5 25 0 15 Z" fill="#a86169" opacity="0.7" />
+                  <path d="M 5 10 Q 15 25 5 30 Q -5 25 0 15 Z" fill="#a86169" opacity="0.7" />
                   
                   <path d="M 0 -5 L 0 15" stroke="var(--footer-ink)" strokeWidth="1.5" strokeLinecap="round" />
                   <path d="M 0 -5 Q -5 -15 -8 -10 M 0 -5 Q 5 -15 8 -10" stroke="var(--footer-ink)" strokeWidth="0.8" fill="none" />
