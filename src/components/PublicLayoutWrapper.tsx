@@ -50,7 +50,7 @@ export default function PublicLayoutWrapper({ children }: { children: React.Reac
               Param Patel
             </span>
             <span className="font-inter text-[8px] md:text-[10px] uppercase tracking-widest mt-1 text-text-dim transition-colors duration-500">
-              AI/ML Engineer • Full Stack Engineer • Builder • Aspiring Researcher
+              From Concept to Production-Ready Systems
             </span>
           </Link>
 

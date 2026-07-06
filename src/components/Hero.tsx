@@ -81,7 +81,7 @@ export default function Hero() {
               transition={{ duration: 1.5, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
               className="text-base md:text-lg text-[var(--text-secondary)] font-medium leading-relaxed max-w-xl mb-12"
             >
-              AI/ML Engineer • Full Stack Engineer • Builder • Aspiring Researcher
+              Building the Future with AI and Software
             </motion.p>
 
             {/* CTAs */}

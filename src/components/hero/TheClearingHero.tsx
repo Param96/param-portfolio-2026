@@ -80,7 +80,7 @@ export default function TheClearingHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
           >
-            AI/ML Engineer • Full Stack Engineer • Builder • Aspiring Researcher
+            Code. Intelligence. Impact.
           </motion.div>
 
           {/* Headline */}
