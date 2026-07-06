@@ -8,6 +8,7 @@ import { ArrowRight, Menu, X } from "lucide-react";
 import { navLinks } from "@/data/navigation";
 import { Show, UserButton, SignInButton } from "@clerk/nextjs";
 import posthog from "posthog-js";
+import { Logo } from "./Logo";
 
 export default function Navbar() {
   const [hidden, setHidden] = useState(false);
@@ -105,21 +106,8 @@ export default function Navbar() {
             )}
             
             {/* ── Brand / Left Side ── */}
-            <Link href="/" className="group flex items-center gap-3 relative z-10">
-              <div className="flex flex-col">
-                <span className={`text-sm font-bold tracking-tight transition-colors duration-500 ${scrolled ? "text-[#FEFAE0]" : "text-[#2F3E46]"}`}>
-                  Param Patel
-                </span>
-                <div className="flex items-center gap-2 opacity-80">
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${scrolled ? "bg-[#D4A373]" : "bg-[#84A98C]"}`}></span>
-                    <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${scrolled ? "bg-[#D4A373]" : "bg-[#52796F]"}`}></span>
-                  </span>
-                  <span className={`text-[9px] font-inter uppercase tracking-[0.25em] transition-colors duration-500 ${scrolled ? "text-[#D4A373]" : "text-[#52796F]"}`}>
-                    Systems
-                  </span>
-                </div>
-              </div>
+            <Link href="/" className="relative z-10">
+              <Logo scrolled={scrolled} />
             </Link>
 
             {/* ── Desktop Navigation / Center ── */}
