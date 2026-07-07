@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useMemo, memo } from "react";
+import { useRouter } from "next/navigation";
 import ReactMarkdown from 'react-markdown';
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useLivingSystemStore } from "@/lib/store";
@@ -130,6 +131,7 @@ TerminalLine.displayName = "TerminalLine";
 // ─────────────────────────────────────────────────────────
 export default function OracleRootTerminal() {
   const { terminalOpen, toggleTerminal, timeOfDayTheme, setTimeOfDayTheme } = useLivingSystemStore();
+  const router = useRouter();
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<OutputLine[]>([]);
   const [isRebooting, setIsRebooting] = useState(false);
@@ -138,6 +140,8 @@ export default function OracleRootTerminal() {
   
   const colors = THEMES[timeOfDayTheme] || THEMES.night;
   const reducedMotion = useReducedMotion();
+  
+  const sidebarCommands = useMemo(() => ORACLE_COMMANDS.filter(c => !c.hiddenFromSidebar), []);
 
   // Auto-focus & scroll
   useEffect(() => {
@@ -204,7 +208,8 @@ Type \`exit\` to close.`,
     
     setInput("");
     
-    if (cmdString.trim().toLowerCase() === "clear") {
+    const lowerCmd = cmdString.trim().toLowerCase();
+    if (lowerCmd === "clear" || lowerCmd === "cls") {
       // Trigger wilt animation
       setHistory(prev => [...prev, { id: Math.random().toString(), text: "__CLEAR__", type: "system" }]);
       return;
@@ -227,6 +232,7 @@ Type \`exit\` to close.`,
         setIsRebooting(true);
         setTimeout(() => window.location.reload(), 1500);
       },
+      navigate: (path: string) => router.push(path),
       history
     };
 
@@ -295,12 +301,12 @@ Type \`exit\` to close.`,
               />
 
               {/* Collapsible Sidebar */}
-              <div className="w-12 border-r flex flex-col items-center py-4 gap-4 z-10" style={{ borderColor: colors.border + '40', backgroundColor: 'rgba(0,0,0,0.2)' }}>
-                {ORACLE_COMMANDS.map(cmd => (
+              <div className="w-12 border-r flex flex-col items-center py-4 gap-4 z-10 overflow-y-auto" style={{ borderColor: colors.border + '40', backgroundColor: 'rgba(0,0,0,0.2)' }}>
+                {sidebarCommands.map(cmd => (
                   <button 
                     key={cmd.id}
                     onClick={() => execute(cmd.id)}
-                    className="p-2 rounded-md hover:bg-white/10 group relative transition-colors"
+                    className="p-2 rounded-md hover:bg-white/10 group relative transition-colors flex-shrink-0"
                     title={cmd.name}
                   >
                     <cmd.icon className="w-4 h-4" style={{ color: colors.border }} />
