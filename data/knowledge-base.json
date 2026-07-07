@@ -1,8 +1,8 @@
 [
   {
-    "id": "bio-sanvaya",
+    "id": "bio-param",
     "category": "biography",
-    "text": "Param Patel is Co-Founder and CEO of Sanvaya, a pre-incorporation AI/ML startup focused on AI-powered codebase intelligence and systems engineering tooling. His co-founder is Preet Shah (COO). Equity split is 45/45 with a 10% ESOP pool."
+    "text": "Param Patel is an AI/ML Engineer, Full Stack Developer, and entrepreneur passionate about building intelligent software systems. His interests include artificial intelligence, machine learning, agentic AI, distributed systems, code intelligence, and developer tooling. He enjoys building scalable products that solve real-world engineering problems."
   },
   {
     "id": "project-deepfake-detection",
@@ -43,5 +43,10 @@
     "id": "skills-business",
     "category": "skills",
     "text": "Business & Leadership Skills: Product Thinking, Startup Strategy, MVP Planning, SaaS Product Development, Team Management, Public Speaking, UI/UX Design."
+  },
+  {
+    "id": "startup-current",
+    "category": "startup",
+    "text": "Currently building a pre-incorporation AI/ML startup focused on AI-powered codebase intelligence, software architecture understanding, developer productivity, and intelligent systems engineering tools."
   }
 ]

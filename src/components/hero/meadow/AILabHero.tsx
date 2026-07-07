@@ -7,7 +7,7 @@ import MeadowEnvironment from "./MeadowEnvironment";
 
 function NexusPool() {
   const waterRef = useRef<THREE.Mesh>(null);
-  
+
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
     if (waterRef.current) {
@@ -23,15 +23,15 @@ function NexusPool() {
         <ringGeometry args={[1.5, 1.8, 32]} />
         <meshStandardMaterial color="#4a504d" roughness={0.9} flatShading />
       </mesh>
-      
+
       {/* Water surface */}
       <mesh ref={waterRef} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
         <circleGeometry args={[1.5, 32]} />
-        <meshPhysicalMaterial 
-          color="#a8d5d0" 
-          transmission={0.8} 
-          roughness={0.05} 
-          ior={1.33} 
+        <meshPhysicalMaterial
+          color="#a8d5d0"
+          transmission={0.8}
+          roughness={0.05}
+          ior={1.33}
           transparent
           opacity={0.8}
         />
@@ -85,22 +85,22 @@ function WoodenDesk() {
       </mesh>
       {/* Legs */}
       {/* Front Left */}
-      <mesh position={[-length/2 + 0.1, -legHeight/2, width/2 - 0.1]} receiveShadow castShadow>
+      <mesh position={[-length / 2 + 0.1, -legHeight / 2, width / 2 - 0.1]} receiveShadow castShadow>
         <boxGeometry args={[legThickness, legHeight, legThickness]} />
         <meshStandardMaterial color="#3d2b1f" roughness={0.9} />
       </mesh>
       {/* Front Right */}
-      <mesh position={[length/2 - 0.1, -legHeight/2, width/2 - 0.1]} receiveShadow castShadow>
+      <mesh position={[length / 2 - 0.1, -legHeight / 2, width / 2 - 0.1]} receiveShadow castShadow>
         <boxGeometry args={[legThickness, legHeight, legThickness]} />
         <meshStandardMaterial color="#3d2b1f" roughness={0.9} />
       </mesh>
       {/* Back Left */}
-      <mesh position={[-length/2 + 0.1, -legHeight/2, -width/2 + 0.1]} receiveShadow castShadow>
+      <mesh position={[-length / 2 + 0.1, -legHeight / 2, -width / 2 + 0.1]} receiveShadow castShadow>
         <boxGeometry args={[legThickness, legHeight, legThickness]} />
         <meshStandardMaterial color="#3d2b1f" roughness={0.9} />
       </mesh>
       {/* Back Right */}
-      <mesh position={[length/2 - 0.1, -legHeight/2, -width/2 + 0.1]} receiveShadow castShadow>
+      <mesh position={[length / 2 - 0.1, -legHeight / 2, -width / 2 + 0.1]} receiveShadow castShadow>
         <boxGeometry args={[legThickness, legHeight, legThickness]} />
         <meshStandardMaterial color="#3d2b1f" roughness={0.9} />
       </mesh>
@@ -111,7 +111,7 @@ function WoodenDesk() {
 function FieldJournal() {
   const leftPageRef = useRef<THREE.Mesh>(null);
   const rightPageRef = useRef<THREE.Mesh>(null);
-  
+
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
     if (rightPageRef.current) {
@@ -127,13 +127,13 @@ function FieldJournal() {
         <boxGeometry args={[0.9, 0.02, 0.6]} />
         <meshStandardMaterial color="#2c1a0e" roughness={0.8} />
       </mesh>
-      
+
       {/* Left Page (Static) */}
       <mesh position={[-0.22, 0, 0]}>
         <boxGeometry args={[0.4, 0.01, 0.55]} />
         <meshStandardMaterial color="#f0e6d2" roughness={0.9} />
       </mesh>
-      
+
       {/* Right Page (Fluttering) */}
       <mesh ref={rightPageRef} position={[0, 0, 0]}>
         <boxGeometry args={[0.4, 0.01, 0.55]} />
@@ -209,7 +209,7 @@ function WoodenChair() {
 
 function Person() {
   const headRef = useRef<THREE.Mesh>(null);
-  
+
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
     if (headRef.current) {
@@ -226,7 +226,7 @@ function Person() {
         <boxGeometry args={[0.35, 0.4, 0.2]} />
         <meshStandardMaterial color="#1f2937" roughness={0.8} /> {/* Dark hoodie */}
       </mesh>
-      
+
       {/* Head */}
       <group position={[0, 0.55, 0]} ref={headRef}>
         <mesh receiveShadow castShadow>
@@ -234,7 +234,7 @@ function Person() {
           <meshStandardMaterial color="#fcd5ce" roughness={0.5} /> {/* Skin tone */}
         </mesh>
       </group>
-      
+
       {/* Arms reaching towards computer */}
       {/* Left arm */}
       <mesh position={[-0.2, 0.25, -0.1]} rotation={[-1.0, 0.3, 0]} receiveShadow castShadow>
@@ -246,7 +246,7 @@ function Person() {
         <boxGeometry args={[0.08, 0.35, 0.08]} />
         <meshStandardMaterial color="#1f2937" roughness={0.8} />
       </mesh>
-      
+
       {/* Legs down the chair */}
       <mesh position={[-0.1, -0.15, -0.1]} rotation={[0, 0, 0]} receiveShadow castShadow>
         <boxGeometry args={[0.1, 0.3, 0.1]} />
@@ -263,7 +263,7 @@ function Person() {
 function DustMotes() {
   const groupRef = useRef<THREE.Group>(null);
   const count = 50;
-  
+
   const dustData = useMemo(() => {
     return Array.from({ length: count }).map(() => ({
       x: (Math.random() - 0.5) * 4 - 1,
@@ -299,7 +299,7 @@ function DustMotes() {
 
 function Fishes() {
   const groupRef = useRef<THREE.Group>(null);
-  
+
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
     if (groupRef.current) {
@@ -308,7 +308,7 @@ function Fishes() {
         const radius = 0.8 + Math.sin(time * 0.2 + i) * 0.2;
         fish.position.x = Math.cos(angle) * radius;
         fish.position.z = Math.sin(angle) * radius;
-        fish.rotation.y = -angle; 
+        fish.rotation.y = -angle;
       });
     }
   });
@@ -331,7 +331,7 @@ function StreetLight() {
   const globalTheme = useLivingSystemStore((state) => state.timeOfDayTheme);
   const isNight = globalTheme === "night";
   const lightIntensity = isNight ? 2.5 : 0.0;
-  
+
   return (
     <group position={[-2.8, 0, -3.8]}>
       {/* Pole */}
@@ -395,7 +395,7 @@ function PoolGlows() {
     if (groupRef.current) {
       groupRef.current.children.forEach((glow, i) => {
         const material = (glow as THREE.Mesh).material as THREE.MeshBasicMaterial;
-        material.opacity = (Math.sin(time * 1.5 + i * 2.5) + 1) * 0.15 + 0.1; 
+        material.opacity = (Math.sin(time * 1.5 + i * 2.5) + 1) * 0.15 + 0.1;
       });
     }
   });
@@ -423,7 +423,7 @@ function PoolGlows() {
 
 function Frogs() {
   const frogsData = [
-    { x: 1.5, z: 0.2, rotY: -Math.PI / 4 }, 
+    { x: 1.5, z: 0.2, rotY: -Math.PI / 4 },
     { x: -0.2, z: 1.45, rotY: Math.PI / 2 + 0.2 }
   ];
 
@@ -477,13 +477,13 @@ export default function AILabHero() {
       <MeadowEnvironment cameraPosition={[0, 1.5, 4]} focusDistance={0.02}>
         <AILabSceneContent />
       </MeadowEnvironment>
-      
+
       <div className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-center px-6 md:px-24">
         <div className="max-w-2xl pointer-events-auto">
-          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-inter font-bold mb-6 text-[#2b1b17] drop-shadow-sm">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-inter font-bold mb-6 text-[#FFFFFF] drop-shadow-sm">
             The Nexus Pool
           </h1>
-          <p className="text-xl md:text-2xl text-[#4a2c26] leading-relaxed font-light">
+          <p className="text-xl md:text-2xl text-[#FFFFFF] leading-relaxed font-light">
             Agentic environments, autonomous orchestration, and exploratory AI workflows.
           </p>
         </div>
