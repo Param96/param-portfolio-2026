@@ -67,7 +67,7 @@ export default function CustomCursor() {
     <>
       {/* 1. Soft Glow Layer (Lowest Z, NO blend mode, tracks variant accent) */}
       <motion.div
-        className="fixed top-0 left-0 w-32 h-32 pointer-events-none z-[9997]"
+        className="fixed top-0 left-0 w-32 h-32 pointer-events-none z-[10002]"
         style={{
           background: `radial-gradient(circle, ${glowColor} 0%, transparent 60%)`,
         }}
@@ -82,7 +82,7 @@ export default function CustomCursor() {
 
       {/* 2. Default & Interactive: Inner Dot */}
       <motion.div
-        className="fixed top-0 left-0 w-2 h-2 bg-[var(--moss)] rounded-full pointer-events-none z-[9999] mix-blend-difference"
+        className="fixed top-0 left-0 w-2 h-2 bg-[var(--moss)] rounded-full pointer-events-none z-[10004] mix-blend-difference"
         animate={{
           x: mousePos.x - 4,
           y: mousePos.y - 4,
@@ -94,7 +94,7 @@ export default function CustomCursor() {
       
       {/* 3. Default & Interactive: Outer Ring */}
       <motion.div
-        className="fixed top-0 left-0 w-8 h-8 border border-[var(--moss)] rounded-full pointer-events-none z-[9998] mix-blend-difference"
+        className="fixed top-0 left-0 w-8 h-8 border border-[var(--moss)] rounded-full pointer-events-none z-[10003] mix-blend-difference"
         animate={{
           x: mousePos.x - 16,
           y: mousePos.y - 16,
@@ -107,7 +107,7 @@ export default function CustomCursor() {
 
       {/* 4. Text Variant: Capsule */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9998] mix-blend-difference"
+        className="fixed top-0 left-0 pointer-events-none z-[10003] mix-blend-difference"
         animate={{
           x: mousePos.x,
           y: mousePos.y,
@@ -125,7 +125,7 @@ export default function CustomCursor() {
 
       {/* 5. System Variant: Line-art Crosshair */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9998] mix-blend-difference text-[var(--moss)]"
+        className="fixed top-0 left-0 pointer-events-none z-[10003] mix-blend-difference text-[var(--moss)]"
         animate={{
           x: mousePos.x,
           y: mousePos.y,
