@@ -20,7 +20,7 @@ const DIALOGUE_LINES = [
   "Direct hit. I'll get back to you soon."
 ];
 
-export default function SecureCommLinkForm() {
+export default function SecureCommLinkForm({ onSequenceComplete }: { onSequenceComplete?: () => void }) {
   const [formState, setFormState] = useState<"idle" | "transmitting" | "sent">("idle");
   const [dialogueLine, setDialogueLine] = useState(DIALOGUE_LINES[0]);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -91,6 +91,7 @@ export default function SecureCommLinkForm() {
       setTimeout(() => {
         setFormState("idle");
         controls.set({ x: 0 });
+        if (onSequenceComplete) onSequenceComplete();
       }, 5000);
     } catch (err) {
       console.error(err);

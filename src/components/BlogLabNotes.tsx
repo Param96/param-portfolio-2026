@@ -1,5 +1,6 @@
 import ScrollReveal from "./ScrollReveal";
 import { ArrowUpRight, FlaskConical, PenTool } from "lucide-react";
+import Link from "next/link";
 
 export default function BlogLabNotes() {
   return (
@@ -66,9 +67,12 @@ export default function BlogLabNotes() {
                </p>
              </a>
              
-             <a href="#" className="mt-2 inline-flex items-center gap-2 text-xs font-bold text-[#354F52] hover:text-[#2F3E46] transition-colors uppercase tracking-widest">
+              <Link
+                href="/ai-lab"
+                className="group flex items-center justify-center gap-2 w-full py-4 bg-[#F2F4F3] text-[#354F52] hover:bg-[#354F52] hover:text-[#FEFAE0] rounded-xl text-xs font-bold uppercase tracking-widest transition-all duration-500"
+              >
                 Read All Notes <ArrowUpRight className="w-3.5 h-3.5" />
-             </a>
+              </Link>
           </div>
 
         </div>

@@ -45,13 +45,15 @@ export default function ContactCTA() {
               Get in Touch
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
-            <Link
-              href="/resume"
-              onClick={() => posthog.capture('contact_cta_clicked', { cta_type: 'view_resume', source: 'contact_cta_section' })}
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => posthog.capture('contact_cta_clicked', { cta_type: 'download_resume', source: 'contact_cta_section' })}
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl glass text-slate-300 font-medium hover:bg-white/[0.06] hover:text-white transition-all duration-300"
             >
               View Resume
-            </Link>
+            </a>
           </div>
         </AnimatedSection>
 

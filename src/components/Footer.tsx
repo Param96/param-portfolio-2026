@@ -218,8 +218,7 @@ const SignpostNav = ({ config }: { config: { text: string } }) => {
     { name: "PROJECTS", href: "/projects", dir: "left", y: 92 },
     { name: "AI LAB", href: "/ai-lab", dir: "right", y: 128 },
     { name: "BLOG", href: "/blog", dir: "left", y: 164 },
-    { name: "CONTACT", href: "/contact", dir: "right", y: 200 },
-    { name: "RESUME", href: "/resume", dir: "left", y: 236 }
+    { name: "CONTACT", href: "/contact", dir: "right", y: 200 }
   ];
 
   return (

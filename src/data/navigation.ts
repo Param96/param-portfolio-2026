@@ -3,7 +3,7 @@ export const navLinks = [
   { label: "Projects", href: "/projects" },
   { label: "Research", href: "/research" },
   { label: "Blog", href: "/blog" },
-  { label: "Lab Notes", href: "/lab-notes" },
+  { label: "AI Lab", href: "/ai-lab" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
@@ -15,8 +15,6 @@ export const footerLinks = {
     { label: "Blog", href: "/blog" },
   ],
   secondary: [
-    { label: "Resume", href: "/resume" },
-    { label: "Lab Notes", href: "/lab-notes" },
     { label: "AI Lab", href: "/ai-lab" },
     { label: "Contact", href: "/contact" },
   ],

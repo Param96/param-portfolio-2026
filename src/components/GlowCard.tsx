@@ -32,8 +32,8 @@ export default function GlowCard({
   return (
     <div
       className={`
-        bg-[#FFFFFF] border border-[#2F3E46]/[0.08] rounded-2xl p-6 transition-all duration-300
-        ${hover ? `hover:-translate-y-0.5 hover:bg-[#E9EDC9] ${colorMap[glowColor]}` : ""}
+        bg-[var(--surface-base)] border border-[var(--border-subtle)] rounded-2xl p-6 transition-all duration-300
+        ${hover ? `hover:-translate-y-0.5 hover:bg-[var(--surface-raised)] ${colorMap[glowColor]}` : ""}
         ${className}
       `}
     >

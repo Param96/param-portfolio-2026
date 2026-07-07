@@ -807,7 +807,6 @@ export const DynamicFooterVignette = ({ pathname }: { pathname: string }) => {
   else if (pathname.includes("/blog")) Vignette = BlogVignette;
   else if (pathname.includes("/ai-lab") || pathname.includes("/ai")) Vignette = AILabVignette;
   else if (pathname.includes("/contact")) Vignette = ContactVignette;
-  else if (pathname.includes("/resume")) Vignette = ResumeVignette;
 
   return (
     <div 

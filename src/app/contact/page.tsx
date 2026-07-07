@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import dynamic from "next/dynamic";
 import SecureCommLinkForm from "@/components/ui/SecureCommLinkForm";
 import { motion } from "framer-motion";
@@ -8,6 +10,7 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import posthog from "posthog-js";
 import QuotesSection from "@/components/sections/QuotesSection";
+import PostSubmitLetter from "@/components/ui/PostSubmitLetter";
 
 const ContactHero = dynamic(() => import("@/components/hero/meadow/ContactHero"), { ssr: false });
 
@@ -38,15 +41,24 @@ const currentFocus = [
 ];
 
 export default function ContactPage() {
+  const [showLetter, setShowLetter] = useState(false);
+
+  const handleSequenceComplete = () => {
+    if (typeof window !== "undefined") {
+      const hasShown = sessionStorage.getItem("postSubmitLetterShown");
+      if (!hasShown) {
+        setShowLetter(true);
+        sessionStorage.setItem("postSubmitLetterShown", "true");
+      }
+    }
+  };
+
   return (
     <div className="relative w-full bg-[var(--bg-main)] min-h-screen transition-colors duration-1000 ease-in-out pb-32">
       {/* ── HERO ── */}
       <ContactHero />
 
-      {/* ── SECURE COMM-LINK (Form) ── */}
-      <section className="w-full py-20 px-6 md:px-24 relative z-20 border-t border-[var(--border-line)]">
-        <SecureCommLinkForm />
-      </section>
+
 
       {/* ── WHAT EXCITES ME (Floating Concepts) ── */}
       <section className="w-full py-32 px-6 md:px-24 overflow-hidden relative border-t border-[var(--border-line)]">
@@ -131,7 +143,7 @@ export default function ContactPage() {
       <QuotesSection />
 
       {/* ── SOCIAL CONNECTION ENVIRONMENT (Nodes) ── */}
-      <section className="w-full pt-20 pb-40 px-6 md:px-24 border-t border-[var(--border-line)]">
+      <section className="w-full pt-20 pb-20 px-6 md:px-24 border-t border-[var(--border-line)]">
         <div className="max-w-7xl mx-auto">
           <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--amber)] mb-16 block">
             Transmission Nodes
@@ -161,24 +173,18 @@ export default function ContactPage() {
               );
             })}
 
-            {/* Online Resume Link Node */}
-            <Link 
-              href="/resume"
-              className="group relative h-48 border border-accent-primary/30 flex flex-col items-center justify-center gap-6 hover:border-[var(--amber)] hover:bg-[var(--amber)] transition-all duration-700 rounded-3xl overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-accent-primary/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="w-16 h-16 rounded-full border border-accent-primary/30 flex items-center justify-center group-hover:scale-110 group-hover:border-white group-hover:text-white transition-all duration-700 text-[var(--amber)] relative z-10">
-                <ArrowUpRight className="w-6 h-6" />
-              </div>
-              <span className="text-xs font-bold uppercase tracking-widest text-[var(--amber)] group-hover:text-white transition-colors relative z-10">
-                Online Resume
-              </span>
-            </Link>
+
 
           </div>
         </div>
       </section>
 
+      {/* ── SECURE COMM-LINK (Form) ── */}
+      <section className="w-full py-20 px-6 md:px-24 relative z-20 border-t border-[var(--border-line)]">
+        <SecureCommLinkForm onSequenceComplete={handleSequenceComplete} />
+      </section>
+
+      <PostSubmitLetter isOpen={showLetter} onClose={() => setShowLetter(false)} />
     </div>
   );
 }

@@ -25,7 +25,7 @@ export default function Navbar() {
     if (path === "/projects") return { glow: "rgba(212, 163, 115, 0.25)", border: "rgba(212, 163, 115, 0.3)" }; // Light Bronze
     if (path === "/research") return { glow: "rgba(82, 121, 111, 0.25)", border: "rgba(132, 169, 140, 0.3)" }; // Muted Teal
     if (path === "/blog") return { glow: "rgba(202, 210, 197, 0.2)", border: "rgba(254, 250, 224, 0.2)" }; // Ash Grey / Cream
-    if (path === "/lab-notes") return { glow: "rgba(47, 62, 70, 0.4)", border: "rgba(132, 169, 140, 0.2)" }; // Deep Teal
+    if (path === "/ai-lab") return { glow: "rgba(47, 62, 70, 0.4)", border: "rgba(132, 169, 140, 0.2)" }; // Deep Teal
     if (path === "/contact") return { glow: "rgba(250, 237, 205, 0.2)", border: "rgba(212, 163, 115, 0.3)" }; // Papaya Whip
     return { glow: "rgba(47, 62, 70, 0.3)", border: "rgba(212, 163, 115, 0.2)" }; // Default Charcoal/Bronze
   }, [pathname]);

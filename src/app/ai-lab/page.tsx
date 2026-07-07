@@ -50,40 +50,7 @@ const terminalLines = [
   { text: "all systems nominal ✓", type: "success" as const },
 ];
 
-const labModules = [
-  {
-    icon: Terminal,
-    title: "Interactive Terminal",
-    description:
-      "A live terminal interface for running experiments, querying models, and exploring AI system outputs in real-time.",
-    status: "Coming Soon",
-    glowColor: "blue" as const,
-  },
-  {
-    icon: Cpu,
-    title: "Model Playground",
-    description:
-      "Test and compare ML models with custom inputs. Visualize predictions, confidence scores, and feature importance.",
-    status: "Coming Soon",
-    glowColor: "violet" as const,
-  },
-  {
-    icon: BarChart3,
-    title: "Benchmark Dashboard",
-    description:
-      "Real-time performance metrics, accuracy benchmarks, and system health monitoring for deployed AI systems.",
-    status: "Coming Soon",
-    glowColor: "emerald" as const,
-  },
-  {
-    icon: Zap,
-    title: "Experiment Tracker",
-    description:
-      "Track experiment runs, hyperparameters, results, and model versions across all active research projects.",
-    status: "Coming Soon",
-    glowColor: "amber" as const,
-  },
-];
+import LabModulesGrid from "@/components/LabModulesGrid";
 
 export default async function AILabPage() {
   const { data: notes } = await sanityFetch({ query: LAB_NOTES_QUERY });
@@ -93,18 +60,6 @@ export default async function AILabPage() {
       <AILabHero />
       <div className="max-w-6xl mx-auto px-6 pt-24 pb-20 relative z-10">
 
-        {/* Live Terminal */}
-        <AnimatedSection delay={100}>
-          <div className="mb-12">
-            <TerminalBlock
-              lines={terminalLines}
-              title="param@ai-lab ~/experiments"
-              typingSpeed={35}
-              loop={true}
-              className="max-w-3xl"
-            />
-          </div>
-        </AnimatedSection>
 
         {/* Corkboard Lab Notes */}
         <AnimatedSection delay={150}>
@@ -115,49 +70,16 @@ export default async function AILabPage() {
         </AnimatedSection>
 
         {/* Lab Modules Grid */}
-        <AnimatedSection delay={200}>
-          <h3 className="text-xl font-bold text-[var(--text-primary)] mb-6">Lab Modules</h3>
-        </AnimatedSection>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-          {labModules.map((module, index) => {
-            const Icon = module.icon;
-            return (
-              <AnimatedSection key={module.title} delay={250 + index * 100}>
-                <GlowCard glowColor={module.glowColor} className="p-6 h-full">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-xl glass shrink-0">
-                      <Icon className="w-6 h-6 text-[var(--text-muted)]" />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-3 mb-2">
-                        <h4 className="text-lg font-semibold text-[var(--text-primary)]">
-                          {module.title}
-                        </h4>
-                        <span className="px-2 py-0.5 rounded-full bg-[var(--surface-sunken)] text-[var(--text-secondary)] text-xs border border-[var(--border-subtle)]">
-                          {module.status}
-                        </span>
-                      </div>
-                      <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-                        {module.description}
-                      </p>
-                    </div>
-                  </div>
-                </GlowCard>
-              </AnimatedSection>
-            );
-          })}
-        </div>
+        <LabModulesGrid />
 
         {/* Engineering Philosophy */}
         <AnimatedSection delay={600}>
           <GlowCard glowColor="indigo" className="p-8 text-center">
             <h3 className="text-xl font-bold text-[var(--text-primary)] mb-3">
-              Full Lab Access Coming Soon
+              More Tools Incoming
             </h3>
             <p className="text-[var(--text-secondary)] max-w-lg mx-auto mb-6">
-              The complete AI Lab with interactive terminal, model playground,
-              and live benchmarks is under active development. In the meantime,
-              explore my projects and research.
+              The Model Playground, Benchmark Dashboard, and Experiment Tracker are under active development. Try the Terminal and AI Assistant above in the meantime — or explore my projects and research.
             </p>
             <div className="flex items-center justify-center gap-4">
               <Link
