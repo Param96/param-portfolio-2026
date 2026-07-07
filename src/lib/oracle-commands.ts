@@ -507,13 +507,69 @@ Type \`goto projects\` to explore the full clearing.`,
         id: generateId(),
         text: `Every root has a story.
 
-This site is a meadow that changes with the hour — dawn, day, dusk, night — each with its own light, its own mood. The world you see shifts around you. If you stay long enough, you'll notice.
+This site is a living meadow — not a static portfolio. The entire world shifts with a circadian cycle: dawn, day, dusk, night. Sky colors change, lighting warms and cools, emissive glows on windows and lanterns brighten as darkness falls, and smoke from distant chimneys thickens against the evening air. Every 3D scene is built in Three.js with React Three Fiber, rendered in real time.
 
-Home is where the path begins — open ground, distant mountains, a quiet hut with smoke rising from its chimney. The Clearing holds monuments to what's been built: standing stones around a forge, each one a project brought to life. The Ancient Library hides among broken pillars, where runes still float and something is always being uncovered. The Campfire is where stories get told — warm light, familiar ground. The AI Lab is the only place where someone is actually sitting down, working — a programmer at a desk, lit by a screen, while koi drift in a pond nearby. And The Signal is where the path leads back to you — a lantern, a signpost, and a phone booth waiting for someone to pick up.
+— The World ————————————————————————————
 
-Some things only show themselves if you look closely — a lit window in the distance, smoke that thickens at dusk, something that flickers only when the light is right. There are corners of this place that reward patience and curiosity. Not everything announces itself.
+Home is where the path begins. Open mountains, swaying grass, drifting pollen, and a small hut on the horizon with a pitched roof, a glowing window, and a chimney trailing smoke. It's the quietest page — intentionally restrained.
 
-You're standing in one of those corners right now.
+The Clearing (Projects) is a ring of Standing Stones around an anvil and glowing crystals — monuments to what's been built. Each stone is procedurally weathered geometry. A hut watches from the tree line.
+
+The Ancient Library (Research) is a cluster of broken Ruin Pillars with floating octahedral runes that glow only at dusk and night, a hovering scroll, and a small laboratory structure nested among the ruins — its window flashes green periodically like something is being tested inside.
+
+The Campfire (Blog) burns at the center of the scene. A cabin nearby, warm light. The fire is the storytelling space.
+
+The AI Lab is the only scene with a human figure — a fully rendered programmer sitting at a desk, typing on a laptop, lit by a street lamp. Koi fish drift in a pond. Frogs sit on lily pads. Dust motes float in the light. This is the working space — literal, specific, alive.
+
+The Signal (Contact) has a wooden signpost with a hanging lantern. Moths cluster around it at night. A vintage phone booth stands nearby — red frame, glass panels, a phone unit inside. And a small hut in the distance, watching.
+
+Every scene shares a distant hut — same model, same smoke, same warm glow. A quiet thread connecting every world.
+
+— The Living System ——————————————————————
+
+The site runs on what we call the Living System — a global state engine that tracks the time of day and propagates it everywhere. It's not just a color theme toggle. The sky gradient, ambient light color, emissive intensities on windows and lanterns, particle opacity, smoke density, rune glow, even the koi pond reflections — all of it reacts. You can override it manually: type \`theme night\` right now.
+
+— The Navigation ——————————————————————————
+
+The navbar isn't a standard horizontal menu. It's the Lotus Bloom Nav — a radial, petal-shaped menu that opens from a floating sigil in the corner. Each petal is a page. It was designed to feel like part of the world rather than bolted-on UI. On mobile, it adapts into a clean drawer. The Oracle Root sigil (the button that opened this terminal) pulses with an ambient idle animation and sparks on click.
+
+— The Footer ————————————————————————————
+
+Every page has a unique footer vignette. Not a repeated copyright strip — each one is a hand-crafted scene with its own animal, its own dialogue, its own mood.
+
+Home's footer has an owl perched on a branch: "The roots run deeper than the page." Projects has a fox near scattered tools: "Every system starts with a single commit." Research has a crow on a stack of books: "Not all knowledge is written down." Blog has a rabbit beside a lantern: "Stories grow best in the dark." AI Lab has frogs on a circuit board: "Even machines dream, sometimes." Contact has a deer at the edge of a clearing: "The path here was never accidental."
+
+Each animal is an SVG illustration, hand-positioned, with its own personality.
+
+— Lab Notes ——————————————————————————————
+
+The Lab Notes section lives inside the AI Lab page — not a separate page. It's styled as a wooden corkboard with a visible wood-grain texture, pinned sticky notes, and a push-pin aesthetic. When there are no notes yet, it shows a gentle empty state: "The board is currently empty... check back soon." The sticky notes themselves use the site's handwriting font (Caveat) and slightly rotated angles for that real bulletin-board feel.
+
+— Lab Modules ————————————————————————————
+
+Above Lab Notes sits the Lab Modules grid — the interactive tools. Two are live: the Oracle Root Terminal (you're in it) and the AI Assistant (a full conversational chatbot). The rest show as "Coming Soon" cards with a soft locked-state glow, hinting at what's next without feeling broken.
+
+— The Oracle Root Terminal ——————————————————
+
+This terminal. You're using it. It's a full CLI built into the site — not a gimmick, a real command interface. It has typewriter text rendering, a wilt animation on clear, an organic SVG border that draws itself when summoned, a sidebar with icon shortcuts, Tab autocomplete, and a streaming AI integration. The entire aesthetic shifts with the time of day — dawn is warm amber, day is crisp green-on-cream, dusk is rose, night is cool moss-on-black. It opens with \`~\` or from the floating sigil.
+
+— The AI Assistant ——————————————————————————
+
+The chatbot (accessible via \`ask\` in this terminal, or from the Lab Modules grid) is a conversational AI clone trained on the site's knowledge base. It streams responses in real time, maintains conversation history within the session, and renders Markdown (code blocks, lists, bold, links). It speaks in the site's voice — informed, direct, slightly poetic.
+
+— The Contact Ritual ———————————————————————
+
+The Contact page has a two-part animation sequence. First: the Gravity Apple. There's a hand-drawn tree with an apple hanging from a branch. You fill out the form (name, email, reason — "What brings you here?" with pill-shaped selectors — and your message) then drag a slider to send. When submitted, the apple drops — full physics, bounce, splat. A character appears and delivers a random quip: "Ow. Worth it though — message received!" or "Direct hit. I'll get back to you soon."
+
+Then: the Letter. A modal rises — styled as a real letter on cream paper, serif font, with a close button and a small animated panda-with-bamboo illustration in the corner. The panda gently bobs and blinks, bamboo leaves sway. Pure CSS animation, no JS loop. It thanks the visitor for reaching out and explains the ethos behind the site.
+
+— Hidden Details ———————————————————————————
+
+Some things only show themselves if you look closely. A hut window that's barely visible by day but glows warm at night. Smoke that thickens at dusk. Runes that only light up in darkness. Moths that only appear near lanterns after sunset. A phone booth that waits silently for someone to find it. Koi that drift whether or not anyone's watching.
+
+Not everything announces itself. That's the point.
+
+You're standing in one of those quiet corners right now.
 
 Type \`help\` to keep exploring, or \`whoami\` to know who built all this.`,
         type: "system",
