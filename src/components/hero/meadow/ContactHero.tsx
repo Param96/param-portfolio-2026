@@ -5,40 +5,127 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import MeadowEnvironment from "./MeadowEnvironment";
 
-function SignPost() {
+import { useLivingSystemStore } from "@/lib/store";
+
+function VintageTelephoneBooth() {
+  const lightRef = useRef<THREE.PointLight>(null);
+  const glowRef = useRef<THREE.MeshBasicMaterial>(null);
+  const timeOfDayTheme = useLivingSystemStore((state) => state.timeOfDayTheme);
+
+  useFrame((state, delta) => {
+    let targetIntensity = timeOfDayTheme === "day" ? 0 : (timeOfDayTheme === "night" ? 1.0 : 0.5);
+    
+    if (lightRef.current) lightRef.current.intensity = THREE.MathUtils.lerp(lightRef.current.intensity, targetIntensity * 1.5, delta * 2);
+    if (glowRef.current) glowRef.current.opacity = THREE.MathUtils.lerp(glowRef.current.opacity, targetIntensity * 0.8, delta * 2);
+  });
+
+  const frameColor = "#A6552E"; // Rust accent
+
   return (
-    <group position={[-1.5, 0, -3]}>
-      {/* Main Post */}
-      <mesh position={[0, 1.5, 0]} castShadow receiveShadow>
-        <boxGeometry args={[0.2, 3, 0.2]} />
-        <meshStandardMaterial color="#4a3b2c" roughness={0.9} />
+    <group position={[-3.2, 0, -4.2]} rotation={[0, 0.5, 0]}>
+      {/* Base */}
+      <mesh position={[0, 0.1, 0]} castShadow receiveShadow>
+        <boxGeometry args={[1, 0.2, 1]} />
+        <meshStandardMaterial color={frameColor} roughness={0.7} />
       </mesh>
       
-      {/* Arm for lantern */}
-      <mesh position={[0.4, 2.6, 0]} castShadow receiveShadow>
-        <boxGeometry args={[0.8, 0.15, 0.15]} />
-        <meshStandardMaterial color="#4a3b2c" roughness={0.9} />
+      {/* Corner Pillars */}
+      <mesh position={[-0.45, 1.3, -0.45]} castShadow receiveShadow>
+        <boxGeometry args={[0.1, 2.2, 0.1]} />
+        <meshStandardMaterial color={frameColor} roughness={0.7} />
+      </mesh>
+      <mesh position={[0.45, 1.3, -0.45]} castShadow receiveShadow>
+        <boxGeometry args={[0.1, 2.2, 0.1]} />
+        <meshStandardMaterial color={frameColor} roughness={0.7} />
+      </mesh>
+      <mesh position={[-0.45, 1.3, 0.45]} castShadow receiveShadow>
+        <boxGeometry args={[0.1, 2.2, 0.1]} />
+        <meshStandardMaterial color={frameColor} roughness={0.7} />
+      </mesh>
+      <mesh position={[0.45, 1.3, 0.45]} castShadow receiveShadow>
+        <boxGeometry args={[0.1, 2.2, 0.1]} />
+        <meshStandardMaterial color={frameColor} roughness={0.7} />
       </mesh>
       
-      {/* Chain/Hook */}
-      <mesh position={[0.7, 2.45, 0]} castShadow>
-        <cylinderGeometry args={[0.02, 0.02, 0.3]} />
-        <meshStandardMaterial color="#222222" roughness={0.7} metalness={0.5} />
+      {/* Solid Back Wall */}
+      <mesh position={[0, 1.3, -0.45]} castShadow receiveShadow>
+        <boxGeometry args={[0.8, 2.2, 0.1]} />
+        <meshStandardMaterial color={frameColor} roughness={0.7} />
       </mesh>
+
+      {/* Roof Base */}
+      <mesh position={[0, 2.45, 0]} castShadow receiveShadow>
+        <boxGeometry args={[1.05, 0.1, 1.05]} />
+        <meshStandardMaterial color={frameColor} roughness={0.7} />
+      </mesh>
+      
+      {/* Roof Dome */}
+      <mesh position={[0, 2.65, 0]} castShadow receiveShadow>
+        <sphereGeometry args={[0.45, 16, 16, 0, Math.PI * 2, 0, Math.PI / 2]} />
+        <meshStandardMaterial color={frameColor} roughness={0.7} />
+      </mesh>
+
+      {/* Glass Panes */}
+      <mesh position={[-0.45, 1.3, 0]}>
+        <boxGeometry args={[0.05, 2.0, 0.8]} />
+        <meshPhysicalMaterial color="#ffffff" transmission={0.9} opacity={0.3} transparent roughness={0.1} ior={1.5} />
+      </mesh>
+      <mesh position={[0.45, 1.3, 0]}>
+        <boxGeometry args={[0.05, 2.0, 0.8]} />
+        <meshPhysicalMaterial color="#ffffff" transmission={0.9} opacity={0.3} transparent roughness={0.1} ior={1.5} />
+      </mesh>
+      <mesh position={[0, 1.3, 0.45]}>
+        <boxGeometry args={[0.8, 2.0, 0.05]} />
+        <meshPhysicalMaterial color="#ffffff" transmission={0.9} opacity={0.3} transparent roughness={0.1} ior={1.5} />
+      </mesh>
+
+      {/* Telephone Unit mounted on the back wall */}
+      <group position={[0, 1.4, -0.35]}>
+        {/* Phone Box */}
+        <mesh castShadow receiveShadow>
+          <boxGeometry args={[0.3, 0.4, 0.1]} />
+          <meshStandardMaterial color="#222222" roughness={0.6} />
+        </mesh>
+        {/* Phone Receiver */}
+        <mesh position={[-0.2, 0, 0.05]} castShadow receiveShadow>
+          <cylinderGeometry args={[0.03, 0.03, 0.25]} />
+          <meshStandardMaterial color="#111111" roughness={0.5} />
+        </mesh>
+        {/* Coin Slot / Dial */}
+        <mesh position={[0, 0.05, 0.06]} rotation={[Math.PI/2, 0, 0]} castShadow>
+          <cylinderGeometry args={[0.08, 0.08, 0.02]} />
+          <meshStandardMaterial color="#555555" metalness={0.8} roughness={0.2} />
+        </mesh>
+      </group>
+
+      {/* Glowing Light inside */}
+      <mesh position={[0, 2.2, 0]}>
+        <sphereGeometry args={[0.1, 8, 8]} />
+        <meshBasicMaterial ref={glowRef} color="#ffcc66" transparent opacity={0.8} />
+      </mesh>
+      <pointLight ref={lightRef} position={[0, 2.2, 0]} color="#ffcc66" intensity={1.5} distance={4} decay={2} />
     </group>
   );
 }
 
 function Lantern() {
   const lanternRef = useRef<THREE.Group>(null);
+  const timeOfDayTheme = useLivingSystemStore((state) => state.timeOfDayTheme);
+  const lightRef = useRef<THREE.PointLight>(null);
+  const glowRef = useRef<THREE.MeshBasicMaterial>(null);
   
-  useFrame((state) => {
+  useFrame((state, delta) => {
     const time = state.clock.getElapsedTime();
     if (lanternRef.current) {
       // Gentle swing in the wind
       lanternRef.current.rotation.z = Math.sin(time * 1.5) * 0.05;
       lanternRef.current.rotation.x = Math.cos(time * 1.2) * 0.03;
     }
+    
+    let targetIntensity = timeOfDayTheme === "day" ? 0 : (timeOfDayTheme === "night" ? 1.0 : 0.5);
+    
+    if (lightRef.current) lightRef.current.intensity = THREE.MathUtils.lerp(lightRef.current.intensity, targetIntensity * 1.5, delta * 2);
+    if (glowRef.current) glowRef.current.opacity = THREE.MathUtils.lerp(glowRef.current.opacity, targetIntensity * 1.0, delta * 2);
   });
 
   return (
@@ -71,9 +158,33 @@ function Lantern() {
       {/* Glowing Light inside */}
       <mesh position={[0, 0, 0]}>
         <sphereGeometry args={[0.08, 8, 8]} />
-        <meshBasicMaterial color="#ffcc66" />
+        <meshBasicMaterial ref={glowRef} color="#ffcc66" />
       </mesh>
-      <pointLight color="#ffcc66" intensity={1.5} distance={5} decay={2} />
+      <pointLight ref={lightRef} color="#ffcc66" intensity={1.5} distance={5} decay={2} />
+    </group>
+  );
+}
+
+function SignPost() {
+  return (
+    <group position={[-1.5, 0, -3]}>
+      {/* Main Post */}
+      <mesh position={[0, 1.5, 0]} castShadow receiveShadow>
+        <boxGeometry args={[0.2, 3, 0.2]} />
+        <meshStandardMaterial color="#4a3b2c" roughness={0.9} />
+      </mesh>
+      
+      {/* Arm for lantern */}
+      <mesh position={[0.4, 2.6, 0]} castShadow receiveShadow>
+        <boxGeometry args={[0.8, 0.15, 0.15]} />
+        <meshStandardMaterial color="#4a3b2c" roughness={0.9} />
+      </mesh>
+      
+      {/* Chain/Hook */}
+      <mesh position={[0.7, 2.45, 0]} castShadow>
+        <cylinderGeometry args={[0.02, 0.02, 0.3]} />
+        <meshStandardMaterial color="#222222" roughness={0.7} metalness={0.5} />
+      </mesh>
     </group>
   );
 }
@@ -119,6 +230,7 @@ function Moths() {
 function ContactSceneContent() {
   return (
     <group>
+      <VintageTelephoneBooth />
       <SignPost />
       <Lantern />
       <Moths />

@@ -38,13 +38,20 @@ export const ORACLE_COMMANDS: CommandDefinition[] = [
     execute: (_, { setHistory }) => {
       setHistory(prev => [
         ...prev,
-        { id: generateId(), text: "Available Protocols:", type: "system", animate: "typewriter" },
-        { id: generateId(), text: "  clear        - Prune dead output vines", type: "system", animate: "typewriter" },
-        { id: generateId(), text: "  exit         - Sever root connection", type: "system", animate: "typewriter" },
-        { id: generateId(), text: "  theme [x]    - Override circadian cycle (dawn|day|dusk|night)", type: "system", animate: "typewriter" },
-        { id: generateId(), text: "  github       - Tap telemetry roots", type: "system", animate: "typewriter" },
-        { id: generateId(), text: "  ask [msg]    - Query neural echo", type: "system", animate: "typewriter" },
-        { id: generateId(), text: "  reboot       - Fracture and reload", type: "system", animate: "typewriter" }
+        { 
+          id: generateId(), 
+          text: `Available protocols:
+
+  help, man, cmds               Show this list
+  clear, cls                    Prune dead output vines (clears terminal)
+  exit, quit, close             Close the oracle root terminal
+  theme [dawn|day|dusk|night]   Force a specific visual theme
+  github, telemetry             Tap telemetry roots (live repo stats)
+  ask [msg], query [msg]        Query the neural echo (AI assistant)
+  reboot                        Fracture and reload`, 
+          type: "system", 
+          animate: "typewriter" 
+        }
       ]);
     }
   },

@@ -110,7 +110,7 @@ const TerminalLine = memo(({ line, colors, onClearComplete }: { line: OutputLine
       animate={isWilting ? { opacity: 0, y: 15, rotate: Math.random() * 2 - 1 } : { opacity: 1, y: 0, rotate: 0 }} 
       transition={{ duration: isWilting ? 0.5 : 0.3 }}
       style={{ color: colorStyle }}
-      className={`mt-2 mb-2 font-mono text-xs ${line.type === "ai" ? "leading-relaxed" : ""} [&_p]:inline-block [&_p]:mb-2 [&_a]:underline hover:[&_a]:text-[var(--amber)] [&_ul]:list-disc [&_ul]:ml-4 [&_ul]:mb-2 [&_ol]:list-decimal [&_ol]:ml-4 [&_ol]:mb-2 [&_strong]:font-bold [&_em]:italic [&_code]:bg-black/20 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded`}
+      className={`mt-2 mb-2 font-mono text-xs ${line.type === "ai" ? "leading-relaxed" : ""} [&_p]:inline-block [&_p]:mb-2 [&_a]:underline hover:[&_a]:text-[var(--amber)] [&_ul]:list-disc [&_ul]:ml-4 [&_ul]:mb-2 [&_ol]:list-decimal [&_ol]:ml-4 [&_ol]:mb-2 [&_strong]:font-bold [&_em]:italic [&_code]:bg-black/20 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded whitespace-pre-wrap`}
     >
       {line.type === "user" ? <span className="opacity-50 mr-2">⌥</span> : null}
       {line.type === "ai" ? (
@@ -131,10 +131,7 @@ TerminalLine.displayName = "TerminalLine";
 export default function OracleRootTerminal() {
   const { terminalOpen, toggleTerminal, timeOfDayTheme, setTimeOfDayTheme } = useLivingSystemStore();
   const [input, setInput] = useState("");
-  const [history, setHistory] = useState<OutputLine[]>([
-    { id: "init-1", text: "ORACLE ROOT // LIVING SYSTEM v2.0", type: "system", animate: "fade" },
-    { id: "init-2", text: "Tap into the mycelial network.", type: "ambient", animate: "typewriter" },
-  ]);
+  const [history, setHistory] = useState<OutputLine[]>([]);
   const [isRebooting, setIsRebooting] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -145,7 +142,39 @@ export default function OracleRootTerminal() {
   // Auto-focus & scroll
   useEffect(() => {
     if (terminalOpen && inputRef.current) inputRef.current.focus();
-  }, [terminalOpen]);
+    
+    if (terminalOpen && history.length === 0) {
+      const isReturning = sessionStorage.getItem("oracleRootVisited");
+      
+      if (!isReturning) {
+        sessionStorage.setItem("oracleRootVisited", "true");
+        setHistory([
+          { 
+            id: "init-1", 
+            text: `Oracle Root — a live terminal into this site's roots.
+
+Type \`help\` to see everything I can do, or try:
+  github    → live repo stats (stars, forks, latest commits)
+  ask [msg] → talk to the AI clone trained on this site
+  theme night → shift the whole site into night mode
+
+Type \`exit\` to close.`, 
+            type: "system", 
+            animate: "typewriter" 
+          },
+        ]);
+      } else {
+        setHistory([
+          { 
+            id: "init-1", 
+            text: "Oracle Root reconnected. Type `help` for commands.", 
+            type: "system", 
+            animate: "typewriter" 
+          },
+        ]);
+      }
+    }
+  }, [terminalOpen, history.length]);
 
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -295,6 +324,7 @@ export default function OracleRootTerminal() {
                   ref={scrollRef} 
                   className="flex-1 p-6 overflow-y-auto scroll-smooth cursor-text"
                   onClick={() => inputRef.current?.focus()}
+                  aria-live="polite"
                 >
                   {history.map(line => (
                     <TerminalLine 

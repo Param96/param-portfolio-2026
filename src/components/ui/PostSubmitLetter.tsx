@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Feather } from "lucide-react";
 import { cn } from "@/lib/utils";
+import PandaBamboo from "../PandaBamboo";
 
 interface PostSubmitLetterProps {
   isOpen: boolean;
@@ -12,6 +13,11 @@ interface PostSubmitLetterProps {
 
 export default function PostSubmitLetter({ isOpen, onClose }: PostSubmitLetterProps) {
   const closeRef = useRef<HTMLButtonElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Trap focus & handle Escape key
   useEffect(() => {
@@ -39,11 +45,11 @@ export default function PostSubmitLetter({ isOpen, onClose }: PostSubmitLetterPr
     };
   }, [isOpen, onClose]);
 
-  return (
+  const modalContent = (
     <AnimatePresence>
       {isOpen && (
         <div 
-          className="fixed inset-0 z-[100] flex items-center justify-center px-4 sm:px-6"
+          className="fixed inset-0 z-[10000] flex items-center justify-center px-4 sm:px-6"
           role="dialog"
           aria-modal="true"
           aria-labelledby="letter-title"
@@ -54,7 +60,7 @@ export default function PostSubmitLetter({ isOpen, onClose }: PostSubmitLetterPr
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            className="absolute inset-0 bg-[var(--background)]/80 backdrop-blur-md"
+            className="fixed inset-0 bg-black/60 backdrop-blur-md"
             onClick={onClose}
           />
 
@@ -65,8 +71,8 @@ export default function PostSubmitLetter({ isOpen, onClose }: PostSubmitLetterPr
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className={cn(
-              "relative w-full max-w-lg bg-[var(--background)] border border-[var(--border-line)]",
-              "rounded-2xl shadow-2xl p-8 md:p-10 z-10 overflow-hidden"
+              "relative w-full max-w-lg bg-[#FAF7F0] border border-[var(--border-line)]",
+              "rounded-2xl shadow-2xl p-8 md:p-10 z-[10001] overflow-hidden"
             )}
           >
             {/* Close Button */}
@@ -79,18 +85,13 @@ export default function PostSubmitLetter({ isOpen, onClose }: PostSubmitLetterPr
               <X className="w-5 h-5" />
             </button>
 
-            {/* Decorative flourish */}
-            <div className="absolute -top-10 -right-10 opacity-10 pointer-events-none rotate-12">
-              <Feather className="w-40 h-40 text-[var(--amber)]" strokeWidth={1} />
-            </div>
-
             {/* Content */}
             <div className="relative z-10 font-serif">
-              <h2 id="letter-title" className="text-2xl font-bold mb-6 font-display text-[var(--text-primary)]">
+              <h2 id="letter-title" className="text-2xl font-bold mb-6 font-display text-[#0d1114]">
                 Hello,
               </h2>
               
-              <div className="space-y-6 text-lg text-[var(--text-secondary)] leading-relaxed">
+              <div className="space-y-6 text-lg text-[#424e57] leading-relaxed relative">
                 <p>
                   Thank you for reaching out. I&apos;ve received your transmission.
                 </p>
@@ -102,13 +103,21 @@ export default function PostSubmitLetter({ isOpen, onClose }: PostSubmitLetterPr
                 </p>
               </div>
 
-              <div className="mt-10 font-display text-[var(--text-primary)] text-xl italic">
+              <div className="mt-10 font-display text-[#0d1114] text-xl italic">
                 — Param
               </div>
             </div>
+
+            {/* Decorative flourish */}
+            <PandaBamboo className="absolute bottom-4 right-4 w-20 h-20 md:w-24 md:h-24 pointer-events-none" />
           </motion.div>
         </div>
       )}
     </AnimatePresence>
   );
+
+  if (!mounted) return null;
+  
+  const { createPortal } = require('react-dom');
+  return createPortal(modalContent, document.body);
 }

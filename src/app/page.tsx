@@ -9,7 +9,6 @@ import CurrentExperiments from "@/components/CurrentExperiments";
 import SystemsGrowthArchitecture from "@/components/SystemsGrowthArchitecture";
 import ResearchSystems from "@/components/ResearchSystems";
 import FounderECell from "@/components/FounderECell";
-import LabNotesPreview from "@/components/LabNotesPreview";
 
 export const metadata: Metadata = {
   alternates: {
@@ -72,9 +71,6 @@ export default async function Home() {
       
       {/* SECTION 7: Founder & E-Cell */}
       <FounderECell />
-      
-      {/* SECTION 8: Lab Notes */}
-      <LabNotesPreview />
     </div>
   );
 }

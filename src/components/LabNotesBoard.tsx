@@ -45,8 +45,8 @@ export default function LabNotesBoard({ notes }: LabNotesBoardProps) {
       >
         {/* Empty State */}
         {notes.length === 0 && (
-          <div className="flex items-center justify-center h-64 text-black/40 dark:text-white/40 font-caveat text-2xl">
-            The board is currently empty...
+          <div className="flex items-center justify-center h-64 text-black/40 dark:text-white/40 font-caveat text-2xl text-center px-4">
+            Notes and quick experiment logs will start appearing here as they're written.
           </div>
         )}
 

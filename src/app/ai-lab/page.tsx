@@ -61,16 +61,16 @@ export default async function AILabPage() {
       <div className="max-w-6xl mx-auto px-6 pt-24 pb-20 relative z-10">
 
 
+        {/* Lab Modules Grid */}
+        <LabModulesGrid />
+
         {/* Corkboard Lab Notes */}
         <AnimatedSection delay={150}>
-          <div className="mb-12">
+          <div className="mb-12 mt-20">
             <h3 className="text-xl font-bold text-[var(--text-primary)] mb-6">Lab Notes</h3>
             <LabNotesBoard notes={notes as any[]} />
           </div>
         </AnimatedSection>
-
-        {/* Lab Modules Grid */}
-        <LabModulesGrid />
 
         {/* Engineering Philosophy */}
         <AnimatedSection delay={600}>

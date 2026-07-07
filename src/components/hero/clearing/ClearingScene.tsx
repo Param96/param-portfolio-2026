@@ -10,6 +10,7 @@ import PollenAtmosphere from "./PollenAtmosphere";
 import BackgroundLandscape from "./BackgroundLandscape";
 import { useLivingSystemStore } from "@/lib/store";
 import { THEME_PALETTES } from "./ThemeColors";
+import DistantHut from "../meadow/DistantHut";
 
 function SceneContent() {
   const { camera, mouse, size } = useThree();
@@ -85,6 +86,9 @@ function SceneContent() {
       
       {/* Instanced Grass & Wildflowers */}
       <InstancedMeadow />
+
+      {/* Distant Hut */}
+      <DistantHut position={[3, 0.2, -8]} rotation={[0, -0.6, 0]} scale={0.6} />
 
       {/* Drifting Pollen */}
       <PollenAtmosphere />

@@ -4,6 +4,7 @@ import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import MeadowEnvironment from "./MeadowEnvironment";
+import DistantHut from "./DistantHut";
 
 function NexusPool() {
   const waterRef = useRef<THREE.Mesh>(null);
@@ -467,6 +468,8 @@ function AILabSceneContent() {
       <Person />
       <StreetLight />
       <DustMotes />
+      
+      <DistantHut position={[4, 0.2, -9]} rotation={[0, -0.8, 0]} scale={0.6} />
     </group>
   );
 }

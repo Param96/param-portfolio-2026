@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     const body = await request.json();
-    const { name, email, subject, message } = body;
+    const { name, email, subject, message, reason } = body;
 
     if (!name || !email || !message) {
       return NextResponse.json(
@@ -22,12 +22,13 @@ export async function POST(request: Request) {
       to: ['paramppatel100@gmail.com'], // The destination email
       replyTo: email,
       subject: `New Message from ${name}: ${subject || 'No Subject'}`,
-      text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+      text: `Name: ${name}\nEmail: ${email}\nReason: ${reason || 'Not specified'}\n\nMessage:\n${message}`,
       html: `
         <div style="font-family: sans-serif; line-height: 1.6; color: #333;">
           <h2 style="color: #BA421A;">New Contact Request</h2>
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Reason:</strong> ${reason || 'Not specified'}</p>
           <p><strong>Subject:</strong> ${subject || 'None'}</p>
           <hr style="border: 1px solid #eee; margin: 20px 0;" />
           <p style="white-space: pre-wrap;">${message}</p>

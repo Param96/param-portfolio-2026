@@ -5,14 +5,25 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import MeadowEnvironment from "./MeadowEnvironment";
 
+import { useLivingSystemStore } from "@/lib/store";
+
 function Campfire() {
   const fireRef = useRef<THREE.PointLight>(null);
+  const glowRef = useRef<THREE.MeshBasicMaterial>(null);
+  const timeOfDayTheme = useLivingSystemStore((state) => state.timeOfDayTheme);
   
-  useFrame((state) => {
+  useFrame((state, delta) => {
     const time = state.clock.getElapsedTime();
+    let targetMultiplier = timeOfDayTheme === "day" ? 0.2 : (timeOfDayTheme === "night" ? 1.0 : 0.6);
+    
     if (fireRef.current) {
-      // Flicker effect
-      fireRef.current.intensity = 2 + Math.sin(time * 15) * 0.2 + Math.random() * 0.3;
+      // Flicker effect scaled by time of day
+      const flicker = 2 + Math.sin(time * 15) * 0.2 + Math.random() * 0.3;
+      fireRef.current.intensity = THREE.MathUtils.lerp(fireRef.current.intensity, flicker * targetMultiplier, delta * 4);
+    }
+    
+    if (glowRef.current) {
+      glowRef.current.opacity = THREE.MathUtils.lerp(glowRef.current.opacity, 0.8 * targetMultiplier, delta * 4);
     }
   });
 
@@ -38,7 +49,7 @@ function Campfire() {
       {/* Center glowing core */}
       <mesh position={[0, 0.2, 0]}>
         <sphereGeometry args={[0.2, 8, 8]} />
-        <meshBasicMaterial color="#ff5500" transparent opacity={0.8} />
+        <meshBasicMaterial ref={glowRef} color="#ff5500" transparent opacity={0.8} />
       </mesh>
     </group>
   );
@@ -47,6 +58,8 @@ function Campfire() {
 function Embers() {
   const groupRef = useRef<THREE.Group>(null);
   const count = 30;
+  const matRefs = useRef<(THREE.MeshBasicMaterial | null)[]>([]);
+  const timeOfDayTheme = useLivingSystemStore((state) => state.timeOfDayTheme);
   
   const embersData = useMemo(() => {
     return Array.from({ length: count }).map(() => ({
@@ -72,6 +85,11 @@ function Embers() {
         }
       });
     }
+    
+    let targetOpacity = timeOfDayTheme === "day" ? 0.0 : (timeOfDayTheme === "night" ? 0.8 : 0.4);
+    matRefs.current.forEach(mat => {
+      if (mat) mat.opacity = THREE.MathUtils.lerp(mat.opacity, targetOpacity, delta * 2);
+    });
   });
 
   return (
@@ -79,18 +97,44 @@ function Embers() {
       {embersData.map((data, i) => (
         <mesh key={i} position={[data.x, data.y, data.z]}>
           <planeGeometry args={[0.03, 0.03]} />
-          <meshBasicMaterial color="#ffaa00" transparent opacity={0.8} side={THREE.DoubleSide} />
+          <meshBasicMaterial ref={(el) => { matRefs.current[i] = el; }} color="#ffaa00" transparent opacity={0.8} side={THREE.DoubleSide} />
         </mesh>
       ))}
     </group>
   );
 }
 
+function LogBench() {
+  return (
+    <group position={[-1.2, 0.2, -2.8]} rotation={[0, 2.0, 0]}>
+      {/* Main Seat (cylinder) */}
+      <mesh position={[0, 0.2, 0]} rotation={[0, 0, Math.PI / 2]} castShadow receiveShadow>
+        <cylinderGeometry args={[0.15, 0.15, 1.2, 8]} />
+        <meshStandardMaterial color="#3A2A1A" roughness={0.9} />
+      </mesh>
+      {/* Left leg */}
+      <mesh position={[-0.4, 0, 0]} castShadow receiveShadow>
+        <boxGeometry args={[0.1, 0.4, 0.3]} />
+        <meshStandardMaterial color="#2E1C0A" roughness={1.0} />
+      </mesh>
+      {/* Right leg */}
+      <mesh position={[0.4, 0, 0]} castShadow receiveShadow>
+        <boxGeometry args={[0.1, 0.4, 0.3]} />
+        <meshStandardMaterial color="#2E1C0A" roughness={1.0} />
+      </mesh>
+    </group>
+  );
+}
+
+import DistantHut from "./DistantHut";
+
 function BlogSceneContent() {
   return (
     <group>
       <Campfire />
       <Embers />
+      <LogBench />
+      <DistantHut position={[1.5, 0, -4.5]} rotation={[0, -0.6, 0]} scale={0.8} />
     </group>
   );
 }
