@@ -57,7 +57,7 @@ export function OracleRootTrigger({ timeOfDayTheme, onOpen, isOpen }: OracleRoot
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 5 }}
                 className="absolute right-14 top-1/2 -translate-y-1/2 whitespace-nowrap text-[10px] font-mono tracking-widest uppercase px-3 py-1.5 rounded-md pointer-events-none hidden md:block"
-                style={{ backgroundColor: "rgba(0,0,0,0.8)", color: colors.hover, border: `1px solid ${colors.glow}` }}
+                style={{ backgroundColor: "rgba(0,0,0,0.8)", color: "#F4EDE4", border: `1px solid ${colors.glow}` }}
               >
                 Oracle Root — press ~ or tap to open
               </motion.div>
