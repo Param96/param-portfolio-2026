@@ -78,6 +78,7 @@ import { VisualEditing } from "next-sanity/visual-editing";
 import { SanityLive } from "@/sanity/lib/live";
 import { draftMode } from "next/headers";
 import { PostHogProvider } from "@/providers/PostHogProvider";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 export default async function RootLayout({
   children,
@@ -91,6 +92,7 @@ export default async function RootLayout({
       <html lang="en" className={`${fraunces.variable} ${inter.variable} ${caveat.variable}`} suppressHydrationWarning>
         <head>
           {/* Fonts loaded via next/font/google */}
+          <GoogleAnalytics />
         </head>
         <body className="min-h-screen relative font-inter" suppressHydrationWarning>
           <PostHogProvider>
