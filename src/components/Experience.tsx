@@ -8,7 +8,7 @@ import SectionHeader from "@/components/SectionHeader";
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-24 px-6 relative">
+    <section id="experience" className="py-16 md:py-24 px-6 relative">
       <div className="max-w-6xl mx-auto">
         <SectionHeader
           label="Experience"

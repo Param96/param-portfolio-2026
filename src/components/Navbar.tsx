@@ -67,7 +67,7 @@ export default function Navbar() {
         animate={hidden ? "hidden" : "visible"}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className={`fixed top-0 w-full z-50 transition-all duration-1000 ${
-          scrolled ? "pt-4" : "pt-8"
+          scrolled ? "pt-4" : "pt-4 md:pt-8"
         }`}
       >
         <div className="max-w-6xl mx-auto px-6 flex justify-center">

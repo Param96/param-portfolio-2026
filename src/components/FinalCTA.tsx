@@ -6,7 +6,7 @@ import posthog from "posthog-js";
 
 export default function FinalCTA() {
   return (
-    <section className="py-32 relative overflow-hidden">
+    <section className="py-20 md:py-32 relative overflow-hidden">
       <ScrollReveal>
         <div className="w-full max-w-5xl mx-auto glass-strong rounded-[2.5rem] p-12 md:p-20 text-center relative border border-white shadow-2xl">
           

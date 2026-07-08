@@ -7,7 +7,7 @@ import Image from "next/image";
 export default function ProjectList({ projects }: { projects: any[] }) {
   if (!projects || projects.length === 0) {
     return (
-      <div className="w-full text-center text-[#52796F] text-xl py-32">
+      <div className="w-full text-center text-[#52796F] text-xl py-20 md:py-32">
         No projects uploaded yet.
       </div>
     );

@@ -7,7 +7,7 @@ import posthog from "posthog-js";
 
 export default function ContactCTA() {
   return (
-    <section className="relative py-32 overflow-hidden">
+    <section className="relative py-20 md:py-32 overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full bg-gradient-to-r from-blue-500/5 via-indigo-500/8 to-violet-500/5 blur-3xl" />

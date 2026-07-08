@@ -31,7 +31,7 @@ const experiments = [
 
 export default function CurrentExperiments() {
   return (
-    <section className="relative w-full py-40 bg-[var(--bg-page)] text-[var(--text-main)] overflow-hidden border-t border-accent-sage/10 transition-colors duration-1000 ease-in-out">
+    <section className="relative w-full py-20 md:py-40 bg-[var(--bg-page)] text-[var(--text-main)] overflow-hidden border-t border-accent-sage/10 transition-colors duration-1000 ease-in-out">
       {/* Background cinematic mesh */}
       <div className="absolute inset-0 pointer-events-none opacity-40">
         <div className="absolute top-0 right-[20%] w-[1px] h-full bg-gradient-to-b from-transparent via-[#84A98C]/30 to-transparent transition-colors duration-1000 ease-in-out" />
@@ -66,7 +66,7 @@ export default function CurrentExperiments() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="group relative bg-bg-main/40 border border-accent-sage/10 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row gap-8 md:gap-16 hover:bg-[var(--bg-page)] hover:shadow-lg transition-all duration-700 overflow-hidden shadow-sm"
+              className="group relative bg-bg-main/40 border border-accent-sage/10 rounded-2xl p-6 md:p-12 flex flex-col md:flex-row gap-8 md:gap-16 hover:bg-[var(--bg-page)] hover:shadow-lg transition-all duration-700 overflow-hidden shadow-sm"
             >
               <div 
                 className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none"

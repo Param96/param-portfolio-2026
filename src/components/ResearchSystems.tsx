@@ -7,7 +7,7 @@ import { Layers, Database, ShieldCheck, Workflow } from "lucide-react";
 
 export default function ResearchSystems() {
   return (
-    <section className="relative w-full py-40 bg-[var(--bg-page)] text-[var(--text-main)] overflow-hidden transition-colors duration-1000 ease-in-out">
+    <section className="relative w-full py-20 md:py-40 bg-[var(--bg-page)] text-[var(--text-main)] overflow-hidden transition-colors duration-1000 ease-in-out">
       
       {/* Abstract Background Atmospheric Lighting */}
       <div className="absolute top-0 right-0 w-[800px] h-full bg-bg-tertiary opacity-40 rounded-bl-[100%] blur-[120px] pointer-events-none transition-colors duration-1000 ease-in-out" />
@@ -87,7 +87,7 @@ export default function ResearchSystems() {
             <div className="absolute top-4 left-4 w-full h-full bg-bg-tertiary border border-border-strong/5 shadow-sm -z-10 transition-colors duration-1000 ease-in-out" />
             <div className="absolute top-8 left-8 w-full h-full bg-bg-page-alt/20 blur-xl -z-20 transition-colors duration-1000 ease-in-out" />
             
-            <div className="bg-[var(--bg-page)] p-10 md:p-14 border border-border-strong/10 shadow-[0_20px_60px_-15px_rgba(47,62,70,0.05)] relative overflow-hidden transition-colors duration-1000 ease-in-out">
+            <div className="bg-[var(--bg-page)] p-6 md:p-14 border border-border-strong/10 shadow-[0_20px_60px_-15px_rgba(47,62,70,0.05)] relative overflow-hidden transition-colors duration-1000 ease-in-out">
               
               {/* Subtle visual decoration */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#D4A373]/10 to-transparent pointer-events-none transition-colors duration-1000 ease-in-out" />

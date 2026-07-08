@@ -46,10 +46,12 @@ export default function PublicLayoutWrapper({ children }: { children: React.Reac
           
           {/* Global Fixed Nameplate */}
           <Link href="/" className="fixed top-6 left-6 md:top-8 md:left-8 z-[100] group flex flex-col pointer-events-auto">
+            {/* Subtle backdrop for readability on mobile */}
+            <div className="absolute -inset-4 bg-gradient-to-br from-[var(--bg-page)]/90 via-[var(--bg-page)]/60 to-transparent blur-md -z-10 rounded-full md:hidden" />
             <span className="font-fraunces text-lg md:text-xl font-medium tracking-tight text-text-main group-hover:text-[var(--amber)] transition-colors duration-500">
               Param Patel
             </span>
-            <span className="font-inter text-[8px] md:text-[10px] uppercase tracking-widest mt-1 text-text-dim transition-colors duration-500">
+            <span className="hidden md:block font-inter text-[8px] md:text-[10px] uppercase tracking-widest mt-1 text-text-dim transition-colors duration-500">
               From Concept to Production-Ready Systems
             </span>
           </Link>

@@ -5,7 +5,7 @@ import { Users, GitPullRequest } from "lucide-react";
 
 export default function FounderECell() {
   return (
-    <section className="relative w-full py-40 bg-bg-nature-section text-text-main overflow-hidden border-t border-border-line transition-colors duration-1000 ease-in-out">
+    <section className="relative w-full py-20 md:py-40 bg-bg-nature-section text-text-main overflow-hidden border-t border-border-line transition-colors duration-1000 ease-in-out">
       
       {/* Cinematic Founder Environment Visuals */}
       <div className="absolute inset-0 pointer-events-none z-0">

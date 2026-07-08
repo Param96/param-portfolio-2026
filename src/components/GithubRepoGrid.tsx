@@ -28,7 +28,7 @@ export default function GithubRepoGrid() {
 
   if (loading) {
     return (
-      <div className="w-full py-32 flex flex-col items-center justify-center bg-transparent">
+      <div className="w-full py-20 md:py-32 flex flex-col items-center justify-center bg-transparent">
         <Terminal className="w-8 h-8 text-[#00FF41] animate-pulse mb-4" />
         <span className="text-[#00FF41] font-mono text-sm tracking-widest uppercase opacity-70">
           Syncing Open Source Repositories...
@@ -40,7 +40,7 @@ export default function GithubRepoGrid() {
   if (repos.length === 0) return null;
 
   return (
-    <section className="relative w-full py-32 bg-transparent text-[var(--text-main)] overflow-hidden border-t border-[var(--text-main)]/10">
+    <section className="relative w-full py-20 md:py-32 bg-transparent text-[var(--text-main)] overflow-hidden border-t border-[var(--text-main)]/10">
       
       {/* Background Matrix Grid Effect */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.02]">

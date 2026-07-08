@@ -28,7 +28,7 @@ const highlights = [
 
 export default function About() {
   return (
-    <section id="about" className="py-32 px-6 md:px-10 relative overflow-hidden">
+    <section id="about" className="py-20 md:py-32 px-6 md:px-10 relative overflow-hidden">
       {/* Background Ambient Glow */}
       <div className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-blue-500/5 blur-[120px] rounded-full -z-10" />
       <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-violet-500/5 blur-[100px] rounded-full -z-10" />

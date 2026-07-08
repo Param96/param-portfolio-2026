@@ -15,7 +15,7 @@ const glowColorMap: Record<string, "blue" | "emerald" | "amber" | "rose" | "indi
 
 export default function Skills() {
   return (
-    <section id="skills" className="relative py-24 md:py-32">
+    <section id="skills" className="relative py-16 md:py-24 md:py-32">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <AnimatedSection>
           <SectionHeader

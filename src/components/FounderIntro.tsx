@@ -27,7 +27,7 @@ export default function FounderIntro() {
   const yContent = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"]);
 
   return (
-    <section ref={containerRef} className="relative bg-[var(--bg-page)] w-full py-32 md:py-40 overflow-hidden border-t border-border-strong/10">
+    <section ref={containerRef} className="relative bg-[var(--bg-page)] w-full py-20 md:py-40 overflow-hidden border-t border-border-strong/10">
       
       {/* ── CINEMATIC ATMOSPHERE ── */}
       <div className="absolute inset-0 pointer-events-none z-0 mix-blend-multiply opacity-60">
@@ -143,7 +143,7 @@ export default function FounderIntro() {
               <svg className="w-16 h-3 text-[var(--amber)] opacity-30" viewBox="0 0 100 20" preserveAspectRatio="none" fill="none">
                 <path d="M0,10 Q25,0 50,10 T100,10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
-              <h3 className="font-fraunces italic text-3xl md:text-[2rem] font-medium tracking-tight leading-[1.3] text-[var(--text-dim)]">
+              <h3 className="font-fraunces italic text-3xl md:text-[2rem] font-medium tracking-tight leading-[1.3] text-[var(--text-dim)] pr-20 md:pr-0">
                 “I like building systems that survive{" "}
                 <span className="text-[var(--amber)]">real-world chaos.”</span>
               </h3>
@@ -235,10 +235,10 @@ function PortraitScene() {
 // ─────────────────────────────────────────────────────────────────
 
 const FOCUS_AREAS = [
-  { text: "Agentic AI", delay: 0, x: 15, y: 15 },
-  { text: "Startup Systems", delay: 0.1, x: 80, y: 18 },
-  { text: "Experimental Interfaces", delay: 0.2, x: 75, y: 70 },
-  { text: "Automation Workflows", delay: 0.3, x: 10, y: 75 },
+  { text: "Agentic AI", delay: 0, x: 20, y: 15 },
+  { text: "Startup Systems", delay: 0.1, x: 70, y: 18 },
+  { text: "Experimental Interfaces", delay: 0.2, x: 65, y: 70 },
+  { text: "Automation Workflows", delay: 0.3, x: 25, y: 75 },
   { text: "Applied ML", delay: 0.4, x: 50, y: 85 },
   { text: "Intelligent Infrastructure", delay: 0.5, x: 45, y: 25 },
 ];

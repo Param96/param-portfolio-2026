@@ -41,11 +41,11 @@ const generateParticles = (count: number) => {
   for (let i = 0; i < count; i++) {
     particles.push({
       id: i,
-      x: rand() * 400,
-      y: rand() * 440,
-      r: rand() * 1.5 + 0.5,
-      delay: rand() * -10,
-      duration: rand() * 10 + 10,
+      x: Number((rand() * 400).toFixed(2)),
+      y: Number((rand() * 440).toFixed(2)),
+      r: Number((rand() * 1.5 + 0.5).toFixed(2)),
+      delay: Number((rand() * -10).toFixed(2)),
+      duration: Number((rand() * 10 + 10).toFixed(2)),
     });
   }
   return particles;
@@ -85,10 +85,10 @@ const generateLeaves = () => {
       
       leaves.push({
         id: idCounter++,
-        x: pt.x + offsetX,
-        y: pt.y + offsetY,
-        angle: rand() * 360,
-        size: rand() * 0.4 + 0.3
+        x: Number((pt.x + offsetX).toFixed(2)),
+        y: Number((pt.y + offsetY).toFixed(2)),
+        angle: Number((rand() * 360).toFixed(2)),
+        size: Number((rand() * 0.4 + 0.3).toFixed(2))
       });
     }
   };
@@ -123,10 +123,10 @@ const generateLeaves = () => {
     const r = rand() * 110;
     leaves.push({
       id: idCounter++,
-      x: 200 + Math.cos(t) * r,
-      y: 160 + Math.sin(t) * (r * 0.6),
-      angle: rand() * 360,
-      size: rand() * 0.4 + 0.3
+      x: Number((200 + Math.cos(t) * r).toFixed(2)),
+      y: Number((160 + Math.sin(t) * (r * 0.6)).toFixed(2)),
+      angle: Number((rand() * 360).toFixed(2)),
+      size: Number((rand() * 0.4 + 0.3).toFixed(2))
     });
   }
 
@@ -334,7 +334,7 @@ export default function SystemsGrowthArchitecture() {
       className="relative w-full overflow-hidden transition-colors duration-1000 ease-[var(--ease-organic)] bg-[var(--footer-bg)] text-[var(--footer-text)]"
     >
       {/* ── HEADER ── */}
-      <div className="relative z-20 max-w-7xl mx-auto px-6 text-center pt-24 pb-6" data-cursor="text">
+      <div className="relative z-20 max-w-7xl mx-auto px-6 text-center pt-16 md:pt-24 pb-6" data-cursor="text">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -755,7 +755,7 @@ export default function SystemsGrowthArchitecture() {
       </div>
 
       {/* ── CERTIFICATIONS ENVIRONMENT (2D) ── */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pb-32 mt-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pb-20 md:pb-32 mt-12 md:mt-20">
         <div className="text-center mb-20" data-cursor="text">
           <h3 className="text-3xl md:text-5xl font-light tracking-tight mb-4 transition-colors duration-1000 ease-in-out" style={{ color: 'var(--footer-ink)' }}>
             Learning Infrastructure

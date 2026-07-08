@@ -14,7 +14,7 @@ export default function Leadership() {
   ];
 
   return (
-    <section id="leadership" className="py-24 px-6 md:px-10 relative overflow-hidden">
+    <section id="leadership" className="py-16 md:py-24 px-6 md:px-10 relative overflow-hidden">
       <div className="max-w-5xl mx-auto">
         <AnimatedSection>
           <SectionHeader

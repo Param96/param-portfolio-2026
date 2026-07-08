@@ -473,7 +473,7 @@ export default function Footer() {
         <div className="flex flex-col items-start gap-12 w-full md:w-auto relative z-10">
           
           {/* Ambient Background Element: Distant Tower */}
-          <div className="absolute -z-10 -top-12 -left-36 md:-left-44 lg:-left-48 opacity-40 pointer-events-none text-[var(--footer-ink)] transition-colors duration-1000">
+          <div className="absolute -z-10 -top-12 -right-6 left-auto md:right-auto md:-left-44 lg:-left-48 opacity-40 pointer-events-none text-[var(--footer-ink)] transition-colors duration-1000">
             <svg 
               className="w-40 h-[20rem] md:w-48 md:h-[24rem] lg:w-56 lg:h-[28rem]" 
               viewBox="0 0 120 200" 
@@ -635,12 +635,12 @@ export default function Footer() {
         </div>
 
         {/* Center UI Feature: Dynamic Vignette */}
-        <div className="hidden md:flex flex-1 justify-center items-center h-full pb-8">
+        <div className="flex flex-1 justify-center items-center w-full h-full my-12 md:my-0 pb-0 md:pb-8">
           <DynamicFooterVignette pathname={pathname} />
         </div>
 
         {/* Right Side: Signpost Navigation */}
-        <div className="flex flex-col items-start md:items-end mt-12 md:mt-0 relative z-20">
+        <div className="flex flex-col items-center md:items-end w-full md:w-auto mt-12 md:mt-0 relative z-20">
           <SignpostNav config={config} />
           
           {/* Spacer for floating trigger buttons so they don't overlap links on small screens */}

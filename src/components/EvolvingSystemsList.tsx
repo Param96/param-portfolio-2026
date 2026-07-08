@@ -11,7 +11,7 @@ export default function EvolvingSystemsList({ projects }: { projects: any[] }) {
 
   if (!projects || projects.length === 0) {
     return (
-      <div className="w-full text-center text-[var(--text-main)]/60 text-xl py-32 font-inter uppercase tracking-widest text-[10px]">
+      <div className="w-full text-center text-[var(--text-main)]/60 text-xl py-20 md:py-32 font-inter uppercase tracking-widest text-[10px]">
         System offline. No active nodes found.
       </div>
     );
@@ -114,7 +114,7 @@ export default function EvolvingSystemsList({ projects }: { projects: any[] }) {
   };
 
   return (
-    <section className="relative w-full py-40 bg-transparent text-[var(--text-main)] overflow-hidden min-h-screen">
+    <section className="relative w-full py-20 md:py-40 bg-transparent text-[var(--text-main)] overflow-hidden min-h-screen">
       
       {/* Background Architectural Grid */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.05]">

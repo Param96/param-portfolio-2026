@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function FinalScene() {
   return (
-    <section className="relative w-full py-40 min-h-[70vh] flex flex-col items-center justify-center bg-[#2F3E46] overflow-hidden text-center">
+    <section className="relative w-full py-20 md:py-40 min-h-[70vh] flex flex-col items-center justify-center bg-[#2F3E46] overflow-hidden text-center">
       
       {/* Immersive Atmospheric Lighting */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-[#D4A373] rounded-[100%] opacity-10 blur-[150px] pointer-events-none" />
