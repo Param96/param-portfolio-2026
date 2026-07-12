@@ -1,4 +1,12 @@
-"use client";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "404 - Not Found",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 import Link from "next/link";
 import Button from "@/components/ui/Button";

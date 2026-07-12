@@ -9,14 +9,16 @@ import ReadershipTracker from "@/components/analytics/ReadershipTracker";
 import BlogArticleActions from "@/components/blog/BlogArticleActions";
 import { getPostHogClient } from "@/lib/posthog-server";
 import { Metadata } from "next";
+import { generateBlogPostingJsonLd, generateBreadcrumbJsonLd } from "@/lib/seo";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export const revalidate = 60;
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
-  const { data } = await sanityFetch({ 
-    query: BLOG_BY_SLUG_QUERY, 
-    params: { slug: resolvedParams.slug } 
+  const { data } = await sanityFetch({
+    query: BLOG_BY_SLUG_QUERY,
+    params: { slug: resolvedParams.slug }
   });
   const article = data as any;
 
@@ -46,9 +48,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
-  const { data } = await sanityFetch({ 
-    query: BLOG_BY_SLUG_QUERY, 
-    params: { slug: resolvedParams.slug } 
+  const { data } = await sanityFetch({
+    query: BLOG_BY_SLUG_QUERY,
+    params: { slug: resolvedParams.slug }
   });
   const article = data as any;
 
@@ -74,29 +76,31 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const { data: allData } = await sanityFetch({ query: ALL_BLOGS_QUERY });
   const relatedArticles = (allData as any[]).filter(a => a._id !== article._id).slice(0, 2);
 
-  const dateStr = article.publishedAt 
+  const dateStr = article.publishedAt
     ? new Date(article.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
     : "Draft";
 
-  const blogJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": article.title,
-    "description": article.summary || article.title,
-    "datePublished": article.publishedAt,
-    "dateModified": article._updatedAt || article.publishedAt,
-    "author": {
-      "@type": "Person",
-      "name": "Param Patel",
-      "url": "https://parampatel.in"
-    }
-  };
+  const blogJsonLd = generateBlogPostingJsonLd({
+    title: article.title,
+    summary: article.summary,
+    publishedAt: article.publishedAt,
+    updatedAt: article._updatedAt,
+    slug: resolvedParams.slug,
+    // Add coverImageUrl if present in Sanity schema
+    // coverImageUrl: article.coverImage?.asset?.url,
+  });
+
+  const breadcrumbsJsonLd = generateBreadcrumbJsonLd([
+    { name: "Home", href: "/" },
+    { name: "Blog", href: "/blog" },
+    { name: article.title, href: `/blog/${resolvedParams.slug}` },
+  ]);
 
   return (
     <div className="min-h-screen bg-[#F6F1E3] pt-32 pb-40 selection:bg-[#D4A373] selection:text-[#111]">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify([blogJsonLd, breadcrumbsJsonLd]) }}
       />
       <BlogProgressBar />
       <ReadershipTracker articleId={article._id} articleType="blog" />
@@ -108,18 +112,18 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-16">
-        
+
         {/* LEFT SIDEBAR (Sticky Metadata / Actions) */}
         <aside className="hidden lg:block lg:col-span-3">
           <div className="sticky top-40 flex flex-col gap-8">
-            <Link 
-              href="/blog" 
-              className="inline-flex items-center gap-2 text-[#84A98C] hover:text-[#52796F] transition-colors font-bold uppercase tracking-widest text-[10px]"
-            >
-              <ArrowLeft className="w-3 h-3" />
-              Editorial Hub
-            </Link>
-            
+            <Breadcrumbs 
+              items={[
+                { name: "Home", href: "/" },
+                { name: "Editorial Hub", href: "/blog" },
+                { name: "Article", href: `/blog/${resolvedParams.slug}` }
+              ]}
+            />
+
             <div className="pt-8 border-t border-[#2F3E46]/10">
               <span className="text-[10px] font-bold uppercase tracking-widest text-[#2F3E46]/40 block mb-4">Metadata</span>
               <ul className="space-y-4">
@@ -148,15 +152,17 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
         {/* MAIN CONTENT AREA */}
         <article className="lg:col-span-9 max-w-3xl">
-          
-          {/* Mobile Back Button */}
-          <Link 
-            href="/blog" 
-            className="lg:hidden inline-flex items-center gap-2 text-[#84A98C] hover:text-[#52796F] transition-colors font-bold uppercase tracking-widest text-[10px] mb-12"
-          >
-            <ArrowLeft className="w-3 h-3" />
-            Editorial Hub
-          </Link>
+
+          {/* Mobile Back Button / Breadcrumb */}
+          <div className="lg:hidden mb-12">
+            <Breadcrumbs 
+              items={[
+                { name: "Home", href: "/" },
+                { name: "Editorial", href: "/blog" },
+                { name: "Article", href: `/blog/${resolvedParams.slug}` }
+              ]}
+            />
+          </div>
 
           {/* Header */}
           <header className="mb-16">
@@ -168,7 +174,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 {article.summary}
               </p>
             )}
-            
+
             {/* Mobile Metadata */}
             <div className="lg:hidden flex flex-wrap gap-4 mt-8 pt-8 border-t border-[#2F3E46]/10 text-[10px] font-bold uppercase tracking-widest text-[#2F3E46]/50">
               <span>{dateStr}</span>
@@ -200,8 +206,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               </span>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {relatedArticles.map(rel => (
-                  <Link 
-                    key={rel._id} 
+                  <Link
+                    key={rel._id}
                     href={`/blog/${rel.slug}`}
                     className="group block p-8 bg-[#FEFAE0] border border-[#2F3E46]/5 hover:shadow-xl transition-all duration-500"
                   >

@@ -1,20 +1,23 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact",
-  description: "Get in touch for startup collaborations, MVP development, and experimental engineering.",
+  title: "Contact — Collaborate on AI & Engineering",
+  description:
+    "Get in touch with Param Patel for AI engineering collaborations, startup MVP development, agentic AI projects, and experimental systems.",
   alternates: {
-    canonical: '/contact',
+    canonical: "https://www.parampatel.in/contact",
   },
   openGraph: {
-    title: "Contact | Param Patel",
-    description: "Get in touch for startup collaborations, MVP development, and experimental engineering.",
-    url: "/contact",
+    title: "Contact — Collaborate on AI & Engineering | Param Patel",
+    description:
+      "Get in touch with Param Patel for AI engineering collaborations, startup MVP development, and experimental systems.",
+    url: "https://www.parampatel.in/contact",
   },
   twitter: {
-    title: "Contact | Param Patel",
-    description: "Get in touch for startup collaborations, MVP development, and experimental engineering.",
-  }
+    title: "Contact — Collaborate on AI & Engineering | Param Patel",
+    description:
+      "Get in touch for AI engineering collaborations and startup MVP development.",
+  },
 };
 
 export default function ContactLayout({
@@ -25,9 +28,14 @@ export default function ContactLayout({
   const contactJsonLd = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
-    "name": "Contact Param Patel",
-    "description": "Get in touch for startup collaborations, MVP development, and experimental engineering.",
-    "url": "https://parampatel.in/contact",
+    name: "Contact Param Patel",
+    description:
+      "Get in touch with Param Patel for AI engineering collaborations, startup MVP development, and experimental systems.",
+    url: "https://www.parampatel.in/contact",
+    mainEntity: {
+      "@type": "Person",
+      "@id": "https://www.parampatel.in/#person",
+    },
   };
 
   return (

@@ -7,6 +7,8 @@ import { ArrowLeft, Cpu, Workflow, ShieldCheck, Database } from "lucide-react";
 import ReadershipTracker from "@/components/analytics/ReadershipTracker";
 import { getPostHogClient } from "@/lib/posthog-server";
 import { Metadata } from "next";
+import { generateArticleJsonLd, generateBreadcrumbJsonLd } from "@/lib/seo";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export const revalidate = 60;
 
@@ -64,23 +66,25 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
     },
   });
 
-  const articleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": research.title,
-    "description": research.description || research.title,
-    "author": {
-      "@type": "Person",
-      "name": "Param Patel",
-      "url": "https://parampatel.in"
-    }
-  };
+  const articleJsonLd = generateArticleJsonLd({
+    title: research.title,
+    description: research.description,
+    publishedAt: research.publishedAt,
+    updatedAt: research._updatedAt,
+    slug: resolvedParams.slug,
+  });
+
+  const breadcrumbsJsonLd = generateBreadcrumbJsonLd([
+    { name: "Home", href: "/" },
+    { name: "Research", href: "/research" },
+    { name: research.title, href: `/research/${resolvedParams.slug}` },
+  ]);
 
   return (
     <div className="relative min-h-screen bg-[#E9EDC9] text-[#2F3E46] pt-32 pb-40 overflow-hidden selection:bg-[#D4A373] selection:text-[#FEFAE0]">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify([articleJsonLd, breadcrumbsJsonLd]) }}
       />
       <ReadershipTracker articleId={research._id} articleType="research" />
       {/* Global Atmosphere */}
@@ -91,14 +95,14 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
 
       <article className="max-w-4xl mx-auto px-6 md:px-12 relative z-10">
         
-        {/* Back Button */}
-        <Link 
-          href="/research" 
-          className="inline-flex items-center gap-2 text-[#84A98C] hover:text-[#52796F] transition-colors font-bold uppercase tracking-widest text-xs mb-16"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Research Index
-        </Link>
+        {/* Breadcrumbs */}
+        <Breadcrumbs 
+          items={[
+            { name: "Home", href: "/" },
+            { name: "Research Index", href: "/research" },
+            { name: "Report", href: `/research/${resolvedParams.slug}` }
+          ]}
+        />
 
         {/* Header */}
         <header className="mb-20">

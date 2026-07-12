@@ -16,22 +16,26 @@ import LabNotesBoard from "@/components/LabNotesBoard";
 
 import { Metadata } from "next";
 
+import { generateCollectionPageJsonLd } from "@/lib/seo";
+
 export const metadata: Metadata = {
-  title: "AI Lab",
+  title: "AI Lab — Experiments & Engineering Demos",
   description:
-    "Param Patel's AI Lab — interactive terminal, engineering experiments, benchmark visualizations, and AI demos.",
+    "Param Patel's AI Lab — explore interactive AI experiments, engineering benchmarks, model demos, and lab notes on machine learning and agentic systems.",
   alternates: {
-    canonical: '/ai-lab',
+    canonical: "https://www.parampatel.in/ai-lab",
   },
   openGraph: {
-    title: "AI Lab | Param Patel",
-    description: "Param Patel's AI Lab — interactive terminal, engineering experiments, benchmark visualizations, and AI demos.",
-    url: "/ai-lab",
+    title: "AI Lab — Experiments & Engineering Demos | Param Patel",
+    description:
+      "Param Patel's AI Lab — explore interactive AI experiments, engineering benchmarks, model demos, and lab notes on machine learning and agentic systems.",
+    url: "https://www.parampatel.in/ai-lab",
   },
   twitter: {
-    title: "AI Lab | Param Patel",
-    description: "Param Patel's AI Lab — interactive terminal, engineering experiments, benchmark visualizations, and AI demos.",
-  }
+    title: "AI Lab — Experiments & Engineering Demos | Param Patel",
+    description:
+      "Param Patel's AI Lab — explore interactive AI experiments, engineering benchmarks, and agentic AI demos.",
+  },
 };
 
 const terminalLines = [
@@ -54,9 +58,21 @@ import LabModulesGrid from "@/components/LabModulesGrid";
 
 export default async function AILabPage() {
   const { data: notes } = await sanityFetch({ query: LAB_NOTES_QUERY });
-  
+
   return (
     <div className="min-h-screen transition-colors duration-1000 ease-in-out bg-[var(--bg-page)]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            generateCollectionPageJsonLd({
+              name: "AI Lab — Param Patel",
+              description: "Explore interactive AI experiments, engineering benchmarks, model demos, and lab notes.",
+              url: "/ai-lab",
+            })
+          ),
+        }}
+      />
       <AILabHero />
       <div className="max-w-6xl mx-auto px-6 pt-24 pb-20 relative z-10">
 

@@ -4,21 +4,26 @@ import { RESEARCH_PAGE_QUERY } from "@/sanity/lib/queries";
 import ResearchClientUI from "./ResearchClientUI";
 import { ResearchHero } from "@/components/hero/meadow/ClientHeroes";
 
+import { generateCollectionPageJsonLd } from "@/lib/seo";
+
 export const metadata: Metadata = {
-  title: "Research",
-  description: "Explore my research on AI verification systems, agentic workflows, and structured intelligence.",
+  title: "Research — AI Verification & Agentic Workflows",
+  description:
+    "Param Patel's research on AI verification systems, agentic workflows, structured intelligence, and machine learning applications.",
   alternates: {
-    canonical: '/research',
+    canonical: "https://www.parampatel.in/research",
   },
   openGraph: {
-    title: "Research | Param Patel",
-    description: "Explore my research on AI verification systems, agentic workflows, and structured intelligence.",
-    url: "/research",
+    title: "Research — AI Verification & Agentic Workflows | Param Patel",
+    description:
+      "Param Patel's research on AI verification systems, agentic workflows, and structured intelligence.",
+    url: "https://www.parampatel.in/research",
   },
   twitter: {
-    title: "Research | Param Patel",
-    description: "Explore my research on AI verification systems, agentic workflows, and structured intelligence.",
-  }
+    title: "Research — AI Verification & Agentic Workflows | Param Patel",
+    description:
+      "Research on AI verification, agentic workflows, and structured intelligence by Param Patel.",
+  },
 };
 
 export const revalidate = 60;
@@ -50,6 +55,18 @@ export default async function CinematicResearchPage() {
   const content = data || fallbackContent;
   return (
     <div className="relative min-h-screen bg-[var(--bg-page)] text-[var(--text-main)] overflow-x-hidden selection:bg-[var(--amber)] selection:text-bg-main font-inter transition-colors duration-1000 ease-in-out">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            generateCollectionPageJsonLd({
+              name: "Research — Param Patel",
+              description: "Research on AI verification systems, agentic workflows, and structured intelligence.",
+              url: "/research",
+            })
+          ),
+        }}
+      />
       
       {/* 3D Hero Section */}
       <div className="absolute inset-x-0 top-0 h-[120vh] pointer-events-none z-0">

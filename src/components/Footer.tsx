@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { Github, Instagram, Linkedin, Mail } from "lucide-react";
+import { SOCIAL_PROFILES, AUTHOR_EMAIL } from "@/lib/seo";
 import { DynamicFooterVignette } from "./ui/FooterVignettes";
 import { useLivingSystemStore } from "@/lib/store";
 
@@ -607,18 +608,18 @@ export default function Footer() {
               Param<br/>Patel<span className="text-[var(--amber)]">.</span>
             </h2>
             
-            {/* Social Media Row */}
             <div className="flex items-center gap-6 mt-2">
               {[
-                { name: "GitHub", icon: Github, href: "https://github.com/Param96" },
-                { name: "Instagram", icon: Instagram, href: "https://www.instagram.com/param_230/" },
-                { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com/in/param96" },
-                { name: "Email", icon: Mail, href: "mailto:param@example.com" }
+                { name: "GitHub", icon: Github, href: SOCIAL_PROFILES.github },
+                { name: "Instagram", icon: Instagram, href: SOCIAL_PROFILES.instagram },
+                { name: "LinkedIn", icon: Linkedin, href: SOCIAL_PROFILES.linkedin },
+                { name: "Email", icon: Mail, href: `mailto:${AUTHOR_EMAIL}` }
               ].map((social) => (
                 <Link 
                   key={social.name} 
                   href={social.href}
                   target="_blank"
+                  rel="noopener noreferrer"
                   className={cn(
                     "group relative transition-all duration-300 transform hover:-translate-y-1",
                     config.muted,

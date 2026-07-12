@@ -7,6 +7,7 @@ import OracleRootTerminal from "@/components/ui/OracleRootTerminal";
 import ConnectedOracleRootTrigger from "@/components/ui/OracleRootTrigger";
 import LivingSystemStatus from "@/components/ui/LivingSystemStatus";
 import SynestheticAudio from "@/components/global/SynestheticAudio";
+import { SITE_URL, PERSON_JSONLD, PROFILE_PAGE_JSONLD } from "@/lib/seo";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -28,48 +29,66 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://parampatel.in'),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Param Patel — AI/ML Engineer, Full Stack Engineer, Builder & Aspiring Researcher",
+    default: "Param Patel \u2014 AI/ML Engineer, Full Stack Engineer & Builder",
     template: "%s | Param Patel",
   },
   description:
-    "Building Agentic AI Systems, Intelligent Products & Scalable Software. AI/ML Engineer, Full Stack Engineer, Builder, and Aspiring Researcher.",
+    "Param Patel is an AI/ML Engineer, Full Stack Engineer, and Builder from India \u2014 creating agentic AI systems, intelligent products, and scalable software.",
   keywords: [
     "Param Patel",
     "AI Engineer",
+    "Machine Learning Engineer",
     "ML Engineer",
+    "Full Stack Engineer",
     "Full Stack Developer",
+    "Software Engineer",
+    "AI Researcher",
     "Agentic AI",
+    "Artificial Intelligence",
     "Machine Learning",
+    "Intelligent Systems",
+    "Deep Learning",
+    "Startup Founder",
+    "Builder",
+    "India",
     "Next.js",
     "React",
     "Python",
-    "Deep Learning",
-    "Startup Founder",
   ],
-  authors: [{ name: "Param Patel" }],
+  authors: [{ name: "Param Patel", url: SITE_URL }],
   creator: "Param Patel",
+  publisher: "Param Patel",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "/",
-    title: "Param Patel — AI/ML Engineer, Full Stack Engineer, Builder & Aspiring Researcher",
+    url: SITE_URL,
+    title: "Param Patel \u2014 AI/ML Engineer, Full Stack Engineer & Builder",
     description:
-      "Building Agentic AI Systems, Intelligent Products & Scalable Software.",
+      "Building agentic AI systems, intelligent products, and scalable software. AI/ML Engineer, Full Stack Engineer, and Builder from India.",
     siteName: "Param Patel",
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: "Param Patel - AI/ML Engineer, Full Stack Engineer, Builder & Aspiring Researcher" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Param Patel — AI/ML Engineer, Full Stack Engineer, Builder & Aspiring Researcher",
+    title: "Param Patel \u2014 AI/ML Engineer, Full Stack Engineer & Builder",
     description:
-      "Building Agentic AI Systems, Intelligent Products & Scalable Software.",
-    images: ['/og-image.png'],
+      "Building agentic AI systems, intelligent products, and scalable software.",
+    creator: "@param_230",
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: SITE_URL,
   },
 };
 
@@ -99,19 +118,10 @@ export default async function RootLayout({
             <script
               type="application/ld+json"
               dangerouslySetInnerHTML={{
-                __html: JSON.stringify({
-                  "@context": "https://schema.org",
-                  "@type": "Person",
-                  name: "Param Patel",
-                  url: "https://parampatel.in",
-                  jobTitle: "AI/ML Engineer, Full Stack Engineer, Builder & Aspiring Researcher",
-                  sameAs: [
-                    "https://github.com/Param96",
-                    "https://www.linkedin.com/in/paramp06/",
-                    "https://www.instagram.com/param_230/"
-                  ],
-                  knowsAbout: ["Machine Learning", "Full Stack Development", "AI/ML Engineering", "Agentic AI Systems"]
-                })
+                __html: JSON.stringify([
+                  PERSON_JSONLD,
+                  PROFILE_PAGE_JSONLD,
+                ])
               }}
             />
             <LivingSystemProvider />
