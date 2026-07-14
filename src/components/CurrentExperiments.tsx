@@ -31,7 +31,7 @@ const experiments = [
 
 export default function CurrentExperiments() {
   return (
-    <section className="relative w-full py-20 md:py-40 bg-[var(--bg-page)] text-[var(--text-main)] overflow-hidden border-t border-accent-sage/10 transition-colors duration-1000 ease-in-out">
+    <section id="experiments" className="relative w-full py-20 md:py-40 bg-[var(--bg-page)] text-[var(--text-main)] overflow-hidden border-t border-accent-sage/10 transition-colors duration-1000 ease-in-out">
       {/* Background cinematic mesh */}
       <div className="absolute inset-0 pointer-events-none opacity-40">
         <div className="absolute top-0 right-[20%] w-[1px] h-full bg-gradient-to-b from-transparent via-[#84A98C]/30 to-transparent transition-colors duration-1000 ease-in-out" />
