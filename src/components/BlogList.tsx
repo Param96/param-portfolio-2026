@@ -19,7 +19,7 @@ export default function BlogList({ articles }: { articles: any[] }) {
     <div className="w-full px-6 md:px-12 lg:px-24 pb-40">
       
       {/* Filters */}
-      <div className="max-w-[1400px] mx-auto mb-16 flex flex-wrap justify-center gap-4 items-center border-b border-[#2F3E46]/10 pb-8">
+      <div className="max-w-[1400px] mx-auto mb-16 flex flex-wrap justify-center gap-4 items-center">
         {categories.map((cat: any) => (
           <button
             key={cat}
