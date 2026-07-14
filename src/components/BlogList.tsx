@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import posthog from "posthog-js";
 
@@ -80,6 +81,18 @@ export default function BlogList({ articles }: { articles: any[] }) {
                     {dateStr}
                   </span>
                 </div>
+
+                {/* Thumbnail (Optional) */}
+                {article.coverImageUrl && (
+                  <div className="w-full md:w-48 h-48 md:h-32 relative rounded-xl overflow-hidden shrink-0 mb-4 md:mb-0 hidden sm:block">
+                    <Image 
+                      src={article.coverImageUrl} 
+                      alt={article.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    />
+                  </div>
+                )}
 
                 {/* Title & Description Column */}
                 <div className="flex-1 flex flex-col gap-4">

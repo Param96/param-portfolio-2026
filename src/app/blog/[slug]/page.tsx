@@ -3,6 +3,7 @@ import { BLOG_BY_SLUG_QUERY, ALL_BLOGS_QUERY } from "@/sanity/lib/queries";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import BlogProgressBar from "@/components/BlogProgressBar";
 import ReadershipTracker from "@/components/analytics/ReadershipTracker";
@@ -173,6 +174,18 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               <p className="text-xl md:text-2xl text-[#52796F] font-medium leading-relaxed border-l-2 border-[#84A98C] pl-6 md:pl-8">
                 {article.summary}
               </p>
+            )}
+
+            {article.coverImageUrl && (
+              <div className="w-full aspect-[21/9] md:aspect-[2.5/1] relative rounded-2xl overflow-hidden mt-12 mb-4 border border-[#2F3E46]/10">
+                <Image 
+                  src={article.coverImageUrl} 
+                  alt={article.title} 
+                  fill 
+                  priority
+                  className="object-cover"
+                />
+              </div>
             )}
 
             {/* Mobile Metadata */}
