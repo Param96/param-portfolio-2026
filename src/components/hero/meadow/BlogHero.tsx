@@ -155,7 +155,7 @@ export default function BlogHero({ featuredArticle }: { featuredArticle?: any })
             Stories, insights, and musings from the frontier of building intelligent systems.
           </p>
           {featuredArticle && (
-            <a href={`/blog/${featuredArticle.slug?.current}`} className="inline-block glass bg-black/20 p-6 rounded-2xl border border-white/20 hover:bg-black/40 transition-colors">
+            <a href={`/blog/${featuredArticle.slug}`} className="inline-block glass bg-black/20 p-6 rounded-2xl border border-white/20 hover:bg-black/40 transition-colors">
               <span className="text-[10px] uppercase tracking-widest text-[var(--moss)] font-bold block mb-2">Featured</span>
               <h3 className="text-2xl font-bold text-white mb-2">{featuredArticle.title}</h3>
               <p className="text-white/80 line-clamp-2">{featuredArticle.excerpt}</p>
