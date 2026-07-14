@@ -6,8 +6,9 @@ export async function GET(request: Request) {
   const secret = searchParams.get('secret')
   const slug = searchParams.get('slug')
 
-  // Validate preview secret
-  if (secret !== process.env.SANITY_PREVIEW_SECRET) {
+  // Validate preview secret only if one is configured in the environment
+  const expectedSecret = process.env.SANITY_PREVIEW_SECRET;
+  if (expectedSecret && secret !== expectedSecret) {
     return new Response('Invalid token', { status: 401 })
   }
 
