@@ -77,16 +77,19 @@ export function StickyNote({ note, rotationOffset, className = "", onClick, isNe
       rotate: rotationOffset,
       scale: 1,
       y: 0,
+      opacity: 1,
       boxShadow: `2px 4px 12px ${theme.shadow}`,
     },
     hover: {
       rotate: rotationOffset > 0 ? 1 : -1, // slight de-rotation
       scale: 1.03,
       y: -4, // slight lift
+      opacity: 1,
       boxShadow: `4px 12px 24px ${theme.shadow}`,
     },
     tap: {
       scale: 0.98,
+      opacity: 1,
       boxShadow: `1px 2px 6px ${theme.shadow}`,
     }
   };
