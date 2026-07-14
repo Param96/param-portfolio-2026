@@ -16,7 +16,7 @@ export default function BlogList({ articles }: { articles: any[] }) {
     : articles.filter(a => a.category === activeCategory);
 
   return (
-    <div className="w-full px-6 md:px-12 lg:px-24 pb-40">
+    <div className="w-full px-6 md:px-12 lg:px-24 pt-24 md:pt-32 pb-40">
       
       {/* Filters */}
       <div className="max-w-[1400px] mx-auto mb-16 flex flex-wrap justify-center gap-4 items-center">

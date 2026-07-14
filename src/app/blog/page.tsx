@@ -33,7 +33,9 @@ export default async function BlogPage() {
   const articles = data as any[];
 
   const featuredArticle = articles.find(a => a.isFeatured) || articles[0];
-  const remainingArticles = articles.filter(a => a._id !== featuredArticle?._id);
+  const remainingArticles = articles.length > 1 
+    ? articles.filter(a => a._id !== featuredArticle?._id)
+    : articles;
 
   return (
     <div className="relative min-h-screen bg-[var(--bg-page)] transition-colors duration-1000 ease-in-out">
