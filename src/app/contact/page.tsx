@@ -76,9 +76,9 @@ export default function ContactPage() {
                 transition={{ duration: 1, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 className="group relative cursor-crosshair flex flex-col items-start"
               >
-                <h3 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tighter text-[var(--text-main)] transition-all duration-700 group-hover:text-[var(--amber-deep)]">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tighter text-[var(--text-main)] transition-all duration-700 group-hover:text-[var(--amber-deep)]">
                   {concept.main}
-                </h3>
+                </h2>
                 <div className="mt-6 opacity-0 -translate-y-4 transition-all duration-700 group-hover:opacity-100 group-hover:translate-y-0 h-0 group-hover:h-auto overflow-visible">
                   <p className="text-sm font-medium tracking-wide text-[var(--moss)] max-w-[250px] leading-relaxed">
                     {concept.sub}

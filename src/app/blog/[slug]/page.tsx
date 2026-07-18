@@ -15,6 +15,16 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 
 export const revalidate = 60;
 
+/**
+ * Pre-render all blog posts at build time for instant crawlability and better TTFB.
+ * New posts are still handled via ISR (revalidate = 60).
+ */
+export async function generateStaticParams() {
+  const { data } = await sanityFetch({ query: ALL_BLOGS_QUERY });
+  const blogs = data as any[];
+  return (blogs || []).map((blog) => ({ slug: blog.slug }));
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
   const { data } = await sanityFetch({
@@ -225,9 +235,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     className="group block p-8 bg-[#FEFAE0] border border-[#2F3E46]/5 hover:shadow-xl transition-all duration-500"
                   >
                     <span className="text-[10px] uppercase text-[#2F3E46]/40 block mb-3">{rel.category || "Article"}</span>
-                    <h3 className="text-2xl font-medium text-[#2F3E46] mb-4 group-hover:text-[#52796F] transition-colors line-clamp-2">
+                    <h2 className="text-2xl font-medium text-[#2F3E46] mb-4 group-hover:text-[#52796F] transition-colors line-clamp-2">
                       {rel.title}
-                    </h3>
+                    </h2>
                     <div className="flex items-center gap-2 text-xs font-bold uppercase text-[#84A98C]">
                       Read <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                     </div>

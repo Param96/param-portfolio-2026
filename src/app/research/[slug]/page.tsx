@@ -1,5 +1,5 @@
 import { sanityFetch } from "@/sanity/lib/live";
-import { RESEARCH_BY_SLUG_QUERY } from "@/sanity/lib/queries";
+import { RESEARCH_BY_SLUG_QUERY, ALL_RESEARCH_QUERY } from "@/sanity/lib/queries";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
 import Link from "next/link";
@@ -11,6 +11,18 @@ import { generateArticleJsonLd, generateBreadcrumbJsonLd } from "@/lib/seo";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
 export const revalidate = 60;
+
+/**
+ * Pre-render all research articles at build time for instant crawlability and better TTFB.
+ * New articles are still handled via ISR (revalidate = 60).
+ */
+export async function generateStaticParams() {
+  const { data } = await sanityFetch({
+    query: ALL_RESEARCH_QUERY,
+  });
+  const research = data as any[];
+  return (research || []).map((r) => ({ slug: r.slug }));
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
@@ -131,9 +143,9 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
         {/* Meta / Role Block */}
         <div className="bg-[#FEFAE0] border border-[#354F52]/5 p-8 md:p-12 mb-20 shadow-lg relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-[#D4A373]/10 blur-2xl" />
-          <h3 className="text-[10px] uppercase tracking-widest font-bold text-[#84A98C] mb-6 flex items-center gap-2 font-inter">
+          <h2 className="text-[10px] uppercase tracking-widest font-bold text-[#84A98C] mb-6 flex items-center gap-2 font-inter">
             <Database className="w-4 h-4" /> Project Metadata
-          </h3>
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
               <p className="text-xs uppercase tracking-widest text-[#2F3E46]/50 mb-2">Role</p>
