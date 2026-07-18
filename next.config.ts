@@ -1,6 +1,31 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/resume",
+        destination: "/resume.pdf",
+        permanent: true,
+      },
+      {
+        source: "/projects/:slug",
+        destination: "/projects",
+        permanent: true,
+      },
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "parampatel.in",
+          },
+        ],
+        destination: "https://www.parampatel.in/:path*",
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {
