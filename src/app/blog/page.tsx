@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@/lib/seo";
 import BlogList from "@/components/BlogList";
 import { sanityFetch } from "@/sanity/lib/live";
 import { ALL_BLOGS_QUERY } from "@/sanity/lib/queries";
@@ -11,13 +12,13 @@ export const metadata: Metadata = {
   description:
     "Articles by Param Patel on artificial intelligence, machine learning, full stack engineering, agentic AI systems, and startup building.",
   alternates: {
-    canonical: "https://www.parampatel.in/blog",
+    canonical: `${SITE_URL}/blog`,
   },
   openGraph: {
     title: "Blog — AI, Engineering & Startup Insights | Param Patel",
     description:
       "Articles by Param Patel on artificial intelligence, machine learning, full stack engineering, agentic AI systems, and startup building.",
-    url: "https://www.parampatel.in/blog",
+    url: `${SITE_URL}/blog`,
   },
   twitter: {
     title: "Blog — AI, Engineering & Startup Insights | Param Patel",

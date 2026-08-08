@@ -18,10 +18,10 @@ const nextConfig: NextConfig = {
         has: [
           {
             type: "host",
-            value: "parampatel.in",
+            value: "www.parampatel.in",
           },
         ],
-        destination: "https://www.parampatel.in/:path*",
+        destination: "https://parampatel.in/:path*",
         permanent: true,
       },
     ];

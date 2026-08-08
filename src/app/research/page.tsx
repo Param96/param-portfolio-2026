@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@/lib/seo";
 import { sanityFetch } from "@/sanity/lib/live";
 import { RESEARCH_PAGE_QUERY } from "@/sanity/lib/queries";
 import ResearchClientUI from "./ResearchClientUI";
@@ -11,13 +12,13 @@ export const metadata: Metadata = {
   description:
     "Param Patel's research on AI verification systems, agentic workflows, structured intelligence, and machine learning applications.",
   alternates: {
-    canonical: "https://www.parampatel.in/research",
+    canonical: `${SITE_URL}/research`,
   },
   openGraph: {
     title: "Research — AI Verification & Agentic Workflows | Param Patel",
     description:
       "Param Patel's research on AI verification systems, agentic workflows, and structured intelligence.",
-    url: "https://www.parampatel.in/research",
+    url: `${SITE_URL}/research`,
   },
   twitter: {
     title: "Research — AI Verification & Agentic Workflows | Param Patel",

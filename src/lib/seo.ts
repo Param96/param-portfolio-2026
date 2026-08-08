@@ -3,7 +3,7 @@
  * Single source of truth for all SEO-related configuration across the portfolio.
  */
 
-export const SITE_URL = "https://www.parampatel.in";
+export const SITE_URL = "https://parampatel.in";
 export const SITE_NAME = "Param Patel";
 export const AUTHOR_NAME = "Param Patel";
 export const AUTHOR_EMAIL = "paramppatel100@gmail.com";

@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { sanityFetch } from '@/sanity/lib/live';
 import { defineQuery } from 'next-sanity';
+import { SITE_URL } from '@/lib/seo';
 
 const SITEMAP_QUERY = defineQuery(`{
   "blogs": *[_type == "blog"] { "slug": slug.current, "_updatedAt": _updatedAt },
@@ -8,7 +9,7 @@ const SITEMAP_QUERY = defineQuery(`{
 }`);
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://www.parampatel.in';
+  const baseUrl = SITE_URL;
 
   const { data } = await sanityFetch({ query: SITEMAP_QUERY });
   const { blogs, research } = data as any;
