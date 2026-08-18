@@ -58,10 +58,6 @@ const nextConfig: NextConfig = {
         source: "/(.*)",
         headers: [
           {
-            key: "X-Robots-Tag",
-            value: "index, follow",
-          },
-          {
             key: "X-Content-Type-Options",
             value: "nosniff",
           },
@@ -86,6 +82,33 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/admin/:path*",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow",
+          },
+        ],
+      },
+      {
+        source: "/sign-in/:path*",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow",
+          },
+        ],
+      },
+      {
+        source: "/sign-up/:path*",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow",
+          },
+        ],
+      },
+      {
+        source: "/studio/:path*",
         headers: [
           {
             key: "X-Robots-Tag",
