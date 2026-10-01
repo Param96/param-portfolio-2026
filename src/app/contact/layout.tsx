@@ -1,17 +1,18 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Contact — Collaborate on AI & Engineering",
   description:
     "Get in touch with Param Patel for AI engineering collaborations, startup MVP development, agentic AI projects, and experimental systems.",
   alternates: {
-    canonical: "https://www.parampatel.in/contact",
+    canonical: "/contact",
   },
   openGraph: {
     title: "Contact — Collaborate on AI & Engineering | Param Patel",
     description:
       "Get in touch with Param Patel for AI engineering collaborations, startup MVP development, and experimental systems.",
-    url: "https://www.parampatel.in/contact",
+    url: "/contact",
   },
   twitter: {
     title: "Contact — Collaborate on AI & Engineering | Param Patel",
@@ -31,10 +32,10 @@ export default function ContactLayout({
     name: "Contact Param Patel",
     description:
       "Get in touch with Param Patel for AI engineering collaborations, startup MVP development, and experimental systems.",
-    url: "https://www.parampatel.in/contact",
+    url: `${SITE_URL}/contact`,
     mainEntity: {
       "@type": "Person",
-      "@id": "https://www.parampatel.in/#person",
+      "@id": `${SITE_URL}/#person`,
     },
   };
 
