@@ -1,24 +1,22 @@
 import { Metadata } from "next";
-import { SITE_URL } from "@/lib/seo";
+import { generateCollectionPageJsonLd } from "@/lib/seo";
 import { sanityFetch } from "@/sanity/lib/live";
 import { RESEARCH_PAGE_QUERY } from "@/sanity/lib/queries";
 import ResearchClientUI from "./ResearchClientUI";
 import { ResearchHero } from "@/components/hero/meadow/ClientHeroes";
-
-import { generateCollectionPageJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Research — AI Verification & Agentic Workflows",
   description:
     "Param Patel's research on AI verification systems, agentic workflows, structured intelligence, and machine learning applications.",
   alternates: {
-    canonical: `${SITE_URL}/research`,
+    canonical: "/research",
   },
   openGraph: {
     title: "Research — AI Verification & Agentic Workflows | Param Patel",
     description:
       "Param Patel's research on AI verification systems, agentic workflows, and structured intelligence.",
-    url: `${SITE_URL}/research`,
+    url: "/research",
   },
   twitter: {
     title: "Research — AI Verification & Agentic Workflows | Param Patel",

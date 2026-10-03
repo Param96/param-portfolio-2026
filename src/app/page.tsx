@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/live";
 import { HOMEPAGE_QUERY } from "@/sanity/lib/queries";
 import ModuleRenderer from "@/components/cms/ModuleRenderer";
-import { SITE_URL, WEBSITE_JSONLD } from "@/lib/seo";
+import { WEBSITE_JSONLD } from "@/lib/seo";
 
 import TheClearingHero from "@/components/hero/TheClearingHero";
 import FounderIntro from "@/components/FounderIntro";
@@ -13,10 +13,10 @@ import FounderECell from "@/components/FounderECell";
 
 export const metadata: Metadata = {
   alternates: {
-    canonical: SITE_URL,
+    canonical: "/",
   },
   openGraph: {
-    url: SITE_URL,
+    url: "/",
   },
 };
 

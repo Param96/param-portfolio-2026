@@ -12,13 +12,13 @@ export const metadata: Metadata = {
   description:
     "Explore AI systems, scalable infrastructure, and intelligent products built by Param Patel — from agentic AI workflows to full stack applications.",
   alternates: {
-    canonical: "https://www.parampatel.in/projects",
+    canonical: "/projects",
   },
   openGraph: {
     title: "Projects — AI Systems & Scalable Products | Param Patel",
     description:
       "Explore AI systems, scalable infrastructure, and intelligent products built by Param Patel.",
-    url: "https://www.parampatel.in/projects",
+    url: "/projects",
   },
   twitter: {
     title: "Projects — AI Systems & Scalable Products | Param Patel",
