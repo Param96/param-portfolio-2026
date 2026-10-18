@@ -13,12 +13,17 @@ export const metadata: Metadata = {
     canonical: "/blog",
   },
   openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Param Patel",
     title: "Blog — AI, Engineering & Startup Insights | Param Patel",
     description:
       "Articles by Param Patel on artificial intelligence, machine learning, full stack engineering, agentic AI systems, and startup building.",
     url: "/blog",
   },
   twitter: {
+    card: "summary_large_image",
+    creator: "@param_230",
     title: "Blog — AI, Engineering & Startup Insights | Param Patel",
     description:
       "Articles on AI, machine learning, engineering, and startups by Param Patel.",

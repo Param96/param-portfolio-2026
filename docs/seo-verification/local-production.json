@@ -1,0 +1,776 @@
+{
+  "checked_at": "2026-10-18T09:27:41.034398+00:00",
+  "base_url": "http://localhost:3100",
+  "canonical_origin": "https://parampatel.in",
+  "counts": {
+    "PASS": 153,
+    "FAIL": 0
+  },
+  "checks": [
+    {
+      "status": "PASS",
+      "check": "robots.txt: HTTP 200 plain text",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "robots.txt: canonical sitemap reference",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "robots.txt allows /",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "robots.txt allows /projects",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "robots.txt allows /research",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "robots.txt allows /blog",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "robots.txt allows /ai-lab",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "robots.txt allows /contact",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "robots.txt allows /_next/static/test.js",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "robots.txt allows /_next/static/test.css",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "robots.txt allows /founder.jpg",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "robots.txt restricts /admin and descendants",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "robots.txt restricts /api and descendants",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "robots.txt restricts /sign-in and descendants",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "robots.txt restricts /sign-up and descendants",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "robots.txt restricts /studio and descendants",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "robots.txt restricts /cms and descendants",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "robots.txt restricts /dashboard and descendants",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/sitemap.xml: HTTP 200 XML",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/sitemap.xml: valid sitemap XML",
+      "detail": "7 entries"
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap canonical origin: https://parampatel.in",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap canonical origin: https://parampatel.in/projects",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap canonical origin: https://parampatel.in/research",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap canonical origin: https://parampatel.in/blog",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap canonical origin: https://parampatel.in/ai-lab",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap canonical origin: https://parampatel.in/contact",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap canonical origin: https://parampatel.in/blog/building-a-meadow-why-my-portfolio-isn-t-a-website",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap lastmod not in future: /blog/building-a-meadow-why-my-portfolio-isn-t-a-website",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap: no duplicate URLs",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap: all real public landing pages present",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap excludes private/obsolete routes: /",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap URL crawlable: /",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/: HTTP 200",
+      "detail": "200"
+    },
+    {
+      "status": "PASS",
+      "check": "/: HTML response",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/: no indexing restrictions",
+      "detail": "index, follow; index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+    },
+    {
+      "status": "PASS",
+      "check": "/: one self-referencing production canonical",
+      "detail": "https://parampatel.in"
+    },
+    {
+      "status": "PASS",
+      "check": "/: title and unique description tag",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/: heading in initial HTML",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/: complete social metadata",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/: no development/preview metadata URLs",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap excludes private/obsolete routes: /ai-lab",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap URL crawlable: /ai-lab",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/ai-lab: HTTP 200",
+      "detail": "200"
+    },
+    {
+      "status": "PASS",
+      "check": "/ai-lab: HTML response",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/ai-lab: no indexing restrictions",
+      "detail": "index, follow; index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+    },
+    {
+      "status": "PASS",
+      "check": "/ai-lab: one self-referencing production canonical",
+      "detail": "https://parampatel.in/ai-lab"
+    },
+    {
+      "status": "PASS",
+      "check": "/ai-lab: title and unique description tag",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/ai-lab: heading in initial HTML",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/ai-lab: complete social metadata",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/ai-lab: no development/preview metadata URLs",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap excludes private/obsolete routes: /blog",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap URL crawlable: /blog",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog: HTTP 200",
+      "detail": "200"
+    },
+    {
+      "status": "PASS",
+      "check": "/blog: HTML response",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog: no indexing restrictions",
+      "detail": "index, follow; index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+    },
+    {
+      "status": "PASS",
+      "check": "/blog: one self-referencing production canonical",
+      "detail": "https://parampatel.in/blog"
+    },
+    {
+      "status": "PASS",
+      "check": "/blog: title and unique description tag",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog: heading in initial HTML",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog: complete social metadata",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog: no development/preview metadata URLs",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap excludes private/obsolete routes: /blog/building-a-meadow-why-my-portfolio-isn-t-a-website",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap URL crawlable: /blog/building-a-meadow-why-my-portfolio-isn-t-a-website",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog/building-a-meadow-why-my-portfolio-isn-t-a-website: HTTP 200",
+      "detail": "200"
+    },
+    {
+      "status": "PASS",
+      "check": "/blog/building-a-meadow-why-my-portfolio-isn-t-a-website: HTML response",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog/building-a-meadow-why-my-portfolio-isn-t-a-website: no indexing restrictions",
+      "detail": "index, follow; index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+    },
+    {
+      "status": "PASS",
+      "check": "/blog/building-a-meadow-why-my-portfolio-isn-t-a-website: one self-referencing production canonical",
+      "detail": "https://parampatel.in/blog/building-a-meadow-why-my-portfolio-isn-t-a-website"
+    },
+    {
+      "status": "PASS",
+      "check": "/blog/building-a-meadow-why-my-portfolio-isn-t-a-website: title and unique description tag",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog/building-a-meadow-why-my-portfolio-isn-t-a-website: heading in initial HTML",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog/building-a-meadow-why-my-portfolio-isn-t-a-website: complete social metadata",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog/building-a-meadow-why-my-portfolio-isn-t-a-website: no development/preview metadata URLs",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap excludes private/obsolete routes: /contact",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap URL crawlable: /contact",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/contact: HTTP 200",
+      "detail": "200"
+    },
+    {
+      "status": "PASS",
+      "check": "/contact: HTML response",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/contact: no indexing restrictions",
+      "detail": "index, follow; index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+    },
+    {
+      "status": "PASS",
+      "check": "/contact: one self-referencing production canonical",
+      "detail": "https://parampatel.in/contact"
+    },
+    {
+      "status": "PASS",
+      "check": "/contact: title and unique description tag",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/contact: heading in initial HTML",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/contact: complete social metadata",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/contact: no development/preview metadata URLs",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap excludes private/obsolete routes: /projects",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap URL crawlable: /projects",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/projects: HTTP 200",
+      "detail": "200"
+    },
+    {
+      "status": "PASS",
+      "check": "/projects: HTML response",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/projects: no indexing restrictions",
+      "detail": "index, follow; index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+    },
+    {
+      "status": "PASS",
+      "check": "/projects: one self-referencing production canonical",
+      "detail": "https://parampatel.in/projects"
+    },
+    {
+      "status": "PASS",
+      "check": "/projects: title and unique description tag",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/projects: heading in initial HTML",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/projects: complete social metadata",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/projects: no development/preview metadata URLs",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap excludes private/obsolete routes: /research",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "sitemap URL crawlable: /research",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/research: HTTP 200",
+      "detail": "200"
+    },
+    {
+      "status": "PASS",
+      "check": "/research: HTML response",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/research: no indexing restrictions",
+      "detail": "index, follow; index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+    },
+    {
+      "status": "PASS",
+      "check": "/research: one self-referencing production canonical",
+      "detail": "https://parampatel.in/research"
+    },
+    {
+      "status": "PASS",
+      "check": "/research: title and unique description tag",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/research: heading in initial HTML",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/research: complete social metadata",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/research: no development/preview metadata URLs",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "public pages have distinct canonicals",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "public pages have distinct titles",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "public pages have distinct descriptions",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "reachable through public navigation: /projects",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "reachable through public navigation: /research",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "reachable through public navigation: /blog",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "reachable through public navigation: /ai-lab",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "reachable through public navigation: /contact",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "reachable through public navigation: /blog/building-a-meadow-why-my-portfolio-isn-t-a-website",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "internal link resolves without redirect: /resume.pdf",
+      "detail": "200"
+    },
+    {
+      "status": "PASS",
+      "check": "/sign-in: intentionally noindex",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/sign-in: no inherited homepage canonical",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/sign-up: intentionally noindex",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/sign-up: no inherited homepage canonical",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "admin remains protected and noindex",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/__seo_missing_page__: real 404 with noindex",
+      "detail": "404"
+    },
+    {
+      "status": "PASS",
+      "check": "/__seo_missing_page__: no inherited homepage canonical",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog/__seo_missing_page__: real 404 with noindex",
+      "detail": "404"
+    },
+    {
+      "status": "PASS",
+      "check": "/blog/__seo_missing_page__: no inherited homepage canonical",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/research/__seo_missing_page__: real 404 with noindex",
+      "detail": "404"
+    },
+    {
+      "status": "PASS",
+      "check": "/research/__seo_missing_page__: no inherited homepage canonical",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/resume: permanent normalization to /resume.pdf",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/resume: no redirect loop",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/projects/drilex-oil: permanent normalization to /projects",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/projects/drilex-oil: no redirect loop",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog/: permanent normalization to /blog",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog/: no redirect loop",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog?utm_source=seo-validation: HTTP 200",
+      "detail": "200"
+    },
+    {
+      "status": "PASS",
+      "check": "/blog?utm_source=seo-validation: HTML response",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog?utm_source=seo-validation: no indexing restrictions",
+      "detail": "index, follow; index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+    },
+    {
+      "status": "PASS",
+      "check": "/blog?utm_source=seo-validation: one self-referencing production canonical",
+      "detail": "https://parampatel.in/blog"
+    },
+    {
+      "status": "PASS",
+      "check": "/blog?utm_source=seo-validation: title and unique description tag",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog?utm_source=seo-validation: heading in initial HTML",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog?utm_source=seo-validation: complete social metadata",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog?utm_source=seo-validation: no development/preview metadata URLs",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/ (browser): HTTP 200",
+      "detail": "200"
+    },
+    {
+      "status": "PASS",
+      "check": "/ (browser): HTML response",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/ (browser): no indexing restrictions",
+      "detail": "index, follow; index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+    },
+    {
+      "status": "PASS",
+      "check": "/ (browser): one self-referencing production canonical",
+      "detail": "https://parampatel.in"
+    },
+    {
+      "status": "PASS",
+      "check": "/ (browser): title and unique description tag",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/ (browser): heading in initial HTML",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/ (browser): complete social metadata",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/ (browser): no development/preview metadata URLs",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog/building-a-meadow-why-my-portfolio-isn-t-a-website (browser): HTTP 200",
+      "detail": "200"
+    },
+    {
+      "status": "PASS",
+      "check": "/blog/building-a-meadow-why-my-portfolio-isn-t-a-website (browser): HTML response",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog/building-a-meadow-why-my-portfolio-isn-t-a-website (browser): no indexing restrictions",
+      "detail": "index, follow; index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+    },
+    {
+      "status": "PASS",
+      "check": "/blog/building-a-meadow-why-my-portfolio-isn-t-a-website (browser): one self-referencing production canonical",
+      "detail": "https://parampatel.in/blog/building-a-meadow-why-my-portfolio-isn-t-a-website"
+    },
+    {
+      "status": "PASS",
+      "check": "/blog/building-a-meadow-why-my-portfolio-isn-t-a-website (browser): title and unique description tag",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog/building-a-meadow-why-my-portfolio-isn-t-a-website (browser): heading in initial HTML",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog/building-a-meadow-why-my-portfolio-isn-t-a-website (browser): complete social metadata",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "/blog/building-a-meadow-why-my-portfolio-isn-t-a-website (browser): no development/preview metadata URLs",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "www/: permanent redirect to production canonical host",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "www/blog: permanent redirect to production canonical host",
+      "detail": ""
+    }
+  ]
+}

@@ -26,12 +26,17 @@ export const metadata: Metadata = {
     canonical: "/ai-lab",
   },
   openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Param Patel",
     title: "AI Lab — Experiments & Engineering Demos | Param Patel",
     description:
       "Param Patel's AI Lab — explore interactive AI experiments, engineering benchmarks, model demos, and lab notes on machine learning and agentic systems.",
     url: "/ai-lab",
   },
   twitter: {
+    card: "summary_large_image",
+    creator: "@param_230",
     title: "AI Lab — Experiments & Engineering Demos | Param Patel",
     description:
       "Param Patel's AI Lab — explore interactive AI experiments, engineering benchmarks, and agentic AI demos.",

@@ -16,7 +16,12 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Param Patel",
     url: "/",
+    title: "Param Patel — AI/ML Engineer, Full Stack Engineer & Builder",
+    description: "Building agentic AI systems, intelligent products, and scalable software. AI/ML Engineer, Full Stack Engineer, and Builder from India.",
   },
 };
 

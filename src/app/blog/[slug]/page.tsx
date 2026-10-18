@@ -20,9 +20,9 @@ export const revalidate = 60;
  * New posts are still handled via ISR (revalidate = 60).
  */
 export async function generateStaticParams() {
-  const { data } = await sanityFetch({ query: ALL_BLOGS_QUERY });
+  const { data } = await sanityFetch({ query: ALL_BLOGS_QUERY, perspective: "published", stega: false });
   const blogs = data as any[];
-  return (blogs || []).map((blog) => ({ slug: blog.slug }));
+  return (blogs || []).filter((blog) => /^[a-zA-Z0-9_-]+$/.test(blog.slug)).map((blog) => ({ slug: blog.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -33,17 +33,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   });
   const article = data as any;
 
-  if (!article) return { title: 'Not Found' };
+  if (!article) notFound();
 
   return {
-    title: article.title,
-    description: article.summary || `Read ${article.title}`,
+    title: article.seo?.metaTitle || article.title,
+    description: article.seo?.metaDescription || article.summary || `Read ${article.title}`,
     alternates: {
       canonical: `/blog/${resolvedParams.slug}`,
     },
     openGraph: {
-      title: `${article.title} | Param Patel`,
-      description: article.summary || `Read ${article.title}`,
+      locale: "en_US",
+      siteName: "Param Patel",
+      title: `${article.seo?.metaTitle || article.title} | Param Patel`,
+      description: article.seo?.metaDescription || article.summary || `Read ${article.title}`,
       url: `/blog/${resolvedParams.slug}`,
       type: "article",
       publishedTime: article.publishedAt,
@@ -51,8 +53,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       // fallback to layout's og-image if article doesn't have one
     },
     twitter: {
-      title: `${article.title} | Param Patel`,
-      description: article.summary || `Read ${article.title}`,
+      card: "summary_large_image",
+      creator: "@param_230",
+      title: `${article.seo?.metaTitle || article.title} | Param Patel`,
+      description: article.seo?.metaDescription || article.summary || `Read ${article.title}`,
     }
   };
 }
@@ -71,7 +75,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   // Track article view server-side for a reliable count
   const posthog = getPostHogClient();
-  posthog.capture({
+  posthog?.capture({
     distinctId: "anonymous",
     event: "article_viewed",
     properties: {

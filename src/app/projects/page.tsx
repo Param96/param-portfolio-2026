@@ -15,12 +15,17 @@ export const metadata: Metadata = {
     canonical: "/projects",
   },
   openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Param Patel",
     title: "Projects — AI Systems & Scalable Products | Param Patel",
     description:
       "Explore AI systems, scalable infrastructure, and intelligent products built by Param Patel.",
     url: "/projects",
   },
   twitter: {
+    card: "summary_large_image",
+    creator: "@param_230",
     title: "Projects — AI Systems & Scalable Products | Param Patel",
     description:
       "AI systems, scalable infrastructure, and intelligent products by Param Patel.",

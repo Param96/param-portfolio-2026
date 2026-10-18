@@ -19,9 +19,11 @@ export const revalidate = 60;
 export async function generateStaticParams() {
   const { data } = await sanityFetch({
     query: ALL_RESEARCH_QUERY,
+    perspective: "published",
+    stega: false,
   });
   const research = data as any[];
-  return (research || []).map((r) => ({ slug: r.slug }));
+  return (research || []).filter((item) => /^[a-zA-Z0-9_-]+$/.test(item.slug)).map((r) => ({ slug: r.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -32,23 +34,27 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   });
   const research = rawData as any;
 
-  if (!research) return { title: 'Not Found' };
+  if (!research) notFound();
 
   return {
-    title: research.title,
-    description: research.description || `Research on ${research.title}`,
+    title: research.seo?.metaTitle || research.title,
+    description: research.seo?.metaDescription || research.description || `Research on ${research.title}`,
     alternates: {
       canonical: `/research/${resolvedParams.slug}`,
     },
     openGraph: {
-      title: `${research.title} | Param Patel`,
-      description: research.description || `Research on ${research.title}`,
+      locale: "en_US",
+      siteName: "Param Patel",
+      title: `${research.seo?.metaTitle || research.title} | Param Patel`,
+      description: research.seo?.metaDescription || research.description || `Research on ${research.title}`,
       url: `/research/${resolvedParams.slug}`,
       type: "article",
     },
     twitter: {
-      title: `${research.title} | Param Patel`,
-      description: research.description || `Research on ${research.title}`,
+      card: "summary_large_image",
+      creator: "@param_230",
+      title: `${research.seo?.metaTitle || research.title} | Param Patel`,
+      description: research.seo?.metaDescription || research.description || `Research on ${research.title}`,
     }
   };
 }
@@ -67,7 +73,7 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
 
   // Track research view server-side for a reliable count
   const posthog = getPostHogClient();
-  posthog.capture({
+  posthog?.capture({
     distinctId: "anonymous",
     event: "article_viewed",
     properties: {
@@ -79,7 +85,7 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
   });
 
   const articleJsonLd = generateArticleJsonLd({
-    title: research.title,
+    title: research.seo?.metaTitle || research.title,
     description: research.description,
     publishedAt: research.publishedAt,
     updatedAt: research._updatedAt,
