@@ -4,7 +4,7 @@ Welcome to the repository for my personal portfolio website! This project is a m
 
 ## Live Website
 
-View the live portfolio here: **[https://param-portfolio-2026.vercel.app/](https://param-portfolio-2026.vercel.app/)**
+View the live portfolio here: **[https://parampatel.in/](https://parampatel.in/)**
 
 ## About the Project
 
@@ -91,3 +91,22 @@ To run this project locally, follow these steps:
 ## Contact
 
 Feel free to reach out for collaborations, inquiries, or just to chat about tech! You can contact me through the dedicated section on the live website.
+
+## SEO validation
+
+Use Node.js 20.9+ for this Next.js version. The SEO checker needs Python 3 and curl, with no extra Python packages.
+
+```sh
+npm run typecheck
+npm run build
+npm run start -- --hostname localhost --port 3100
+# In a second terminal:
+npm run seo:test
+npm run seo:check -- --base-url http://localhost:3100
+# After deploying:
+npm run seo:check -- --base-url https://parampatel.in --report /tmp/seo-production.json
+```
+
+The canonical origin is `https://parampatel.in`. The App Router owns `/robots.txt` and `/sitemap.xml`; do not create competing files in `public/`. Public content must be published in Sanity, have a title and slug, and not have a future publication date. The sitemap refreshes every 60 seconds and uses genuine CMS modification dates only. A passing check establishes technical eligibility, not Google indexing.
+
+See [the audit report](docs/seo-audit-2026-10-18.md) for findings, known lint debt, and Search Console follow-up.

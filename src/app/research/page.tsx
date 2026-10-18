@@ -1,7 +1,8 @@
 import { Metadata } from "next";
 import { generateCollectionPageJsonLd } from "@/lib/seo";
 import { sanityFetch } from "@/sanity/lib/live";
-import { RESEARCH_PAGE_QUERY } from "@/sanity/lib/queries";
+import { ALL_RESEARCH_QUERY, RESEARCH_PAGE_QUERY } from "@/sanity/lib/queries";
+import Link from "next/link";
 import ResearchClientUI from "./ResearchClientUI";
 import { ResearchHero } from "@/components/hero/meadow/ClientHeroes";
 
@@ -13,12 +14,17 @@ export const metadata: Metadata = {
     canonical: "/research",
   },
   openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Param Patel",
     title: "Research — AI Verification & Agentic Workflows | Param Patel",
     description:
       "Param Patel's research on AI verification systems, agentic workflows, and structured intelligence.",
     url: "/research",
   },
   twitter: {
+    card: "summary_large_image",
+    creator: "@param_230",
     title: "Research — AI Verification & Agentic Workflows | Param Patel",
     description:
       "Research on AI verification, agentic workflows, and structured intelligence by Param Patel.",
@@ -28,7 +34,10 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function CinematicResearchPage() {
-  const { data } = await sanityFetch({ query: RESEARCH_PAGE_QUERY });
+  const [{ data }, { data: articles }] = await Promise.all([
+    sanityFetch({ query: RESEARCH_PAGE_QUERY }),
+    sanityFetch({ query: ALL_RESEARCH_QUERY }),
+  ]);
   const fallbackContent = {
     roleTitle: 'Lead — Data Analysis & Verification Team',
     roleDescription: 'Tasked with designing and structuring verification workflows to process vast amounts of unstructured cybersecurity educational data. I lead the Data Analysis & Verification Team, focusing heavily on building automated pipelines to extract, route, and validate intelligence.',
@@ -52,6 +61,12 @@ export default async function CinematicResearchPage() {
   };
 
   const content = data || fallbackContent;
+  const researchArticles = (articles || []) as Array<{
+    _id: string;
+    slug: string;
+    title: string;
+    description?: string;
+  }>;
   return (
     <div className="relative min-h-screen bg-[var(--bg-page)] text-[var(--text-main)] overflow-x-hidden selection:bg-[var(--amber)] selection:text-bg-main font-inter transition-colors duration-1000 ease-in-out">
       <script
@@ -74,6 +89,21 @@ export default async function CinematicResearchPage() {
 
       <div className="max-w-7xl mx-auto px-6 relative z-10 pt-24 pb-40 mt-[100vh]">
         {content && <ResearchClientUI content={content} />}
+        {researchArticles.length > 0 && (
+          <section className="mt-24 border-t border-[var(--border-line)] pt-12">
+            <h2 className="font-fraunces text-3xl mb-8">Research articles</h2>
+            <ul className="space-y-8">
+              {researchArticles.map((article) => (
+                <li key={article._id}>
+                  <Link href={`/research/${article.slug}`} className="text-xl hover:text-[var(--amber)]">
+                    {article.title}
+                  </Link>
+                  {article.description && <p className="mt-2 text-[var(--text-dim)]">{article.description}</p>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </div>
     </div>
   );

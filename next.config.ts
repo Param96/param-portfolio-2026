@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Resolve metadata (including missing-article checks) before sending HTML.
+  htmlLimitedBots: /.*/,
   async redirects() {
     return [
       {
@@ -42,7 +44,6 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  skipTrailingSlashRedirect: true,
   trailingSlash: false,
   images: {
     remotePatterns: [

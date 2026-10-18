@@ -13,13 +13,24 @@ export const LAB_NOTES_QUERY = groq`
   }
 `;
 
+// Shared eligibility for article lists, detail routes, and the public sitemap.
+// Sanity's published perspective additionally excludes drafts and release versions.
+const PUBLIC_ARTICLE_FILTER = groq`defined(slug.current) && slug.current != "" && defined(title) && (!defined(publishedAt) || dateTime(publishedAt) <= dateTime(now()))`;
+
+export const SITEMAP_QUERY = groq`
+  *[_type in ["blog", "research"] && ${PUBLIC_ARTICLE_FILTER}] {
+    "type": _type, "slug": slug.current, _updatedAt
+  }
+`;
+
 // Blogs
 export const ALL_BLOGS_QUERY = groq`
-  *[_type == "blog"] | order(publishedAt desc) {
+  *[_type == "blog" && ${PUBLIC_ARTICLE_FILTER}] | order(publishedAt desc) {
     _id,
     title,
     "slug": slug.current,
     publishedAt,
+    _updatedAt,
     category,
     atmosphere,
     isFeatured,
@@ -31,11 +42,12 @@ export const ALL_BLOGS_QUERY = groq`
 `;
 
 export const FEATURED_BLOGS_QUERY = groq`
-  *[_type == "blog" && isFeatured == true] | order(publishedAt desc) {
+  *[_type == "blog" && ${PUBLIC_ARTICLE_FILTER} && isFeatured == true] | order(publishedAt desc) {
     _id,
     title,
     "slug": slug.current,
     publishedAt,
+    _updatedAt,
     category,
     summary,
     readingTime,
@@ -44,11 +56,12 @@ export const FEATURED_BLOGS_QUERY = groq`
 `;
 
 export const BLOG_BY_SLUG_QUERY = groq`
-  *[_type == "blog" && slug.current == $slug][0] {
+  *[_type == "blog" && ${PUBLIC_ARTICLE_FILTER} && slug.current == $slug][0] {
     _id,
     title,
     "slug": slug.current,
     publishedAt,
+    _updatedAt,
     category,
     atmosphere,
     isFeatured,
@@ -171,7 +184,7 @@ export const RESEARCH_PAGE_QUERY = groq`
   }
 `;
 export const ALL_RESEARCH_QUERY = groq`
-  *[_type == "research"] | order(publishedAt desc) {
+  *[_type == "research" && ${PUBLIC_ARTICLE_FILTER}] | order(publishedAt desc) {
     _id,
     title,
     "slug": slug.current,
@@ -183,7 +196,7 @@ export const ALL_RESEARCH_QUERY = groq`
 `;
 
 export const RESEARCH_BY_SLUG_QUERY = groq`
-  *[_type == "research" && slug.current == $slug][0] {
+  *[_type == "research" && ${PUBLIC_ARTICLE_FILTER} && slug.current == $slug][0] {
     _id,
     title,
     "slug": slug.current,
@@ -194,6 +207,7 @@ export const RESEARCH_BY_SLUG_QUERY = groq`
     contributions,
     systemVisualization,
     publishedAt,
+    _updatedAt,
     institution,
     collaborators,
     content,

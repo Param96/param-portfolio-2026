@@ -9,12 +9,17 @@ export const metadata: Metadata = {
     canonical: "/contact",
   },
   openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Param Patel",
     title: "Contact — Collaborate on AI & Engineering | Param Patel",
     description:
       "Get in touch with Param Patel for AI engineering collaborations, startup MVP development, and experimental systems.",
     url: "/contact",
   },
   twitter: {
+    card: "summary_large_image",
+    creator: "@param_230",
     title: "Contact — Collaborate on AI & Engineering | Param Patel",
     description:
       "Get in touch for AI engineering collaborations and startup MVP development.",
