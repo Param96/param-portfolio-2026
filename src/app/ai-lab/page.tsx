@@ -16,7 +16,7 @@ import LabNotesBoard from "@/components/LabNotesBoard";
 
 import { Metadata } from "next";
 
-import { generateCollectionPageJsonLd } from "@/lib/seo";
+import { DEFAULT_SOCIAL_IMAGE, generateCollectionPageJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "AI Lab — Experiments & Engineering Demos",
@@ -26,12 +26,18 @@ export const metadata: Metadata = {
     canonical: "/ai-lab",
   },
   openGraph: {
+    images: [DEFAULT_SOCIAL_IMAGE],
+    type: "website",
+    locale: "en_US",
+    siteName: "Param Patel",
     title: "AI Lab — Experiments & Engineering Demos | Param Patel",
     description:
       "Param Patel's AI Lab — explore interactive AI experiments, engineering benchmarks, model demos, and lab notes on machine learning and agentic systems.",
     url: "/ai-lab",
   },
   twitter: {
+    card: "summary_large_image",
+    creator: "@param_230",
     title: "AI Lab — Experiments & Engineering Demos | Param Patel",
     description:
       "Param Patel's AI Lab — explore interactive AI experiments, engineering benchmarks, and agentic AI demos.",

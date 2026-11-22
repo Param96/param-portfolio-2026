@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { generateCollectionPageJsonLd } from "@/lib/seo";
+import { DEFAULT_SOCIAL_IMAGE, generateCollectionPageJsonLd } from "@/lib/seo";
 import BlogList from "@/components/BlogList";
 import { sanityFetch } from "@/sanity/lib/live";
 import { ALL_BLOGS_QUERY } from "@/sanity/lib/queries";
@@ -13,12 +13,18 @@ export const metadata: Metadata = {
     canonical: "/blog",
   },
   openGraph: {
+    images: [DEFAULT_SOCIAL_IMAGE],
+    type: "website",
+    locale: "en_US",
+    siteName: "Param Patel",
     title: "Blog — AI, Engineering & Startup Insights | Param Patel",
     description:
       "Articles by Param Patel on artificial intelligence, machine learning, full stack engineering, agentic AI systems, and startup building.",
     url: "/blog",
   },
   twitter: {
+    card: "summary_large_image",
+    creator: "@param_230",
     title: "Blog — AI, Engineering & Startup Insights | Param Patel",
     description:
       "Articles on AI, machine learning, engineering, and startups by Param Patel.",

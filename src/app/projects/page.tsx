@@ -5,7 +5,7 @@ import { ALL_PROJECTS_QUERY } from "@/sanity/lib/queries";
 import { ProjectsHero } from "@/components/hero/meadow/ClientHeroes";
 import GithubRepoGrid from "@/components/GithubRepoGrid";
 
-import { generateCollectionPageJsonLd } from "@/lib/seo";
+import { DEFAULT_SOCIAL_IMAGE, generateCollectionPageJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Projects — AI Systems & Scalable Products",
@@ -15,12 +15,18 @@ export const metadata: Metadata = {
     canonical: "/projects",
   },
   openGraph: {
+    images: [DEFAULT_SOCIAL_IMAGE],
+    type: "website",
+    locale: "en_US",
+    siteName: "Param Patel",
     title: "Projects — AI Systems & Scalable Products | Param Patel",
     description:
       "Explore AI systems, scalable infrastructure, and intelligent products built by Param Patel.",
     url: "/projects",
   },
   twitter: {
+    card: "summary_large_image",
+    creator: "@param_230",
     title: "Projects — AI Systems & Scalable Products | Param Patel",
     description:
       "AI systems, scalable infrastructure, and intelligent products by Param Patel.",

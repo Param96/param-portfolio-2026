@@ -1,14 +1,13 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import type { NextFetchEvent, NextRequest } from "next/server";
 import { Redis } from '@upstash/redis';
 
 const isAdminRoute = createRouteMatcher(["/admin(.*)", "/cms(.*)", "/dashboard(.*)"]);
+const isClerkRoute = createRouteMatcher([
+  "/sign-in(.*)", "/sign-up(.*)", "/api(.*)", "/trpc(.*)", "/__clerk/:path*",
+]);
 
-export default clerkMiddleware(async (auth, req) => {
-  // Protect all admin, cms, and dashboard routes
-  if (isAdminRoute(req)) {
-    await auth.protect();
-  }
-
+function trackVisit(req: NextRequest) {
   // --- VERCEL KV LIVE ENVIRONMENTAL TRACKING ---
   const path = req.nextUrl.pathname;
   const isPublicPage = req.method === 'GET' && 
@@ -38,11 +37,28 @@ export default clerkMiddleware(async (auth, req) => {
       redis.zadd(`live:global`, { score: timestamp, member: memberId }).catch(() => {});
       redis.expire(`live:global`, 3600).catch(() => {});
 
-    } catch (e) {
+    } catch {
       // Fail silently to not disrupt edge routing
     }
   }
+}
+
+const clerkProxy = clerkMiddleware(async (auth, req) => {
+  if (isAdminRoute(req)) {
+    await auth.protect();
+  }
+  trackVisit(req);
 });
+
+export default function proxy(req: NextRequest, event: NextFetchEvent) {
+  if (isAdminRoute(req) || isClerkRoute(req)) {
+    return clerkProxy(req, event);
+  }
+
+  // Public pages use Clerk on the client and do not need a server session.
+  // Serve their HTML directly, including to visitors without Clerk cookies.
+  trackVisit(req);
+}
 
 export const config = {
   matcher: [

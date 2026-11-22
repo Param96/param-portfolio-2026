@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { SITE_URL } from "@/lib/seo";
+import { DEFAULT_SOCIAL_IMAGE, SITE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Contact — Collaborate on AI & Engineering",
@@ -9,12 +9,18 @@ export const metadata: Metadata = {
     canonical: "/contact",
   },
   openGraph: {
+    images: [DEFAULT_SOCIAL_IMAGE],
+    type: "website",
+    locale: "en_US",
+    siteName: "Param Patel",
     title: "Contact — Collaborate on AI & Engineering | Param Patel",
     description:
       "Get in touch with Param Patel for AI engineering collaborations, startup MVP development, and experimental systems.",
     url: "/contact",
   },
   twitter: {
+    card: "summary_large_image",
+    creator: "@param_230",
     title: "Contact — Collaborate on AI & Engineering | Param Patel",
     description:
       "Get in touch for AI engineering collaborations and startup MVP development.",

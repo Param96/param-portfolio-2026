@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import dynamic from "next/dynamic";
+import { ContactHero } from "@/components/hero/meadow/ClientHeroes";
 import SecureCommLinkForm from "@/components/ui/SecureCommLinkForm";
 import { motion } from "framer-motion";
 import { socialLinks } from "@/data/social";
@@ -11,8 +11,6 @@ import Link from "next/link";
 import posthog from "posthog-js";
 import QuotesSection from "@/components/sections/QuotesSection";
 import PostSubmitLetter from "@/components/ui/PostSubmitLetter";
-
-const ContactHero = dynamic(() => import("@/components/hero/meadow/ContactHero"), { ssr: false });
 
 const floatingConcepts = [
   { main: "Agentic AI Systems", sub: "orchestration layers, autonomous workflows, intelligent routing" },

@@ -1,0 +1,9 @@
+{
+  "baseline_commit": "f75566ebaacc0f377990917e7d2535963eb0b43b",
+  "baseline_errors": 156,
+  "baseline_warnings": 5,
+  "current_errors": 156,
+  "current_warnings": 5,
+  "new_findings": 0,
+  "note": "Baseline and modified source checked with the same newly configured Next.js ESLint rules. Existing lint was next lint, removed in Next.js 16."
+}
