@@ -20,6 +20,8 @@ PUBLIC_PATHS = ['/', '/projects', '/research', '/blog', '/ai-lab', '/contact']
 PRIVATE_PATHS = ['/admin', '/api', '/sign-in', '/sign-up', '/studio', '/cms', '/dashboard']
 NS = 'http://www.sitemaps.org/schemas/sitemap/0.9'
 GOOGLEBOT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+BROWSER = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/140.0.0.0 Safari/537.36'
+ARTICLE_PATH = re.compile(r'/(blog|research)/[a-zA-Z0-9_-]+')
 
 
 class Page(HTMLParser):
@@ -27,6 +29,7 @@ class Page(HTMLParser):
         super().__init__(convert_charrefs=True)
         self.meta, self.canonicals, self.links = {}, [], []
         self.title, self.h1 = [], []
+        self.title_count = 0
         self.in_title = self.in_h1 = False
         self.feed(html)
 
@@ -41,6 +44,7 @@ class Page(HTMLParser):
             self.links.append(attrs['href'])
         if tag == 'title':
             self.in_title = True
+            self.title_count += 1
         if tag == 'h1':
             self.in_h1 = True
 
@@ -59,6 +63,15 @@ class Page(HTMLParser):
 
 def blocks_indexing(value):
     return bool(re.search(r'\b(noindex|none)\b', value, re.I))
+
+
+def unrestricted(value):
+    return not blocks_indexing(value) and not re.search(r'\bnofollow\b', value, re.I)
+
+
+def explicit_index_follow(values):
+    directives = {part.strip().lower() for value in values for part in value.split(',')}
+    return {'index', 'follow'}.issubset(directives) and all(map(unrestricted, values))
 
 
 def robots_allowed(text, path, agent='googlebot'):
@@ -128,8 +141,14 @@ class Audit:
     def get(self, path, agent=GOOGLEBOT, follow=False, host=None):
         url = path if path.startswith(('https://', 'http://')) else self.base + path
         key = (url, agent, follow, host)
-        if key in self.cache:
-            return self.cache[key]
+        if key not in self.cache:
+            try:
+                self.cache[key] = self.fetch(url, agent, follow, host)
+            except (ValueError, OSError) as error:
+                self.cache[key] = {'status': 0, 'headers': {}, 'body': '', 'url': url, 'chain': [], 'error': str(error)}
+        return self.cache[key]
+
+    def fetch(self, url, agent, follow, host):
         seen, chain = set(), []
         for _ in range(9):
             if url in seen:
@@ -156,8 +175,9 @@ class Audit:
                         headers[name] = headers.get(name, '') + (', ' if name in headers else '') + value.strip()
                 response = {'status': status, 'headers': headers, 'body': body.read_bytes().decode('utf-8', errors='replace'), 'url': url, 'chain': list(chain)}
             if not follow or status not in (301, 302, 303, 307, 308):
-                self.cache[key] = response
                 return response
+            if not headers.get('location'):
+                raise ValueError(f'HTTP {status} without Location at {url}')
             destination = urljoin(url, headers.get('location', ''))
             chain.append({'url': url, 'status': status, 'destination': destination})
             url = destination
@@ -165,19 +185,46 @@ class Audit:
 
     def public(self, path, agent=GOOGLEBOT):
         response = self.get(path, agent)
-        page, expected = Page(response['body']), self.origin + path.split('?', 1)[0].rstrip('/')
+        page = Page(response['body'])
+        canonical_path = path.split('?', 1)[0]
+        expected = self.origin + ('' if canonical_path == '/' else canonical_path)
         label = path + (' (browser)' if agent != GOOGLEBOT else '')
-        self.check(response['status'] == 200, f'{label}: HTTP 200', str(response['status']))
-        self.check('text/html' in response['headers'].get('content-type', ''), f'{label}: HTML response')
-        directives = page.meta.get('robots', []) + page.meta.get('googlebot', []) + [response['headers'].get('x-robots-tag', '')]
-        self.check(not any(blocks_indexing(v) or re.search(r'\bnofollow\b', v, re.I) for v in directives), f'{label}: no indexing restrictions', '; '.join(filter(None, directives)))
-        self.check(len(page.canonicals) == 1 and page.canonicals[0].rstrip('/') == expected, f'{label}: one self-referencing production canonical', ', '.join(page.canonicals))
-        self.check(bool(''.join(page.title).strip()) and len(page.meta.get('description', [])) == 1 and bool(page.meta['description'][0].strip()), f'{label}: title and unique description tag')
+        self.check(unrestricted(response['headers'].get('x-robots-tag', '')) and response['status'] > 0,
+                   f'{label}: response header permits indexing and following',
+                   response.get('error') or response['headers'].get('x-robots-tag', ''))
+        if not self.check(response['status'] == 200, f'{label}: HTTP 200', self.response_detail(response)):
+            return None
+        if not self.check('text/html' in response['headers'].get('content-type', ''), f'{label}: HTML response'):
+            return None
+        for name in ('robots', 'googlebot'):
+            values = page.meta.get(name, [])
+            self.check(len(values) == 1 and explicit_index_follow(values),
+                       f'{label}: HTML {name} allows indexing and following', ', '.join(values))
+        self.check(page.canonicals == [expected], f'{label}: one self-referencing production canonical', ', '.join(page.canonicals))
+        self.check(page.title_count == 1 and bool(''.join(page.title).strip()), f'{label}: one nonempty title')
+        descriptions = page.meta.get('description', [])
+        self.check(len(descriptions) == 1 and bool(descriptions[0].strip()), f'{label}: one nonempty description')
         self.check(bool(''.join(page.h1).strip()), f'{label}: heading in initial HTML')
-        self.check(len(page.meta.get('og:url', [])) == 1 and page.meta['og:url'][0].rstrip('/') == expected and bool(page.meta.get('og:title')) and bool(page.meta.get('og:description')) and page.meta.get('twitter:card') == ['summary_large_image'], f'{label}: complete social metadata')
+        self.check(page.meta.get('og:url') == [expected] and bool(page.meta.get('og:title')) and bool(page.meta.get('og:description')) and page.meta.get('twitter:card') == ['summary_large_image'], f'{label}: complete social metadata')
+        for name in ('og:image', 'twitter:image'):
+            images = page.meta.get(name, [])
+            self.check(bool(images) and all(urlsplit(src).scheme == 'https' and urlsplit(src).hostname
+                                            for src in images),
+                       f'{label}: {name} points to an HTTPS image', ', '.join(images))
         metadata = ' '.join(page.canonicals + [item for values in page.meta.values() for item in values])
         self.check(not re.search(r'localhost|127\.0\.0\.1|https?://[^\s"<>]*\.vercel\.app', metadata, re.I), f'{label}: no development/preview metadata URLs')
         return page
+
+    @staticmethod
+    def response_detail(response):
+        if 'error' in response:
+            return response['error']
+        parts = [str(response['status']), response['url']]
+        if response['headers'].get('location'):
+            parts.append(response['headers']['location'])
+        if response['chain']:
+            parts.append(json.dumps(response['chain']))
+        return ' → '.join(parts)
 
     def sitemap(self, path='/sitemap.xml', seen=None):
         seen = set() if seen is None else seen
@@ -185,14 +232,17 @@ class Audit:
             raise ValueError('Repeated or circular sitemap reference')
         seen.add(path)
         response = self.get(path)
-        self.check(response['status'] == 200 and 'xml' in response['headers'].get('content-type', ''), f'{path}: HTTP 200 XML')
+        if not self.check(response['status'] == 200 and 'xml' in response['headers'].get('content-type', ''),
+                          f'{path}: HTTP 200 XML', self.response_detail(response)):
+            return []
         index, entries = sitemap_entries(response['body'])
         self.check(True, f'{path}: valid sitemap XML', f'{len(entries)} entries')
         urls = []
         for url, lastmod in entries:
             parts = urlsplit(url)
-            self.check(parts.scheme == 'https' and parts.netloc == urlsplit(self.origin).netloc and not parts.query and not parts.fragment, f'sitemap canonical origin: {url}')
-            if parts.scheme != 'https' or parts.netloc != urlsplit(self.origin).netloc:
+            valid = (parts.scheme == 'https' and parts.netloc == urlsplit(self.origin).netloc
+                     and not parts.query and not parts.fragment)
+            if not self.check(valid, f'sitemap uses an absolute canonical HTTPS URL: {url}'):
                 continue
             if lastmod:
                 date = dt.datetime.fromisoformat(lastmod.replace('Z', '+00:00'))
@@ -207,34 +257,54 @@ class Audit:
 
     def run(self):
         robots = self.get('/robots.txt')
-        self.check(robots['status'] == 200 and 'text/plain' in robots['headers'].get('content-type', ''), 'robots.txt: HTTP 200 plain text')
-        self.check(re.search(r'^sitemap:\s*' + re.escape(self.origin + '/sitemap.xml') + r'\s*$', robots['body'], re.I | re.M) is not None, 'robots.txt: canonical sitemap reference')
-        for path in PUBLIC_PATHS + ['/_next/static/test.js', '/_next/static/test.css', '/founder.jpg']:
-            self.check(robots_allowed(robots['body'], path) and robots_allowed(robots['body'], path, 'bingbot'), f'robots.txt allows {path}')
-        for path in PRIVATE_PATHS:
-            self.check(not robots_allowed(robots['body'], path) and not robots_allowed(robots['body'], path + '/child'), f'robots.txt restricts {path} and descendants')
-        urls = self.sitemap()
-        self.check(len(urls) == len(set(urls)), 'sitemap: no duplicate URLs')
+        robots_ok = self.check(
+            robots['status'] == 200 and 'text/plain' in robots['headers'].get('content-type', ''),
+            'robots.txt: HTTP 200 plain text', self.response_detail(robots))
+        if robots_ok:
+            self.check(re.search(r'^sitemap:\s*' + re.escape(self.origin + '/sitemap.xml') + r'\s*$', robots['body'], re.I | re.M) is not None, 'robots.txt: canonical sitemap reference')
+            for path in PUBLIC_PATHS + ['/_next/static/test.js', '/_next/static/test.css', '/founder.jpg']:
+                self.check(robots_allowed(robots['body'], path) and robots_allowed(robots['body'], path, 'bingbot'), f'robots.txt allows {path}')
+            for path in PRIVATE_PATHS:
+                self.check(not robots_allowed(robots['body'], path) and not robots_allowed(robots['body'], path + '/child'), f'robots.txt restricts {path} and descendants')
+        try:
+            urls = self.sitemap()
+        except (ValueError, ET.ParseError) as error:
+            self.check(False, 'sitemap XML processing', str(error))
+            urls = []
         paths = [urlsplit(url).path or '/' for url in urls]
+        if urls:
+            self.check(len(paths) == len(set(paths)), 'sitemap: no duplicate URLs')
         self.check(set(PUBLIC_PATHS).issubset(paths), 'sitemap: all real public landing pages present')
         canonicals, titles, descriptions, links = [], [], [], set()
         pages = {}
-        for path in sorted(set(paths + PUBLIC_PATHS)):
-            self.check(path in PUBLIC_PATHS or bool(re.fullmatch(r'/(blog|research)/[a-zA-Z0-9_-]+', path)), f'sitemap excludes private/obsolete routes: {path}')
-            self.check(robots_allowed(robots['body'], path), f'sitemap URL crawlable: {path}')
+        canonical_host = urlsplit(self.origin).hostname
+        apex = canonical_host.removeprefix('www.')
+        alternate_host = apex if canonical_host != apex else 'www.' + apex
+        if urls:
+            self.check(self.origin in urls, 'sitemap: homepage matches the exact canonical URL')
+        for path in paths:
+            self.check(path in PUBLIC_PATHS or bool(ARTICLE_PATH.fullmatch(path)), f'sitemap excludes private/obsolete routes: {path}')
+        for path in dict.fromkeys(PUBLIC_PATHS + paths):
+            if robots_ok:
+                self.check(robots_allowed(robots['body'], path), f'public URL crawlable: {path}')
             page = self.public(path)
+            self.public(path, agent=BROWSER)
+            if page is None:
+                continue
             pages[path] = page
             canonicals.extend(page.canonicals)
             titles.append(''.join(page.title))
             descriptions.extend(page.meta.get('description', []))
             for href in page.links:
                 destination = urlsplit(urljoin(self.origin + path, href))
-                if destination.netloc == urlsplit(self.origin).netloc:
+                if destination.hostname == canonical_host:
                     links.add(destination.path or '/')
-                elif destination.netloc == 'www.' + urlsplit(self.origin).netloc:
+                elif destination.hostname == alternate_host:
                     self.check(False, f'internal link uses redirected hostname: {href}')
         for values, label in [(canonicals, 'canonicals'), (titles, 'titles'), (descriptions, 'descriptions')]:
-            self.check(len(values) == len(set(values)), f'public pages have distinct {label}')
+            if pages:
+                normalized = {' '.join(value.casefold().split()) for value in values} if label != 'canonicals' else set(values)
+                self.check(len(values) == len(normalized), f'public pages have distinct {label}')
         reachable, pending = {'/'}, ['/']
         while pending:
             path = pending.pop()
@@ -249,40 +319,55 @@ class Audit:
                 self.check(path in reachable, f'reachable through public navigation: {path}')
         for path in sorted(links - set(paths)):
             response = self.get(path)
-            self.check(response['status'] == 200, f'internal link resolves without redirect: {path}', str(response['status']))
+            self.check(response['status'] == 200, f'internal link resolves without redirect: {path}', self.response_detail(response))
+            if ARTICLE_PATH.fullmatch(path) and response['status'] == 200:
+                self.check(False, f'linked public article is missing from sitemap: {path}')
+        social_images = {urlsplit(image).path for page in pages.values()
+                         for image in page.meta.get('og:image', []) + page.meta.get('twitter:image', [])
+                         if urlsplit(image).hostname == canonical_host}
+        for path in sorted(social_images):
+            response = self.get(path)
+            self.check(response['status'] == 200 and response['headers'].get('content-type', '').startswith('image/'),
+                       f'production social image is accessible: {path}', self.response_detail(response))
         for path in ['/sign-in', '/sign-up']:
             response = self.get(path)
             page = Page(response['body'])
             directives = page.meta.get('robots', []) + [response['headers'].get('x-robots-tag', '')]
-            self.check(response['status'] == 200 and any(blocks_indexing(v) for v in directives), f'{path}: intentionally noindex')
-            self.check(not page.canonicals, f'{path}: no inherited homepage canonical')
+            self.check(response['status'] == 200 and any(blocks_indexing(v) for v in directives), f'{path}: intentionally noindex', self.response_detail(response))
+            if response['status'] == 200:
+                self.check(not page.canonicals, f'{path}: no inherited homepage canonical')
         response = self.get('/admin')
         self.check(response['status'] in (301, 302, 303, 307, 308, 401, 403, 404) and blocks_indexing(response['headers'].get('x-robots-tag', '')), 'admin remains protected and noindex')
         for path in ['/__seo_missing_page__', '/blog/__seo_missing_page__', '/research/__seo_missing_page__']:
             response = self.get(path)
             page = Page(response['body'])
-            self.check(response['status'] == 404 and any(blocks_indexing(v) for v in page.meta.get('robots', [])), f'{path}: real 404 with noindex', str(response['status']))
-            self.check(not page.canonicals, f'{path}: no inherited homepage canonical')
-        for path, target in [('/resume', '/resume.pdf'), ('/projects/drilex-oil', '/projects'), ('/blog/', '/blog')]:
+            self.check(response['status'] == 404 and any(blocks_indexing(v) for v in page.meta.get('robots', [])), f'{path}: real 404 with noindex', self.response_detail(response))
+            if response['status'] == 404:
+                self.check(not page.canonicals, f'{path}: no inherited homepage canonical')
+        legacy_redirects = {
+            '/resume': '/resume.pdf',
+            '/projects/drilex-oil': '/projects',
+            '/projects/ai-verify-agent': '/projects',
+            '/projects/rethink-mindful-flow': '/projects',
+            '/blog/': '/blog',
+        }
+        for path, target in legacy_redirects.items():
             response = self.get(path)
             location = urljoin(self.base + path, response['headers'].get('location', ''))
             self.check(response['status'] in (301, 308) and location == self.base + target, f'{path}: permanent normalization to {target}')
             final = self.get(path, follow=True)
-            self.check(final['status'] == 200 and len(final['chain']) <= 2, f'{path}: no redirect loop')
+            self.check(final['status'] == 200 and len(final['chain']) == 1, f'{path}: one redirect to a working page', self.response_detail(final))
         self.public('/blog?utm_source=seo-validation')
-        self.public('/', agent='Mozilla/5.0')
-        article = next((p for p in paths if p.startswith('/blog/')), None)
-        if article:
-            self.public(article, agent='Mozilla/5.0')
         if self.base != self.origin:
             for path in ['/', '/blog']:
-                response = self.get(path, host='www.' + urlsplit(self.origin).netloc)
-                self.check(response['status'] in (301, 308) and response['headers'].get('location', '').rstrip('/') == (self.origin + path).rstrip('/'), f'www{path}: permanent redirect to production canonical host')
+                response = self.get(path, host=alternate_host)
+                self.check(response['status'] in (301, 308) and response['headers'].get('location', '').rstrip('/') == (self.origin + path).rstrip('/'), f'{alternate_host}{path}: permanent redirect to production canonical host', self.response_detail(response))
         if self.base == self.origin:
-            for origin in ['http://parampatel.in', 'http://www.parampatel.in', 'https://www.parampatel.in']:
-                for path in ['/', '/blog']:
+            for origin in [f'http://{canonical_host}', f'http://{alternate_host}', f'https://{alternate_host}']:
+                max_hops = 2 if origin == f'http://{alternate_host}' else 1
+                for path in ['/', '/blog?utm_source=seo-validation']:
                     response = self.get(origin + path, follow=True)
-                    self.check(response['status'] == 200 and response['url'].rstrip('/') == (self.origin + path).rstrip('/') and bool(response['chain']) and all(hop['status'] in (301, 308) for hop in response['chain']), f'{origin}{path}: permanent redirects agree with canonical')
+                    self.check(response['status'] == 200 and response['url'].rstrip('/') == (self.origin + path).rstrip('/') and 0 < len(response['chain']) <= max_hops and all(hop['status'] in (301, 308) for hop in response['chain']), f'{origin}{path}: permanent redirects agree with canonical', self.response_detail(response))
 
 
 def main():

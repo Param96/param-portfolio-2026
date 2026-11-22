@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/live";
 import { HOMEPAGE_QUERY } from "@/sanity/lib/queries";
 import ModuleRenderer from "@/components/cms/ModuleRenderer";
-import { WEBSITE_JSONLD } from "@/lib/seo";
+import { DEFAULT_SOCIAL_IMAGE, WEBSITE_JSONLD } from "@/lib/seo";
 
 import TheClearingHero from "@/components/hero/TheClearingHero";
 import FounderIntro from "@/components/FounderIntro";
@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
+    images: [DEFAULT_SOCIAL_IMAGE],
     type: "website",
     locale: "en_US",
     siteName: "Param Patel",

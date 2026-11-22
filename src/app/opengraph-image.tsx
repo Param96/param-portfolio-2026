@@ -1,13 +1,13 @@
 import { ImageResponse } from 'next/og';
-import { SITE_NAME, SITE_URL } from '@/lib/seo';
+import { DEFAULT_SOCIAL_IMAGE, SITE_NAME, SITE_URL } from '@/lib/seo';
 
 export const runtime = 'edge';
 
 // Image metadata
-export const alt = 'Param Patel — AI/ML Engineer, Full Stack Engineer & Builder';
+export const alt = DEFAULT_SOCIAL_IMAGE.alt;
 export const size = {
-  width: 1200,
-  height: 630,
+  width: DEFAULT_SOCIAL_IMAGE.width,
+  height: DEFAULT_SOCIAL_IMAGE.height,
 };
 
 export const contentType = 'image/png';

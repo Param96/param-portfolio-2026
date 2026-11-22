@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { generateCollectionPageJsonLd } from "@/lib/seo";
+import { DEFAULT_SOCIAL_IMAGE, generateCollectionPageJsonLd } from "@/lib/seo";
 import { sanityFetch } from "@/sanity/lib/live";
 import { ALL_RESEARCH_QUERY, RESEARCH_PAGE_QUERY } from "@/sanity/lib/queries";
 import Link from "next/link";
@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     canonical: "/research",
   },
   openGraph: {
+    images: [DEFAULT_SOCIAL_IMAGE],
     type: "website",
     locale: "en_US",
     siteName: "Param Patel",

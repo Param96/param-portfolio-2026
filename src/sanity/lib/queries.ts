@@ -77,6 +77,7 @@ export const BLOG_BY_SLUG_QUERY = groq`
       "slug": slug.current,
       "coverImageUrl": coverImage.asset->url
     },
+    "ogImageUrl": seo.ogImage.asset->url,
     seo
   }
 `;
@@ -218,6 +219,7 @@ export const RESEARCH_BY_SLUG_QUERY = groq`
       atmosphere,
       "coverImageUrl": coverImage.asset->url
     },
+    "ogImageUrl": seo.ogImage.asset->url,
     seo
   }
 `;

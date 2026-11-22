@@ -16,7 +16,7 @@ import LabNotesBoard from "@/components/LabNotesBoard";
 
 import { Metadata } from "next";
 
-import { generateCollectionPageJsonLd } from "@/lib/seo";
+import { DEFAULT_SOCIAL_IMAGE, generateCollectionPageJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "AI Lab — Experiments & Engineering Demos",
@@ -26,6 +26,7 @@ export const metadata: Metadata = {
     canonical: "/ai-lab",
   },
   openGraph: {
+    images: [DEFAULT_SOCIAL_IMAGE],
     type: "website",
     locale: "en_US",
     siteName: "Param Patel",

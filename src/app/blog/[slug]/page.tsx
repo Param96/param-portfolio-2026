@@ -10,7 +10,7 @@ import ReadershipTracker from "@/components/analytics/ReadershipTracker";
 import BlogArticleActions from "@/components/blog/BlogArticleActions";
 import { getPostHogClient } from "@/lib/posthog-server";
 import { Metadata } from "next";
-import { generateBlogPostingJsonLd, generateBreadcrumbJsonLd } from "@/lib/seo";
+import { DEFAULT_SOCIAL_IMAGE, generateBlogPostingJsonLd, generateBreadcrumbJsonLd } from "@/lib/seo";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
 export const revalidate = 60;
@@ -35,6 +35,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   if (!article) notFound();
 
+  const imageUrl = article.ogImageUrl || article.coverImageUrl;
+
   return {
     title: article.seo?.metaTitle || article.title,
     description: article.seo?.metaDescription || article.summary || `Read ${article.title}`,
@@ -50,7 +52,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       type: "article",
       publishedTime: article.publishedAt,
       authors: ["Param Patel"],
-      // fallback to layout's og-image if article doesn't have one
+      images: [imageUrl ? { url: imageUrl, alt: article.title } : DEFAULT_SOCIAL_IMAGE],
     },
     twitter: {
       card: "summary_large_image",

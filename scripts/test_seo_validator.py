@@ -1,6 +1,7 @@
 import unittest
+from unittest.mock import patch
 import xml.etree.ElementTree as ET
-from validate_seo import Page, blocks_indexing, robots_allowed, sitemap_entries
+from validate_seo import Audit, ORIGIN, Page, blocks_indexing, explicit_index_follow, robots_allowed, sitemap_entries
 
 
 class ValidatorTests(unittest.TestCase):
@@ -18,6 +19,30 @@ class ValidatorTests(unittest.TestCase):
         self.assertFalse(blocks_indexing('index, follow, max-image-preview:large'))
         page = Page('<meta name="robots" content="index"><meta name="robots" content="noindex">')
         self.assertTrue(any(blocks_indexing(v) for v in page.meta['robots']))
+
+    def test_index_follow_must_be_explicit_and_unambiguous(self):
+        self.assertTrue(explicit_index_follow(['INDEX, FOLLOW, max-snippet: -1']))
+        for values in ([], ['noindex, follow'], ['index, nofollow'], ['index, follow, none']):
+            self.assertFalse(explicit_index_follow(values))
+
+    @patch('builtins.print')
+    def test_unreachable_sitemap_does_not_hide_public_redirect_or_header(self, _print):
+        audit = Audit(ORIGIN, ORIGIN)
+        url = ORIGIN + '/'
+        headers = {'location': 'https://example.clerk.accounts.dev/v1/client/handshake',
+                   'x-robots-tag': 'noindex'}
+        redirected = {'status': 307, 'headers': headers, 'body': '', 'url': url, 'chain': []}
+        with patch.object(audit, 'fetch', side_effect=lambda target, *_: redirected if target == url
+                          else self.fail_fetch(target)):
+            audit.run()
+        checks = {result['check']: result for result in audit.results}
+        self.assertEqual(checks['/sitemap.xml: HTTP 200 XML']['status'], 'FAIL')
+        self.assertIn('clerk.accounts.dev', checks['/: HTTP 200']['detail'])
+        self.assertEqual(checks['/: response header permits indexing and following']['detail'], 'noindex')
+
+    @staticmethod
+    def fail_fetch(url):
+        raise ValueError(f'Unreachable: {url}')
 
     def test_robots_specific_agents_override_wildcard(self):
         text = 'User-agent: *\nDisallow: /\nUser-agent: Googlebot\nAllow: /\nDisallow: /admin$\nDisallow: /admin/\n'

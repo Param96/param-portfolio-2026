@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, Caveat } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import PublicLayoutWrapper from "@/components/PublicLayoutWrapper";
 import LivingSystemProvider from "@/components/global/LivingSystemProvider";
@@ -9,21 +9,23 @@ import LivingSystemStatus from "@/components/ui/LivingSystemStatus";
 import SynestheticAudio from "@/components/global/SynestheticAudio";
 import { SITE_URL, PERSON_JSONLD, PROFILE_PAGE_JSONLD } from "@/lib/seo";
 
-const fraunces = Fraunces({
-  subsets: ["latin"],
+const fraunces = localFont({
+  src: "./fonts/fraunces-latin.woff2",
+  weight: "100 900",
   variable: "--font-fraunces",
   display: "swap",
-  axes: ["SOFT", "WONK", "opsz"],
 });
 
-const inter = Inter({
-  subsets: ["latin"],
+const inter = localFont({
+  src: "./fonts/inter-latin.woff2",
+  weight: "100 900",
   variable: "--font-inter",
   display: "swap",
 });
 
-const caveat = Caveat({
-  subsets: ["latin"],
+const caveat = localFont({
+  src: "./fonts/caveat-latin.woff2",
+  weight: "400 700",
   variable: "--font-caveat",
   display: "swap",
 });
@@ -107,7 +109,6 @@ export default async function RootLayout({
     <ClerkProvider>
       <html lang="en" className={`${fraunces.variable} ${inter.variable} ${caveat.variable}`} suppressHydrationWarning>
         <head>
-          {/* Fonts loaded via next/font/google */}
           <GoogleAnalytics />
         </head>
         <body className="min-h-screen relative font-inter" suppressHydrationWarning>

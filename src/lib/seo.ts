@@ -7,6 +7,12 @@ export const SITE_URL = "https://parampatel.in";
 export const SITE_NAME = "Param Patel";
 export const AUTHOR_NAME = "Param Patel";
 export const AUTHOR_EMAIL = "paramppatel100@gmail.com";
+export const DEFAULT_SOCIAL_IMAGE = {
+  url: "/opengraph-image",
+  width: 1200,
+  height: 630,
+  alt: "Param Patel — AI/ML Engineer, Full Stack Engineer & Builder",
+};
 
 export const SOCIAL_PROFILES = {
   github: "https://github.com/Param96",

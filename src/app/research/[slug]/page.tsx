@@ -7,7 +7,7 @@ import { ArrowLeft, Cpu, Workflow, ShieldCheck, Database } from "lucide-react";
 import ReadershipTracker from "@/components/analytics/ReadershipTracker";
 import { getPostHogClient } from "@/lib/posthog-server";
 import { Metadata } from "next";
-import { generateArticleJsonLd, generateBreadcrumbJsonLd } from "@/lib/seo";
+import { DEFAULT_SOCIAL_IMAGE, generateArticleJsonLd, generateBreadcrumbJsonLd } from "@/lib/seo";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
 export const revalidate = 60;
@@ -49,6 +49,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: research.seo?.metaDescription || research.description || `Research on ${research.title}`,
       url: `/research/${resolvedParams.slug}`,
       type: "article",
+      images: [research.ogImageUrl ? { url: research.ogImageUrl, alt: research.title } : DEFAULT_SOCIAL_IMAGE],
     },
     twitter: {
       card: "summary_large_image",

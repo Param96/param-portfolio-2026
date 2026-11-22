@@ -5,7 +5,7 @@ import { ALL_PROJECTS_QUERY } from "@/sanity/lib/queries";
 import { ProjectsHero } from "@/components/hero/meadow/ClientHeroes";
 import GithubRepoGrid from "@/components/GithubRepoGrid";
 
-import { generateCollectionPageJsonLd } from "@/lib/seo";
+import { DEFAULT_SOCIAL_IMAGE, generateCollectionPageJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Projects — AI Systems & Scalable Products",
@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     canonical: "/projects",
   },
   openGraph: {
+    images: [DEFAULT_SOCIAL_IMAGE],
     type: "website",
     locale: "en_US",
     siteName: "Param Patel",
